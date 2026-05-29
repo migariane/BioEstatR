@@ -9,9 +9,10 @@
 #' @param conf real < 1: confidence level for effect estimation IC. Default = 1-alfa.
 #' @param decs integer: decimal precision for results. Default = 3.
 #' @return Report with descriptive measures, parameter estimation for multiple linear regression, residual description, and diagnostic plots
-#' @importFrom stats lm na.exclude rstandard shapiro.test predict formula model.frame
+#' @importFrom stats lm na.exclude rstandard shapiro.test predict formula model.frame confint sd
 #' @importFrom ggplot2 ggplot aes geom_point geom_hline geom_smooth labs geom_histogram geom_dotplot
-#' @export rlm
+#' @importFrom graphics par plot
+
 #' @examples
 #' # Example 1 - Basic usage
 #' data(osteo)

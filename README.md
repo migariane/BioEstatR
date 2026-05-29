@@ -7,7 +7,7 @@ This is the BioStatR R package.
 ## Installation
 
 ### From GitHub (Development version)
-You can install the development version of BioStatR from [GitHub](https://github.com/migariane/BioStatR) with:
+Esta version en desarrollo del paquete BioStatR puede ser instalada desde [GitHub](https://github.com/migariane/BioStatR) with:
 
 ```r
 # install.packages("remotes")
