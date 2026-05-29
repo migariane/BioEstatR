@@ -56,7 +56,7 @@ Si necesita la referencia en formato BibTeX para su artículo académico, pued
 ### Cita del libro de soporte
 Si utiliza este paquete en su investigación, le agradeceríamos que cite también el libro de texto de soporte:
 
-*   **Referencia:**Miguel Ángel Luque Fernández. *Matemática Estadística Médica con R*. 2026
+*   **Referencia:** Miguel Ángel Luque Fernández. *Matemática Estadística Médica con R*. 2026
 *   **Enlace:** [Matemática Estadística Médica con R](https://migariane.github.io/MatematicaEstadisticaMedicinaR/)
 *   **https://migariane.github.io/MatematicaEstadisticaMedicinaR/**
 
