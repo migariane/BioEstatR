@@ -104,10 +104,10 @@ rls<-function(y=NULL,x=NULL,data=NULL,pred=NULL,grf=TRUE,dfout=F ,alfa=0.05,conf
 
   isErr<-FALSE
   # determinación del tipo de entrada
-  if(class(y)=="formula") {
+  if(inherits(y, "formula")) {
     # obtener el data.frame del modelo
     dataf<-rl(y,data)
-    if (class(dataf)=="integer") {
+    if (inherits(dataf, "integer")) {
       isERR<-TRUE
       stop(get_msg("rls_stop_multi_var"))}
     ylbl<-names(dataf)[1]
