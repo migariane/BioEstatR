@@ -12,6 +12,8 @@ You can install the development version of BioStatR from [GitHub](https://github
 remotes::install_github("migariane/BioStatR")
 ```
 
+*Note: This method is recommended as it automatically builds the package for your specific operating system (Windows, macOS, or Linux).*
+
 ### From Local Files
 You can also install the package from the provided files in the repository:
 
