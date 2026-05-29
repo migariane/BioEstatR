@@ -31,3 +31,11 @@ install.packages("path/to/BioStatR_1.0.0.zip", repos = NULL, type = "binary")
 ```
 
 *Nota: El binario de Windows (`.zip`) debe construirse en una máquina con Windows usando `devtools::build(binary = TRUE)` para asegurar la compatibilidad.*
+
+## Cómo citar este paquete
+
+Para citar este paquete en sus publicaciones, puede utilizar el siguiente comando en R:
+
+```r
+citation("BioStatR")
+```
