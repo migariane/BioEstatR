@@ -6,9 +6,9 @@ Para mayor informacion sobre el libro, visite el sitio web del libro o consulte 
 La función principal de este paquete es proporcionar rutinas de bioestadística que se utilizan en el libro, pero también se pueden usar de forma independiente para análisis estadísticos en medicina y ciencias de la salud.
 Para información sobre **BioStatR** visite: [https://migariane.github.io/BioStatR/](https://migariane.github.io/BioStatR/)
 
-## Instalación
+## Introducción y Tutorial
 
-### Desde GitHub (Versión de desarrollo)
+Puede consultar la viñeta (tutorial) introductoria del paquete en: [Introducción a BioStatR](articles/BioStatR-overview.html)
 Puede instalar la versión de desarrollo de BioStatR desde [GitHub](https://github.com/migariane/BioStatR) con:
 
 ```r
