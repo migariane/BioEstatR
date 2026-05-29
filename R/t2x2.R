@@ -219,14 +219,14 @@ tabla2x2<-function(frecs=NULL,fvar=NULL,cvar=NULL,o=NULL,o11=0, o12=0, o21=0, o2
       cat(paste(tab,chi2," = ", roundf(x2y,decs),", ",sep=""),paste(" gl = ",gl,", ",sep=""),paste(ptxty,", (cpc de Yates = ",roundf(t/2,2),")",sep=""),"\n")
 
       # Tablas de residuos
-      ifelse(decs==4,ndecs<-3,ndecs<-decs)
+      if (decs==4) { ndecs<-3 } else { ndecs<-decs }
       if(length(tablas[tablas=="R"])>0 ||length(tablas[tablas=="r"])>0)
       {
         showtitle("Residuos de Pearson",2)
         print.table(trxcshow(x=m,fcat=fcat,ccat=ccat,decs=ndecs, tipo="P"))
       }
 
-      ifelse(decs==4,ndecs<-3,ndecs<-decs)
+      if (decs==4) { ndecs<-3 } else { ndecs<-decs }
       if(length(tablas[tablas=="S"])>0 ||length(tablas[tablas=="s"])>0)
       {
 
@@ -242,7 +242,7 @@ tabla2x2<-function(frecs=NULL,fvar=NULL,cvar=NULL,o=NULL,o11=0, o12=0, o21=0, o2
       }
 
       # Tablas de porcentajes
-      ifelse(decs==4,ndecs<-3,ndecs<-decs)
+      if (decs==4) { ndecs<-3 } else { ndecs<-decs }
       if(length(tablas[tablas=="F"])>0 ||length(tablas[tablas=="f"])>0)
       {
         showtitle("Porcentajes por filas",2)

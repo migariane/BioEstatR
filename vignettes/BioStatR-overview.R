@@ -16,7 +16,7 @@ rls(imc ~ peso, data = osteo, grf = F)
 
 ## ----rlm----------------------------------------------------------------------
 # Ejemplo de regresión lineal múltiple
-rls(imc ~ peso + talla, data = osteo, grf = F)
+rlm(imc ~ peso + talla, data = osteo, grf = F)
 
 ## ----rlogits------------------------------------------------------------------
 # Ejemplo de regresión logística simple

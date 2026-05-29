@@ -1,4 +1,4 @@
-#' @noRd
+#' @name grpsggp
 #' @title Diagramas por grupos
 #' @description Obtencion de los diagramas de distribucion segmentados, o no, por factor de agrupacion
 #' @param x vector: variable cuantitativa a resumir
@@ -28,6 +28,7 @@ grpsggp<-function(x=NULL,f=NULL,se=NULL,ggid=1,lbls=NULL,bins=NULL,hnmin=50)
   xname<-deparse(substitute(x))
   if (is.null(f)) { fname<-"" } else { fname<-deparse(substitute(f)) }
   if(!is.null(lbls)){
+
     xname<-lbls[1]
     if(length(lbls)>1) fname<-lbls[2]
   }

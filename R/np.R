@@ -57,8 +57,7 @@ np<-function(x=0,n=0,d=0,v=0,level="",conf=.95,alfa=.05, decs=4, eco=TRUE){
     dobs<- (waldaj[[2]]- waldaj[[1]])/2
     if(waldaj[[1]]<=.5 && waldaj[[2]]>=.5)
     {po<-.5}
-    else
-    {ifelse(waldaj[[1]]>=.5,po<-waldaj[[1]],po<-waldaj[[2]])}
+    if (waldaj[[1]]>=.5) { po<-waldaj[[1]] } else { po<-waldaj[[2]] }
   }
 
   if(d<=0 || d>1) {cat("ERROR: No valid data\n")}
