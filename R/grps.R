@@ -9,6 +9,17 @@
 #' @param decs entero: precision decimal
 #' @param ... parametros de configuracion de la funcion grpsggp
 #' @export grps
+#' @examples
+#' nivel <- c(1.1,2.1,2.2,3.2,0.1,.2,1.0,0.4,0.7,1.3,1.5,3.1,2.4,3.6,1.1,2.4,
+#'            3.2,2.6,1.5,6.1,2.1,1.9,1,2.1,1.3,4.1,1.2)
+#' grupo <- c("A","A","A","A","A","A","A","B","B","B","B","B","B","C","C","C",
+#'            "C","C","C","C","C","C","D","D","D","D","D")
+#' grps(x=nivel)
+#' grps(x=nivel, f=grupo)
+#' \donttest{
+#' grps(x=nivel, f=grupo, ic=TRUE)
+#' grps(x=nivel, hnmin=10)
+#' }
 grps <- function(x=NULL, f=NULL, ic=FALSE, grf=TRUE, alfa=0.05, conf=0.95, decs=3, ...) {
   if(is.null(x)) stop("No se han indicado datos validos")
   
@@ -47,7 +58,6 @@ grps <- function(x=NULL, f=NULL, ic=FALSE, grf=TRUE, alfa=0.05, conf=0.95, decs=
     t <- data.frame(t, ic_inf, ic_sup)
   }
   
-  # Final display and plotting
   print(t)
   if(grf && k > 1) {
     se_vec <- tapply(dataf$x, dataf$f, sd, na.rm = TRUE)
