@@ -2,7 +2,3 @@ url: https://migariane.github.io/BioEstatR/
 template:
   bootstrap: 5
 
-articles:
-- title: Introducción a BioEstatR
-  contents:
-  - BioEstatR-overview
