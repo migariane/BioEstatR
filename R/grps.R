@@ -94,12 +94,12 @@ grps<-function(x=NULL,f=NULL,ic=FALSE,grf=TRUE,alfa=0.05,conf=0.95,decs=3,...)
 
   if(ic){
     if (k>1){
-      se <- t$dt[levels(dataf$f)]
+      se <- tapply(dataf$x, dataf$f, sd, na.rm = TRUE)
       ic_inf=vector( length=length(se))
       ic_sup=vector( length=length(se))
       for(i in 1:k) {
         if(haymiss) gsize<-t$n_valido[i] else gsize<-t$n[i]
-        interv<-icm(n=as.numeric(gsize), m=as.numeric(t$m[i]),s=as.numeric(t$dt[i]),decs=decs,conf=conf, eco=FALSE)
+        interv<-icm(n=as.numeric(gsize), m=as.numeric(t$m[i]),s=as.numeric(se[i]),decs=decs,conf=conf, eco=FALSE)
         ic_inf[i]=round(interv[[1]],decs)
         ic_sup[i]=round(interv[[2]],decs)
 
