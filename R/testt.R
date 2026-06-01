@@ -25,51 +25,27 @@
 #' @importFrom stats cor sd var shapiro.test na.omit
 #' @export testt
 #' @examples
+#' @examples
+#' \donttest{
 #' # [A] Test con una muestra
-#' # [A.1] Con los datos individuales
 #' datos<-c(76,54,12,47,13,15,25,14,19,32,7)
 #' testt(m=datos, m0=25)
 #' testt(m=datos, m0=29,delta=3)
 #' testt(m=datos, m0=29,delta=3,vac=FALSE)
-#'
 #' # [A.2] Con informacion muestral sintetizada
 #' testt(m=37, s=5, n=158, m0=25)
 #' testt(m=37, s=7, n=158, m0=36,delta=3,potencia=0.95)
-#'
 #' # [B] Test con dos muestras independientes
-#' # [B.1] 2 muestras independientes con datos individuales
 #' sexo<-c( 1,2,2,2,1,1,2,2,1,1)
 #' peso<-c(54,64,76,84,45,74,76,95,63,62)
 #' testt(m=peso, grupos=sexo)
 #' fuma<-c("si","no","si","no","no","no","no","si","no","si")
 #' testt(m=peso, grupos=fuma,delta=5,potencia=0.95)
-#'
-#' grupo1<-c(12.5,7.4,8.3,4.6,5.1,7.8,9.2,4.6)
-#' grupo2<-c(8.7,14.8,13.5,16.1,7.1,19.2,21.5,22.4,18.7)
-#' testt(m1=grupo1, m2=grupo2)
-#'
-#' # [B.2] 2 muestras independientes con datos sintetizados
-#' testt(n1=123, m1=25, s1=6, n2=87, m2=20, s2=8)
-#'
 #' # [C] Test con dos muestras relacionadas
-#' # [C.1] 2 muestras apareadas con datos individuales
 #' pre_tratamiento<-c(3.2,4.5,1.7,2.6,1.7,4.3,2.1,3.8,4.9,5.1,NA)
 #' post_tratamiento<-c(3.8,4.1,2.2,3.1,2.7,9.3,7.9,3.1,5.7,5.3,NA)
 #' testt(m1=pre_tratamiento, m2=post_tratamiento, par=TRUE)
-#' testt(m1=pre_tratamiento, m2=post_tratamiento, par=TRUE, delta=2,m0=0.1)
-#' testt(m1=pre_tratamiento, m2=post_tratamiento, par=TRUE, delta=2,m0=0.1, vac=FALSE)
-#'
-#' # [C.2] 2 muestras apareadas con datos sintetizados (es el test con una sola
-#' #       muestra, habitualmente m0=0)
-#' testt(m=0.65, s=1.2, n=17)
-#'
-#' # [D] Estudio de la fiabilidad por H0 y estimacion del tamano de muestra (basta
-#' #    anadir el parametro delta a cualquiera de las opciones anteriores)
-#' testt(m=peso, grupos=fuma, delta=5, potencia=0.95)
-#' testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, potencia=0.85)
-#' testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, beta=0.15)
-#'
-
+#' }
 ###################
 #t-test
 ###################
