@@ -1,4 +1,11 @@
-# BioEstatR
+# BioEstatR (ver 1.0.1 - 05/2026)
+
+## Biostatistics Routines in R
+
+**Authors**: Pedro Femia, Miguel Angel Luque Fernandez
+**Biostatistics Faculty of Medicine - University of Granada**
+
+* Contacto: pfemia@ugr.es, mluquefe@ugr.es
 
 **BioEstatR**: Bioestadística con R ha sido desarrollado como soporte docente para el libro [Matemática Estadística Médica con R](https://migariane.github.io/MatematicaEstadisticaMedicinaR/)
 que es un texto de referencia para la estadística médica con R que cubre los conceptos básicos con rigor matemático y un enfoque computacional aplicado a la práctica de la medicina y las ciencias de la salud.
