@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(BioStatR)
+library(BioEstatR)
 
-test_check("BioStatR")
+test_check("BioEstatR")
