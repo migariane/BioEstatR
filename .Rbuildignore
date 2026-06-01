@@ -6,3 +6,5 @@
 ^.github$
 ^CONTRIBUTING\.md$
 ^\.github$
+^doc$
+^Meta$
