@@ -20,6 +20,7 @@
 #' @return Informe analisis de tablas 2x2 mediante tests Chi2 y exacto de Fisher con medidas de asociacion
 #' @importFrom stats fisher.test pchisq
 #' @export tabla2x2
+#' @references Agresti, A. (2013). Categorical Data Analysis.
 #' @examples
 #'# [1] Formato esperado de la tabla (presencia de enfermedad
 #'# (variable respuesta) vs exposicion a factor de riesgo (var. factor))

@@ -9,6 +9,8 @@
 #' @param bins entero: numero de intervalos para el histograma
 #' @param hnmin entero: tamano minimo/maximo de muestra para representar el histograma/diagrama de puntos
 #' @return Representacion grafica
+#' @seealso freq, grps
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @importFrom stats na.exclude
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 geom_pointrange aes facet_wrap geom_bar geom_boxplot geom_col geom_dotplot

@@ -8,6 +8,8 @@
 #' @param grf valor logico: si TRUE/FALSE se proporciona/omite salida grafica
 #' @param ... parametros de configuracion de la funcion grpsggp
 #' @return si x es un vector, se devuelve un data.frame con la tabla de frecuencias. Si x es un data.frame, se muestra la tabla de frecuencias de cada columna, pero la funcion no devuelve ningun objeto
+#' @seealso grps, grpsggp
+#' @references Agresti, A. (2013). Categorical Data Analysis.
 #' @export freq
 #' @examples
 #' dat<-c(12,15,13,12,11,14,15,15,15,12,11,13,14,15,NA)

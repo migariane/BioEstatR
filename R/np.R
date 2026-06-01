@@ -10,6 +10,7 @@
 #' @param decs valor entero: precision decimal para la salida de resultados. Por defecto = 4.
 #' @param eco valor logico: si eco=TRUE devuelve informe, de lo contrario, los valores estimados de n con y sin informacion
 #' @return Informe con el tamano de muestra necesario para estimar un proporcion binomial con la precision deseada
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export np
 #' @examples
 #' np(x=25, n=210, d=.05,decs=3)

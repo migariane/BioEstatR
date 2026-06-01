@@ -21,6 +21,7 @@
 #' @param decs valor entero: precision decimal para la salida de resultados. Por defecto = 4.
 #' @param grf valor logico: Si TRUE/FALSE se genera/omite la salida grafica
 #' @return Informe con medidas descriptivas, test de normalidad (si se aportan datos individuales), test del cociente de varianzas de Fisher (si procede), t-test con estimacion del tamano del efecto bruto, estudio de la potencia y estimacion de tamano muestral.
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @importFrom stats cor sd var shapiro.test na.omit
 #' @export testt
 #' @examples

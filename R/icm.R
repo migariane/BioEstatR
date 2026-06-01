@@ -11,6 +11,7 @@
 #' @param d valor real < 1: precision deseada para el intervalo de confianza. Si d>0 se invoca a la funcion nm() para estimar el tamano de muestra
 #' @param eco valor logico: si eco=TRUE la funcion genera un informe (no devuelve valores), si eco=FALSE devuelve los limites del IC y su precision
 #' @return Informe (si eco=T) con el intervalo de confianza para estimar la media poblacional de una variable aleatoria normal. Limites inferior y superior del IC y su precision.
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export icm
 #' @examples
 #' icm(x=c(25.4, 14.6, 23.1, 26.0, 14.4, 24.3, 36.1, 21.0, NA, 41.9))

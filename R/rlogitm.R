@@ -13,6 +13,7 @@
 #' @importFrom pROC roc auc coords
 #' @importFrom ggplot2 labs theme_minimal scale_x_continuous scale_y_continuous coord_cartesian theme_classic geom_abline scale_x_reverse
 #' @export rlogitm
+#' @references Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression.
 #' @examples
 #' # Ejemplo 1 - Uso basico
 #' data(osteo)

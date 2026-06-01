@@ -17,6 +17,7 @@
 #' @param decs entero: Numero de decimales en las salidas
 #' @param lbls vector de los nombres de variable pre- y post- (llamada desde testp)
 #' @return Informe analisis de dos proporciones apareadas mediante test de McNemar, intervalo de conf. para la diferencia y estimacion de tamano muestral
+#' @references McNemar, Q. (1947). Note on the sampling error of the difference between correlated proportions or percentages. Psychometrika.
 #' @importFrom stats  na.omit
 #' @export testmcnemar
 #' @examples

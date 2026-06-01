@@ -10,6 +10,7 @@
 #' @param eco valor logico: si eco=TRUE devuelve informe, de lo contrario valores estimados de n, sin y con cpc
 #' @return Estimacion del tamano de muestra sin y con correccion por continuidad (cpc)
 #' @export nl
+#' @references Garwood, F. (1936). Fiducial Limits for the Poisson Distribution. Biometrika.
 #' @examples
 #' # Introduciendo datos observados
 #' # una observacion (muestra de tamano 1). Precision deseada de 1 unidad

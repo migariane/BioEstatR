@@ -8,7 +8,9 @@
 #' @param decs valor entero: precision decimal para la salida de resultados. Por defecto = 4.
 #' @param eco valor logico: si eco=TRUE la funcion genera un informe (no devuelve valores), si eco=FALSE devuelve el IC exacto y el basado en la aprox normal con su precision respectiva
 #' @return Informe con intervalos de confianza exacto y aproximado a la normal (con cpc) (eco=TRUE) o los limites y precision correspondientes a cada intervalo
+#' @seealso nl
 #' @export icl
+#' @references Garwood, F. (1936). Fiducial Limits for the Poisson Distribution. Biometrika.
 #' @examples
 #' # Introduciendo datos observados
 #' # Una sola observacion (muestra de tamano n=1)

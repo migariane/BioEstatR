@@ -10,6 +10,8 @@
 #' @param decs entero: precision decimal de la salida
 #' @param ... parametros de configuracion de la funcion grpsggp
 #' @return Tabla con medidas descriptivas (n, media, y dt, y opcionalmente el IC) por niveles del factor f (si no hay factor se analiza la variable x)
+#' @seealso freq, grpsggp
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export grps
 #' @examples
 #' nivel<-c(1.1,2.1,2.2,3.2,0.1,.2,1.0,0.4,0.7,1.3,1.5,3.1,2.4,3.6,1.1,2.4,

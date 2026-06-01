@@ -9,6 +9,7 @@
 #' @param decs valor entero: precision decimal para la salida de resultados. Por defecto = 4.
 #' @param tabla valor logico: si tabla=TRUE el informe tiene forma de tabla. En cualquier caso devuelve los limites del IC y su precision
 #' @return Informe con los intervalos de confianza de Wilson, Wald (ambos con cpc) y Wald ajustado. Limites de cada intervalo y su precision en forma de tabla.
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export icp
 #' @examples
 #' # Introduciendo frecuencias

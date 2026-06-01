@@ -13,6 +13,7 @@
 #' @importFrom graphics hist lines
 #' @importFrom stats density dnorm qnorm qqline qqnorm qt quantile  pf pnorm pt qchisq qf qnorm shapiro.test
 #' @return Histograma con densidad normal superpuesta, diagrama probabilistico normal, test de Shapiro-Wilk
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export testnormal
 #' @examples
 #' x=rnorm(500,10,2)

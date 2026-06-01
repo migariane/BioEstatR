@@ -80,6 +80,7 @@ rl<-function(f,data=NULL){
 #' @importFrom ggplot2 ggplot aes geom_dotplot geom_histogram geom_point geom_smooth geom_ribbon
 #' @importFrom ggplot2 ggplot geom_linerange labs
 #' @export rls
+#' @references Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). Introduction to Linear Regression Analysis.
 #' @examples
 #' pre  <-c(200.1, 190.9, 192.7, 213, 241.4, 196.9, 172.2, 185.5, 205.2, 193.7)
 #' post <-c(392.9, 393.2, 345.1, 393, 434, 427.9, 422, 383.9, 392.3, 352.2)

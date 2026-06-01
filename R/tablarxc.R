@@ -10,6 +10,7 @@
 #' @param o vector de enteros: frecuencias de la tabla de contingencia. Requiere especificar el numero de filas con fnum
 #' @param fnum valor entero: numero de filas cuando se indican las frecuencias a traves del parametro o
 #' @return Informe test para analisis de tablas RxC mediante test Chi2
+#' @references Agresti, A. (2013). Categorical Data Analysis.
 #' @export tablarxc
 #' @examples
 #'# [1] Introduccion de datos como variables

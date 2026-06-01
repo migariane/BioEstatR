@@ -5,6 +5,7 @@
 #' @param s1 valor real: desviacion tipica de la muestra 1
 #' @param s2 valor real: desviacion tipica de la muestra 2
 #' @return Fexp, gl1, gl2 y valor p del test de Fisher para el cociente de varianzas
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export testf
 #' @examples
 #' testf(s1=15, n1=120, s2=12, n2=65)

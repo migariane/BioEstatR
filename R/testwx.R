@@ -11,6 +11,7 @@
 #' @param decs valor entero: precision decimal para la salida de resultados. Por defecto = 4.
 #' @param mess valor entero: -1 desactiva mensajes de aviso (ver documentacion de Rs para options(warn = valor))
 #' @return Informe con estadisticos de orden, rangos, resultado del test y estimacion del tamano del efecto
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @importFrom methods show
 #' @importFrom stats wilcox.test median IQR
 #' @importFrom ggplot2 aes ggplot geom_boxplot geom_dotplot stat_summary labs

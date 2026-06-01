@@ -22,6 +22,7 @@
 #' @param decs entero: Numero de decimales en las salidas
 #' @importFrom stats  na.omit
 #' @return Informe con test e IC, estudio de la fiabilidad de la no significacion y tamano de muestra
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export testp
 #' @examples
 #'

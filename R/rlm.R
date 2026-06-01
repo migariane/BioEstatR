@@ -13,7 +13,7 @@
 #' @importFrom ggplot2 ggplot aes geom_point geom_hline geom_smooth labs geom_histogram geom_dotplot
 #' @importFrom graphics par plot
 #' @export rlm
-
+#' @references Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). Introduction to Linear Regression Analysis.
 #' @examples
 #' # Example 1 - Basic usage
 #' data(osteo)

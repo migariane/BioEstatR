@@ -11,6 +11,7 @@
 #' @param vac valor logico: TRUE=se trata de una variable aleatoria continua; FALSE= la variable es discreta y se aplica cpc. Por defecto = TRUE.
 #' @param eco valor logico: si eco=TRUE la funcion genera un informe (no devuelve valores), si eco=FALSE devuelve el tama?o de muestra estimado
 #' @return Informe (si eco=T) con el tamano de muestra estimado para obtener un intervalo de confianza para estimar una media con la precision deseada
+#' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 #' @export nm
 #' @examples
 #' nm(x=c(25.4, 14.6, 23.1, 26.0, 14.4, 24.3, 36.1, 21.0, NA, 41.9,NA), d=1.5)
