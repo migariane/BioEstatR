@@ -94,7 +94,6 @@ grps<-function(x=NULL,f=NULL,ic=FALSE,grf=TRUE,alfa=0.05,conf=0.95,decs=3,...)
 
   if(ic){
     if (k>1){
-    if (k>1){
       se <- tapply(dataf$x, dataf$f, sd, na.rm = TRUE)
       ic_inf <- vector(length = length(se))
       ic_sup <- vector(length = length(se))
