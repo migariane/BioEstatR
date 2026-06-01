@@ -158,3 +158,4 @@ grps<-function(x=NULL,f=NULL,ic=FALSE,grf=TRUE,alfa=0.05,conf=0.95,decs=3,...)
   }
   invisible(tt)
 }
+}
