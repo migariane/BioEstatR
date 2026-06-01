@@ -50,9 +50,9 @@ rlm(imc ~ peso + talla, data = osteo, pred = new_data)
 
 # Example 3 - English output
 data(osteo)
-options(BioStatR.lang = "en")
+options(BioEstatR.lang = "en")
 rlm(imc ~ peso + talla, data = osteo)
-options(BioStatR.lang = "es")
+options(BioEstatR.lang = "es")
 }
 \references{
 Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). Introduction to Linear Regression Analysis.

@@ -1,4 +1,4 @@
-Package: BioStatR
+Package: BioEstatR
 Title: Biostatistics Routines in R
 Description: Library of functions that automate some analytical procedures proper to Biostatistics.
 Version: 1.0.1
@@ -22,7 +22,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
-URL: https://migariane.github.io/BioStatR, https://migariane.github.io/BioStatR/
+URL: https://migariane.github.io/BioEstatR, https://migariane.github.io/BioEstatR/
 Suggests: 
     knitr,
     rmarkdown,

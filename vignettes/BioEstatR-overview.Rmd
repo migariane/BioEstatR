@@ -1,10 +1,10 @@
 ---
-title: "Introducción a BioStatR"
+title: "Introducción a BioEstatR"
 author: "Pedro Femia Marzo, Miguel Angel Luque Fernandez"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introducción a BioStatR}
+  %\VignetteIndexEntry{Introducción a BioEstatR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(BioStatR)
+library(BioEstatR)
 data(osteo)
 ```
 

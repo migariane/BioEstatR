@@ -13,5 +13,5 @@ get_msg(key)
 Message string
 }
 \description{
-Returns a message in the language specified by option 'BioStatR.lang' (default 'es').
+Returns a message in the language specified by option 'BioEstatR.lang' (default 'es').
 }

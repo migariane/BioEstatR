@@ -1,9 +1,9 @@
 #' @title Get multilingual message
-#' @description Returns a message in the language specified by option 'BioStatR.lang' (default 'es').
+#' @description Returns a message in the language specified by option 'BioEstatR.lang' (default 'es').
 #' @param key Message key
 #' @return Message string
 get_msg <- function(key) {
-  lang <- getOption("BioStatR.lang", default = "es")
+  lang <- getOption("BioEstatR.lang", default = "es")
   
   messages <- list(
     es = list(

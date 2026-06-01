@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
 
 
 ## ----setup--------------------------------------------------------------------
-library(BioStatR)
+library(BioEstatR)
 data(osteo)
 
 

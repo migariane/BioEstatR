@@ -26,9 +26,9 @@
 #' 
 #' # Example 3 - English output
 #' data(osteo)
-#' options(BioStatR.lang = "en")
+#' options(BioEstatR.lang = "en")
 #' rlm(imc ~ peso + talla, data = osteo)
-#' options(BioStatR.lang = "es")
+#' options(BioEstatR.lang = "es")
 
 rlm <- function(f, data = NULL, pred = NULL, grf = TRUE, dfout = FALSE, alfa = 0.05, conf = 1 - alfa, decs = 3) {
   

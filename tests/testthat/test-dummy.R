@@ -1,5 +1,5 @@
 library(testthat)
-library(BioStatR)
+library(BioEstatR)
 
 test_that("dummy test passes", {
   expect_true(TRUE)
