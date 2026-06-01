@@ -25,6 +25,8 @@ data(osteo)
 
 Este paquete proporciona una colección de rutinas estadísticas automatizadas para el análisis descriptivo, y la estadística inferencial clásica, desarrolladas como soporte para el libro [Matemática Estadística Médica con R](https://github.com/migariane/MatematicaEstadisticaMedicinaR).
 
+Todas las funciones han sido actualizadas en la versión 1.0.1 con referencias científicas a la literatura estadística fundamental para apoyar su uso y metodología.
+
 ## Uso
 
 A continuación se muestran ejemplos básicos de uso de las funciones principales para la modelización lineal y logística.
