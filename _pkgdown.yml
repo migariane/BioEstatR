@@ -1,11 +1,4 @@
 url: https://migariane.github.io/BioStatR/
 template:
   bootstrap: 5
-navbar:
-  components:
-    articles:
-      text: "Tutoriales"
-      menu:
-      - text: "Introducción a BioStatR"
-        href: articles/BioStatR-overview.html
 
