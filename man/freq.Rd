@@ -49,3 +49,9 @@ freq(df,acum=FALSE,grf=TRUE,hnmin=60)
 
 
 }
+\references{
+Agresti, A. (2013). Categorical Data Analysis.
+}
+\seealso{
+grps, grpsggp
+}

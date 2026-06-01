@@ -45,3 +45,6 @@ data(osteo)
 nuevos_datos <- data.frame(imc = c(22, 25))
 rlogits(osteo_cue ~ imc, data = osteo, pred = nuevos_datos)
 }
+\references{
+Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression.
+}

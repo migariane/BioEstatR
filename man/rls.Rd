@@ -55,3 +55,6 @@ rls(post~pre, data=datos,pred=c(197,205))
 tabla<-rls(post~pre, data=datos,dfout=TRUE)
 head(tabla)
 }
+\references{
+Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). Introduction to Linear Regression Analysis.
+}

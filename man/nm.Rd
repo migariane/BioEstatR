@@ -51,3 +51,6 @@ nm(d=1.0, n=100, m=25.3, s=4.1, conf=.99)
 nm(d=1.0, n=100, m=25.3, s=4.1, alfa=.01)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

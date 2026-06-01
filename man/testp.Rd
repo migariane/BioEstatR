@@ -110,3 +110,6 @@ fuma2<-c("N","N","S","N","N","S","S","N","S","N","S","N","S","N","N","N","N",
 testp(x1=fuma1,x2=fuma2,par=TRUE)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

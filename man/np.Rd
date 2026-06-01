@@ -48,3 +48,6 @@ np(x=25, n=210, d=.05, conf=.90, decs=5)
 np(x=25, n=210, d=.05, conf=.90, decs=5, eco=FALSE)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

@@ -43,3 +43,9 @@ IC
 icl(x=25, n=210, d=1)
 
 }
+\references{
+Garwood, F. (1936). Fiducial Limits for the Poisson Distribution. Biometrika.
+}
+\seealso{
+nl
+}

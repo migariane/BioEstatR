@@ -55,3 +55,6 @@ icm(n=100, m=25.3, s=4.1, alfa=.01, eco=FALSE)->IC
 IC
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

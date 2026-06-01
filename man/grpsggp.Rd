@@ -35,3 +35,13 @@ Representacion grafica
 \description{
 Obtencion de los diagramas de distribucion segmentados, o no, por factor de agrupacion
 }
+\examples{
+data(osteo)
+grpsggp(x = osteo$imc, f = osteo$osteo_cue, ggid = 3)
+}
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}
+\seealso{
+freq, grps
+}

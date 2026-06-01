@@ -65,3 +65,6 @@ tablarxc(o=obs, fnum=2)
 
 
 }
+\references{
+Agresti, A. (2013). Categorical Data Analysis.
+}

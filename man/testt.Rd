@@ -120,3 +120,6 @@ testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, potencia=0.85)
 testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, beta=0.15)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

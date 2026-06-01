@@ -95,3 +95,6 @@ v2<-c(1,1,1,2,1,1,1,1,2,1,1,1,1,1,2,1,2,2,1,2,2,1,2,2,1,2,2,1,2,2,1,2,1,2,2,2)
 tabla2x2(fvar=v1,cvar=v2, estudio="R", tablas="F")
 
 }
+\references{
+Agresti, A. (2013). Categorical Data Analysis.
+}

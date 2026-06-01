@@ -2,7 +2,7 @@
 % Please edit documentation in R/rlm.R
 \name{rlm}
 \alias{rlm}
-\title{Multiple Linear Regression}
+\title{Regresion lineal multiple}
 \usage{
 rlm(
   f,
@@ -16,7 +16,7 @@ rlm(
 )
 }
 \arguments{
-\item{f}{formula: model specification (e.g., y ~ x1 + x2)}
+\item{f}{formula: especificacion del modelo (ej. y ~ x1 + x2)}
 
 \item{data}{data.frame: data table}
 
@@ -36,7 +36,7 @@ rlm(
 Report with descriptive measures, parameter estimation for multiple linear regression, residual description, and diagnostic plots
 }
 \description{
-Adjusts a multiple linear regression model according to the specification y ~ x1 + x2 + ...
+Ajusta el modelo de regresion lineal multiple de acuerdo a la especificacion y ~ x1 + x2 + ...
 }
 \examples{
 # Example 1 - Basic usage
@@ -53,4 +53,7 @@ data(osteo)
 options(BioStatR.lang = "en")
 rlm(imc ~ peso + talla, data = osteo)
 options(BioStatR.lang = "es")
+}
+\references{
+Montgomery, D. C., Peck, E. A., & Vining, G. G. (2012). Introduction to Linear Regression Analysis.
 }

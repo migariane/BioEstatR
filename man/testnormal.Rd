@@ -56,3 +56,6 @@ testnormal(x,sw=TRUE)
 testnormal(x,sw=TRUE,qq=TRUE,ks=3)
 testnormal(x,sw=TRUE,qq=TRUE,ks=3)
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

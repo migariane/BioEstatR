@@ -24,3 +24,6 @@ Permite obtener el intervalo de confianza a partir de una variable o bien de las
 \examples{
 testf(s1=15, n1=120, s2=12, n2=65)
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

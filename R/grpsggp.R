@@ -11,6 +11,9 @@
 #' @return Representacion grafica
 #' @seealso freq, grps
 #' @references Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+#' @examples
+#' data(osteo)
+#' grpsggp(x = osteo$imc, f = osteo$osteo_cue, ggid = 3)
 #' @importFrom stats na.exclude
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 geom_pointrange aes facet_wrap geom_bar geom_boxplot geom_col geom_dotplot
@@ -39,7 +42,7 @@ grpsggp<-function(x=NULL,f=NULL,se=NULL,ggid=1,lbls=NULL,bins=NULL,hnmin=50)
   if(is.null(f)) {f<-rep(" ",nx)}
   dat<-na.exclude(data.frame(f,x))
   x<-dat$x
-  f<-dat$f
+  f<-as.factor(dat$f)
   if(is.numeric(x)){
     m <- tapply(x, f, mean, na.rm = TRUE)
     if(is.null(se)){
@@ -51,7 +54,7 @@ grpsggp<-function(x=NULL,f=NULL,se=NULL,ggid=1,lbls=NULL,bins=NULL,hnmin=50)
     n <- tapply(x, f, length)
     li<-m-s
     ls<-m+s
-    level<-levels(f)
+    level<-names(m)
     if (is.null(level)) level<-c(" ")
     ms<-data.frame(level,n,m,s,li,ls)
   } else {

@@ -51,3 +51,6 @@ nl(x=25, n=210, d=2)
 
 
 }
+\references{
+Garwood, F. (1936). Fiducial Limits for the Poisson Distribution. Biometrika.
+}

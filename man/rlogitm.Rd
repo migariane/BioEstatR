@@ -2,7 +2,7 @@
 % Please edit documentation in R/rlogitm.R
 \name{rlogitm}
 \alias{rlogitm}
-\title{Regresion logistica multivariable}
+\title{Regresion logistica multiple}
 \usage{
 rlogitm(
   f,
@@ -30,10 +30,10 @@ rlogitm(
 \item{decs}{valor entero: precision decimal para la salida de resultados. Por defecto = 3.}
 }
 \value{
-Informe con medidas de asociacion (OR), estimacion de los parametros de regr. logistica multivariable, bondad de ajuste (Hosmer-Lemeshow) y curva ROC.
+Informe con medidas de asociacion (OR), estimacion de los parametros de regr. logistica multiple, bondad de ajuste (Hosmer-Lemeshow) y curva ROC.
 }
 \description{
-Ajuste del modelo de regresion logistica multivariable de acuerdo a la especificacion y ~ x1 + x2 + ...
+Ajuste del modelo de regresion logistica multiple de acuerdo a la especificacion y ~ x1 + x2 + ...
 }
 \examples{
 # Ejemplo 1 - Uso basico
@@ -44,4 +44,7 @@ rlogitm(osteo_cue ~ imc + edad, data = osteo)
 data(osteo)
 nuevos_datos <- data.frame(imc = c(22, 25), edad = c(30, 50))
 rlogitm(osteo_cue ~ imc + edad, data = osteo, pred = nuevos_datos)
+}
+\references{
+Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression.
 }

@@ -88,3 +88,6 @@ testmcnemar(xpre,xpost)
 testmcnemar(xpre,xpost,delta=0.05, beta=0.15)
 
 }
+\references{
+McNemar, Q. (1947). Note on the sampling error of the difference between correlated proportions or percentages. Psychometrika.
+}

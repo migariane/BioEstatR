@@ -57,3 +57,6 @@ icp(x=sexo, level="M",tabla=TRUE)
 icp(x=sexo, level="M", d=0.1)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

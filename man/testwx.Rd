@@ -67,3 +67,6 @@ y2<-c(110,70,53,51,63,87,99)
 testwx(m1=y1,m2=y2)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}

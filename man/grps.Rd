@@ -50,3 +50,9 @@ grps(x=nivel, f=grupo, ic=TRUE)
 grps(x=nivel, hnmin=10)
 
 }
+\references{
+Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
+}
+\seealso{
+freq, grpsggp
+}
