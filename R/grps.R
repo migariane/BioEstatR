@@ -94,7 +94,7 @@ grps<-function(x=NULL,f=NULL,ic=FALSE,grf=TRUE,alfa=0.05,conf=0.95,decs=3,...)
 
   if(ic){
     if (k>1){
-      se<-vector(mode="numeric",length=length(m))
+      se<-t$dt
       ic_inf=vector( length=k)
       ic_sup=vector( length=k)
       for(i in 1:k) {
