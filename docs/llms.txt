@@ -1,0 +1,137 @@
+# BioEstatR (ver 1.0.1 - 05/2026)
+
+## Biostatistics Routines in R
+
+**Authors**: Pedro Femia, Miguel Angel Luque Fernandez **Biostatistics
+Faculty of Medicine - University of Granada**
+
+- Contacto: <pfemia@ugr.es>, <mluquefe@ugr.es>
+
+**BioEstatR**: Bioestadística con R ha sido desarrollado como soporte
+docente para el libro [Matemática Estadística Médica con
+R](https://migariane.github.io/MatematicaEstadisticaMedicinaR/) que es
+un texto de referencia para la estadística médica con R que cubre los
+conceptos básicos con rigor matemático y un enfoque computacional
+aplicado a la práctica de la medicina y las ciencias de la salud. Para
+mayor informacion sobre el libro, visite el sitio web del libro o
+consulte el repositorio de GitHub del libro. La función principal de
+este paquete es proporcionar rutinas de bioestadística que se utilizan
+en el libro, pero también se pueden usar de forma independiente para
+análisis estadísticos en medicina y ciencias de la salud. Para
+información sobre **BioEstatR** visite:
+<https://migariane.github.io/BioEstatR/>
+
+## Introducción y Tutorial
+
+Puede consultar la viñeta (tutorial) introductoria del paquete en:
+[Introducción a
+BioEstatR](https://migariane.github.io/BioEstatR/articles/BioEstatR-overview.html)  
+Puede instalar la versión de desarrollo de BioEstatR desde
+[GitHub](https://github.com/migariane/BioEstatR) con:
+
+``` r
+
+# install.packages("remotes")
+remotes::install_github("migariane/BioEstatR")
+```
+
+*Nota: Se recomienda este metodo ya que construye automáticamente el
+paquete para su sistema operativo específico (Windows, macOS o Linux).*
+
+## Cómo citar este paquete
+
+Para obtener la referencia bibliográfica del paquete en R, ejecute:
+
+``` r
+
+citation("BioEstatR")
+```
+
+Si necesita la referencia en formato BibTeX para su artículo académico,
+puede usar la siguiente estructura:
+
+### Cita del paquete
+
+``` bibtex
+@Manual{,
+  title = {BioEstatR: Rutinas de bioestadística},
+  author = {Pedro Jesús Femia Marzo & Miguel Ángel Luque Fernández},
+  year = {2026},
+  note = {R package version 1.0.1},
+  url = {https://github.com/migariane/BioEstatR},
+}
+```
+
+### Cita del libro de soporte
+
+Si utiliza este paquete en su investigación, le agradeceríamos que cite
+también el libro de texto de soporte:
+
+- **Referencia:** Miguel Ángel Luque Fernández. *Matemática Estadística
+  Médica con R*. 2026
+- **Enlace:** [Matemática Estadística Médica con
+  R](https://migariane.github.io/MatematicaEstadisticaMedicinaR/)
+
+# Package index
+
+## All functions
+
+- [`freq()`](https://migariane.github.io/BioEstatR/reference/freq.md) :
+  Obtencion de la tabla de frecuencias absolutas y relativas de las
+  categorias de una variable
+- [`get_msg()`](https://migariane.github.io/BioEstatR/reference/get_msg.md)
+  : Get multilingual message
+- [`grps()`](https://migariane.github.io/BioEstatR/reference/grps.md) :
+  Tabla de medias y desviaciones por niveles de un factor
+- [`grpsggp()`](https://migariane.github.io/BioEstatR/reference/grpsggp.md)
+  : Diagramas por grupos
+- [`icl()`](https://migariane.github.io/BioEstatR/reference/icl.md) :
+  Estimacion del parametro de la distribucion de Poisson
+- [`icm()`](https://migariane.github.io/BioEstatR/reference/icm.md) :
+  Estimacion de la media de una variable aleatoria con distribucion
+  normal
+- [`icp()`](https://migariane.github.io/BioEstatR/reference/icp.md) :
+  Estimacion de una proporcion binomial por los metodos: Wilson (con
+  cpc), Wald (con cpc) y Wald ajustado
+- [`nl()`](https://migariane.github.io/BioEstatR/reference/nl.md) :
+  Tamano de muestra para estimar el parametro de la distribucion de
+  Poisson
+- [`nm()`](https://migariane.github.io/BioEstatR/reference/nm.md) :
+  Tamano de muestra para estimar la media de una variable aleatoria con
+  distribucion normal con una precision determinada
+- [`np()`](https://migariane.github.io/BioEstatR/reference/np.md) :
+  Tamano de muestra para estimar una proporcion binomial
+- [`osteo`](https://migariane.github.io/BioEstatR/reference/osteo.md) :
+  Datos sobre pacientes diabeticos
+- [`rlm()`](https://migariane.github.io/BioEstatR/reference/rlm.md) :
+  Regresion lineal multiple
+- [`rlogitm()`](https://migariane.github.io/BioEstatR/reference/rlogitm.md)
+  : Regresion logistica multiple
+- [`rlogits()`](https://migariane.github.io/BioEstatR/reference/rlogits.md)
+  : Regresion logistica simple
+- [`rls()`](https://migariane.github.io/BioEstatR/reference/rls.md) :
+  Regresion lineal simple
+- [`tabla2x2()`](https://migariane.github.io/BioEstatR/reference/tabla2x2.md)
+  : Analisis de una tabla de contingencia 2x2
+- [`tablarxc()`](https://migariane.github.io/BioEstatR/reference/tablarxc.md)
+  : Analisis de una tabla de contingencia RxC
+- [`testf()`](https://migariane.github.io/BioEstatR/reference/testf.md)
+  : Test de Fisher (F-test) para comparar dos varianzas
+- [`testmcnemar()`](https://migariane.github.io/BioEstatR/reference/testmcnemar.md)
+  : test de homogeneidad de dos proporciones apareadas (McNemar)
+- [`testnormal()`](https://migariane.github.io/BioEstatR/reference/testnormal.md)
+  : Estudio de la normalidad de una variable
+- [`testp()`](https://migariane.github.io/BioEstatR/reference/testp.md)
+  : Test con proporciones
+- [`testt()`](https://migariane.github.io/BioEstatR/reference/testt.md)
+  : Test de student con una y dos muestras (independientes o apareadas)
+- [`testwx()`](https://migariane.github.io/BioEstatR/reference/testwx.md)
+  : Test no parametricos con dos muestras independientes
+  (Wilcoxon/Mann-Whitney) y apareadas (Wilcoxon)
+
+# Articles
+
+### All vignettes
+
+- [Introducción a
+  BioEstatR](https://migariane.github.io/BioEstatR/articles/BioEstatR-overview.md):
