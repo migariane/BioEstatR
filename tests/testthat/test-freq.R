@@ -1,4 +1,3 @@
-context("Test for freq function")
 
 test_that("freq works with basic vector", {
   dat <- c(12, 15, 13, 12, 11, 14, 15, 15, 15, 12, 11, 13, 14, 15, NA)
