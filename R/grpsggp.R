@@ -48,7 +48,10 @@ grpsggp<-function(x=NULL,f=NULL,se=NULL,ggid=1,lbls=NULL,bins=NULL,hnmin=50)
     if(is.null(se)){
       s <- tapply(x, f, sd,na.rm = TRUE)}
     else{
-      s <- rep(se, length(m))
+      # Si se es escalar, repetir hasta length(m); si ya tiene length(m), usarlo tal cual.
+      # `rep_len()` evita el bug de `rep(se, length(m))` que multiplicaba la longitud
+      # cuando `se` ya era un vector de tamano length(m).
+      s <- rep_len(se, length(m))
     }
     if(length(m)!=length(s)) stop("vectores de m() ",length(m)," y se() ",length(s)," de diferente dimensi\u00f3n")
     n <- tapply(x, f, length)
