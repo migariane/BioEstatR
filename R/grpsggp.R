@@ -40,9 +40,9 @@ grpsggp<-function(x=NULL,f=NULL,se=NULL,ggid=1,lbls=NULL,bins=NULL,hnmin=50)
 
   # prevencion de datos faltantes y tipo
   if(is.null(f)) {f<-rep(" ",nx)}
-  dat<-na.exclude(data.frame(f,x))
+  dat<-na.exclude(data.frame(f=droplevels(as.factor(f)),x))
   x<-dat$x
-  f<-as.factor(dat$f)
+  f<-droplevels(as.factor(dat$f))
   if(is.numeric(x)){
     m <- tapply(x, f, mean, na.rm = TRUE)
     if(is.null(se)){

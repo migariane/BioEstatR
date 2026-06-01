@@ -18,41 +18,20 @@ grps(
 \arguments{
 \item{x}{vector: variable cuantitativa a resumir}
 
-\item{f}{vector: factor cuyos niveles segmentan a la variable cuantitativa (si falta se da la descriptiva de x)}
+\item{f}{vector: factor cuyos niveles segmentan a la variable cuantitativa}
 
-\item{ic}{valor logico: si ic=TRUE, proporciona el intervalo de confianza para la media (sin correccion de tipo Bonferroni)}
+\item{ic}{valor logico: si ic=TRUE, proporciona el intervalo de confianza para la media}
 
 \item{grf}{valor logico: indica si se requiere salida grafica o no}
 
-\item{alfa}{valor real entre 0 y 1: nivel de error (alternativo a conf)}
+\item{alfa}{valor real entre 0 y 1: nivel de error}
 
-\item{conf}{valor real entre 0 y 1: nivel de confianza para la elaboracion de intervalos (alternativo a alfa)}
+\item{conf}{valor real entre 0 y 1: nivel de confianza}
 
-\item{decs}{entero: precision decimal de la salida}
+\item{decs}{entero: precision decimal}
 
 \item{...}{parametros de configuracion de la funcion grpsggp}
 }
-\value{
-Tabla con medidas descriptivas (n, media, y dt, y opcionalmente el IC) por niveles del factor f (si no hay factor se analiza la variable x)
-}
 \description{
-Obtencion de las medidas descriptivas, n, media, desviacion tipica para de una variable para cada nivel de un factor. (Texto intencionadamente sin tildes u otros caracteres especiales por la incompatibilidad de los mapas de caracteres)
-  Se pueden indicar como parametro adicional (...) hnmin, que indica el n minimo requerido para hacer el histograma
-}
-\examples{
-nivel<-c(1.1,2.1,2.2,3.2,0.1,.2,1.0,0.4,0.7,1.3,1.5,3.1,2.4,3.6,1.1,2.4,
-         3.2,2.6,1.5,6.1,2.1,1.9,1,2.1,1.3,4.1,1.2)
-grupo<-c("A","A","A","A","A","A","A","B","B","B","B","B","B","C","C","C",
-         "C","C","C","C","C","C","D","D","D","D","D")
-grps(x=nivel)
-grps(x=nivel, f=grupo)
-grps(x=nivel, f=grupo, ic=TRUE)
-grps(x=nivel, hnmin=10)
-
-}
-\references{
-Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
-}
-\seealso{
-freq, grpsggp
+Obtencion de las medidas descriptivas, n, media, desviacion tipica para de una variable para cada nivel de un factor.
 }
