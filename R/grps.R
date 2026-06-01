@@ -136,15 +136,15 @@ grps<-function(x=NULL,f=NULL,ic=FALSE,grf=TRUE,alfa=0.05,conf=0.95,decs=3,...)
   showtitle(stitle,lev=1)
 
   row.names(tt)<-paste(tab,row.names(tt),sep="")
-  if(k>1) cat(paste(tab,names[[2]],sep=""),"\n")
-  print(tt)
-  if(ic){
-    cat(paste(tab,"___________",sep=""),"\n")
-    cat(paste(tab,foot1,sep=""),"\n")
-    if(k>1) cat(paste(tab,foot2,sep=""),"\n")
-    cat("\n")
-  }
-
+  #diagramas
+  if(grf){
+    se_t<-sd(validx,na.rm=TRUE)
+    if(ic){
+      if(k>1) {grpsggp(x=dataf$x,f=dataf$f,  se=se,  ggid=c(9,7,5,2),   lbls=names,...)}
+      else    {grpsggp(x=dataf$x,f=NULL,  se=se_t,   ggid=c(1,5),       lbls=names,...) }
+    } else {
+      if(k>1) {grpsggp(x=dataf$x,f=dataf$f,  ggid=c(6,4,3,2),    lbls=names,...)}
+      else    {grpsggp(x=dataf$x,f=NULL,     ggid=c(1,3),        lbls=names,...)}
  #diagramas
   if(grf){
     se_t<-sd(validx,na.rm=TRUE)
@@ -158,6 +158,3 @@ grps<-function(x=NULL,f=NULL,ic=FALSE,grf=TRUE,alfa=0.05,conf=0.95,decs=3,...)
   }
   invisible(tt)
 }
-
-
-
