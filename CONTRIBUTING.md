@@ -1,6 +1,6 @@
-# Contribuyendo a BioStatR
+# Contribuyendo a BioEstatR
 
-¡Gracias por tu interés en contribuir a BioStatR!
+¡Gracias por tu interés en contribuir a BioEstatR!
 
 ## Cómo contribuir
 
