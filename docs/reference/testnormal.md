@@ -82,55 +82,55 @@ testnormal(x);
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,ks=3);
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,dens=FALSE)
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,mod=FALSE,dens=FALSE,ks=3)
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,obs=FALSE)
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,col="white")
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,sw=TRUE)
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,sw=TRUE,qq=TRUE,ks=3)
 
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 testnormal(x,sw=TRUE,qq=TRUE,ks=3)
 
 
 #> 
 #> # Test de normalidad de Shapiro-Wilk  
 #>  ------------------------------------- 
-#>    n = 500,  W = 0.998,  p = 0.805 
+#>    n = 500,  W = 0.998,  p = 0.827 
 ```

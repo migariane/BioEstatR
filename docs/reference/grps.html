@@ -113,53 +113,25 @@
 <span class="r-in"><span><span class="va">grupo</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>,</span></span>
 <span class="r-in"><span>         <span class="st">"C"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>,<span class="st">"C"</span>,<span class="st">"D"</span>,<span class="st">"D"</span>,<span class="st">"D"</span>,<span class="st">"D"</span>,<span class="st">"D"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">grps</span><span class="op">(</span>x<span class="op">=</span><span class="va">nivel</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Descriptiva de nivel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # --------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n media    dt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Total 27 1.981 1.322</span>
-<span class="r-plt img"><img src="grps-1.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="grps-2.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n media    dt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27 1.981 1.322</span>
 <span class="r-in"><span><span class="fu">grps</span><span class="op">(</span>x<span class="op">=</span><span class="va">nivel</span>, f<span class="op">=</span><span class="va">grupo</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Descriptiva de nivel por grupo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # ------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  grupo </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n media    dt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  A      7 1.414 1.136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  B      6 1.567 1.023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  C      9 2.722 1.488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  D      5 1.940 1.278</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Total 27 1.981 1.322</span>
-<span class="r-plt img"><img src="grps-3.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="grps-4.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="grps-5.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="grps-6.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n media    dt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A 7 1.414 1.136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B 6 1.567 1.023</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C 9 2.722 1.488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D 5 1.940 1.278</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in grpsggp(x = dataf$x, f = dataf$f, se = se_vec, ...):</span> vectores de m() 4 y se() 16 de diferente dimensión</span>
 <span class="r-in"><span><span class="fu">grps</span><span class="op">(</span>x<span class="op">=</span><span class="va">nivel</span>, f<span class="op">=</span><span class="va">grupo</span>, ic<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Descriptiva de nivel por grupo</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # ------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  grupo </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n media    dt ic_inf ic_sup</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  A      7 1.414 1.136  0.363  2.465</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  B      6 1.567 1.023  0.493  2.641</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  C      9 2.722 1.488  1.578  3.866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  D      5 1.940 1.278  0.353  3.527</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Total 27 1.981 1.322  1.458  2.504</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ___________ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  * ICs para las medias μ[i] y μ global al 95% de confianza </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    (sin corrección por inferencia múltiple)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in grpsggp(x = dataf$x, f = dataf$f, se = se, ggid = c(9, 7, 5,     2), lbls = names, ...):</span> vectores de m() 4 y se() 16 de diferente dimensión</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   n media    dt ic_inf ic_sup</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A 7 1.414 1.136  0.363  2.465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B 6 1.567 1.023  0.493  2.641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C 9 2.722 1.488  1.578  3.866</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> D 5 1.940 1.278  0.353  3.527</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in grpsggp(x = dataf$x, f = dataf$f, se = se_vec, ...):</span> vectores de m() 4 y se() 16 de diferente dimensión</span>
 <span class="r-in"><span><span class="fu">grps</span><span class="op">(</span>x<span class="op">=</span><span class="va">nivel</span>, hnmin<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Descriptiva de nivel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # --------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         n media    dt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Total 27 1.981 1.322</span>
-<span class="r-plt img"><img src="grps-7.png" alt="" width="700" height="433"></span>
-<span class="r-plt img"><img src="grps-8.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    n media    dt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 27 1.981 1.322</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

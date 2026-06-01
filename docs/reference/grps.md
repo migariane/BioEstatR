@@ -79,51 +79,23 @@ nivel<-c(1.1,2.1,2.2,3.2,0.1,.2,1.0,0.4,0.7,1.3,1.5,3.1,2.4,3.6,1.1,2.4,
 grupo<-c("A","A","A","A","A","A","A","B","B","B","B","B","B","C","C","C",
          "C","C","C","C","C","C","D","D","D","D","D")
 grps(x=nivel)
-#> 
-#> # Descriptiva de nivel
-#> # --------------------
-#>         n media    dt
-#>  Total 27 1.981 1.322
-
-
+#>    n media    dt
+#> 1 27 1.981 1.322
 grps(x=nivel, f=grupo)
-#> 
-#> # Descriptiva de nivel por grupo
-#> # ------------------------------
-#>  grupo 
-#>         n media    dt
-#>  A      7 1.414 1.136
-#>  B      6 1.567 1.023
-#>  C      9 2.722 1.488
-#>  D      5 1.940 1.278
-#>  Total 27 1.981 1.322
-
-
-
-
+#>   n media    dt
+#> A 7 1.414 1.136
+#> B 6 1.567 1.023
+#> C 9 2.722 1.488
+#> D 5 1.940 1.278
+#> Error in grpsggp(x = dataf$x, f = dataf$f, se = se_vec, ...): vectores de m() 4 y se() 16 de diferente dimensión
 grps(x=nivel, f=grupo, ic=TRUE)
-#> 
-#> 
-#> # Descriptiva de nivel por grupo
-#> # ------------------------------
-#>  grupo 
-#>         n media    dt ic_inf ic_sup
-#>  A      7 1.414 1.136  0.363  2.465
-#>  B      6 1.567 1.023  0.493  2.641
-#>  C      9 2.722 1.488  1.578  3.866
-#>  D      5 1.940 1.278  0.353  3.527
-#>  Total 27 1.981 1.322  1.458  2.504
-#>  ___________ 
-#>  * ICs para las medias μ[i] y μ global al 95% de confianza 
-#>    (sin corrección por inferencia múltiple)  
-#> 
-#> Error in grpsggp(x = dataf$x, f = dataf$f, se = se, ggid = c(9, 7, 5,     2), lbls = names, ...): vectores de m() 4 y se() 16 de diferente dimensión
+#>   n media    dt ic_inf ic_sup
+#> A 7 1.414 1.136  0.363  2.465
+#> B 6 1.567 1.023  0.493  2.641
+#> C 9 2.722 1.488  1.578  3.866
+#> D 5 1.940 1.278  0.353  3.527
+#> Error in grpsggp(x = dataf$x, f = dataf$f, se = se_vec, ...): vectores de m() 4 y se() 16 de diferente dimensión
 grps(x=nivel, hnmin=10)
-#> 
-#> # Descriptiva de nivel
-#> # --------------------
-#>         n media    dt
-#>  Total 27 1.981 1.322
-
-
+#>    n media    dt
+#> 1 27 1.981 1.322
 ```
