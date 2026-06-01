@@ -43,7 +43,7 @@ grpsggp<-function(x=NULL,f=NULL,se=NULL,ggid=1,lbls=NULL,bins=NULL,hnmin=50)
     if(is.null(se)){
       s <- tapply(x, f, sd,na.rm = TRUE)}
     else{
-      s=se
+      s <- rep(se, length(m))
     }
     if(length(m)!=length(s)) stop("vectores de m() ",length(m)," y se() ",length(s)," de diferente dimensi\u00f3n")
     n <- tapply(x, f, length)

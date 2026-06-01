@@ -34,7 +34,7 @@ Si necesita la referencia en formato BibTeX para su artículo académico, pued
   title = {BioStatR: Rutinas de bioestadística},
   author = {Pedro Jesús Femia Marzo & Miguel Ángel Luque Fernández},
   year = {2026},
-  note = {R package version 1.0.0},
+  note = {R package version 1.0.1},
   url = {https://github.com/migariane/BioStatR},
 }
 ```

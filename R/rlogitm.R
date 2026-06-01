@@ -1,5 +1,5 @@
-#' @title Regresion logistica multivariable
-#' @description Ajuste del modelo de regresion logistica multivariable de acuerdo a la especificacion y ~ x1 + x2 + ...
+#' @title Regresion logistica multiple
+#' @description Ajuste del modelo de regresion logistica multiple de acuerdo a la especificacion y ~ x1 + x2 + ...
 #' @param f formula: especificacion del modelo (ej. y ~ x1 + x2)
 #' @param data data.frame: tabla de datos
 #' @param pred data.frame: valores de los regresores para realizar pronosticos a partir del modelo
@@ -7,7 +7,7 @@
 #' @param alfa valor real < 1: error alfa (parametro alternativamente al nivel de confianza, en tanto por uno). Por defecto =.05.
 #' @param conf valor real < 1: nivel de confianza para la elaboracion del IC para la estimacion del efecto. Por defecto = 1-alfa.
 #' @param decs valor entero: precision decimal para la salida de resultados. Por defecto = 3.
-#' @return Informe con medidas de asociacion (OR), estimacion de los parametros de regr. logistica multivariable, bondad de ajuste (Hosmer-Lemeshow) y curva ROC.
+#' @return Informe con medidas de asociacion (OR), estimacion de los parametros de regr. logistica multiple, bondad de ajuste (Hosmer-Lemeshow) y curva ROC.
 #' @importFrom stats glm binomial confint predict formula model.frame na.exclude
 #' @importFrom ResourceSelection hoslem.test
 #' @importFrom pROC roc auc coords
@@ -119,7 +119,7 @@ rlogitm <- function(f, data = NULL, pred = NULL, grf = FALSE, alfa = 0.05, conf 
   # Salida por consola
   cat("
 ")
-  cat(get_msg("rlog_title"), " multivariable
+  cat(get_msg("rlog_title"), " multiple
 ")
   cat("----------------------------------------------------------------
 ")

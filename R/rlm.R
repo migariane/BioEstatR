@@ -1,6 +1,6 @@
-#' @title Multiple Linear Regression
-#' @description Adjusts a multiple linear regression model according to the specification y ~ x1 + x2 + ...
-#' @param f formula: model specification (e.g., y ~ x1 + x2)
+#' @title Regresion lineal multiple
+#' @description Ajusta el modelo de regresion lineal multiple de acuerdo a la especificacion y ~ x1 + x2 + ...
+#' @param f formula: especificacion del modelo (ej. y ~ x1 + x2)
 #' @param data data.frame: data table
 #' @param pred data.frame: regressors for model prediction
 #' @param grf logical: if grf=FALSE, graphical output is omitted

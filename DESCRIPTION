@@ -1,7 +1,7 @@
 Package: BioStatR
 Title: Biostatistics Routines in R
 Description: Library of functions that automate some analytical procedures proper to Biostatistics.
-Version: 1.0.0
+Version: 1.0.1
 Author: Pedro Femia Marzo [aut, cre]
 Maintainer: Pedro Femia Marzo <pfemia@ugr.es>
 Type: Package
