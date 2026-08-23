@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage("--------------------------------------------------------------")
-  packageStartupMessage("BioEstatR (ver 1.0.1 - 05/2026)")
+  packageStartupMessage("BioEstatR (ver 1.0.2 - 08/2026)")
   packageStartupMessage("  Biostatistics Routines in R ")
   packageStartupMessage("   Pedro Femia*, Miguel Angel Luque Fernandez")
   packageStartupMessage("  Biostatistics Faculty of Medicine - University of Granada")

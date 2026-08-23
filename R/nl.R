@@ -167,7 +167,15 @@ nl<-function(x=NA,n=0,d=0,lmax=0,conf=.95,alfa=.05, decs=3, eco=TRUE){
 
 
    else{
-     res<-as.list(c(n0ex,nex))
+     if(uciex>0){
+       res<-as.list(c(n0ex,nex))
+     } else {
+       if(lmax>0){
+         res<-as.list(c(n0max,nmax))
+       } else {
+         res<-NULL
+       }
+     }
      return(res)
    }
 

@@ -132,7 +132,7 @@ testp(x=30,n=70,p0=0.4)
 #>     Cola derecha π>0.400 1.098   0.355
 #>     Bilateral    π≠0.400     -   0.709
 #> 
-#>     95%-IC(π) = (0.315, 0.553) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.311, 0.553) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 28.0 (>5, el método es válido)
@@ -156,7 +156,7 @@ testp(x=30,n=70,p0=0.4,delta=0.05,potencia=0.9)
 #>     Cola derecha π>0.400 1.098   0.355
 #>     Bilateral    π≠0.400     -   0.709
 #> 
-#>     95%-IC(π) = (0.315, 0.553) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.311, 0.553) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 28.0 (>5, el método es válido)
@@ -194,7 +194,7 @@ testp(x=modos, p0=0.4,delta=0.05,potencia=0.9)
 #>     Cola derecha π>0.400 3.000   0.018
 #>     Bilateral    π≠0.400     -   0.035
 #> 
-#>     95%-IC(π) = (0.446, 0.916) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.419, 0.916) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 5.6 (>5, el método es válido)
@@ -228,7 +228,7 @@ testp(x=edad, x0=6,p0=0.5, delta=0.05,potencia=0.9)
 #>     Cola derecha π>0.500 3.500   0.006
 #>     Bilateral    π≠0.500     -   0.013
 #> 
-#>     95%-IC(π) = (0.612, 0.962) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.566, 0.962) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 8.5 (>5, el método es válido)
@@ -532,43 +532,43 @@ testp(x1=a,x2=b,x0=1)
 #>   Tabla de contingencia de Respuesta['1','0'] x Muestra['a','b'] 
 #>   Muestra Respuesta
 #>           1   0 Total
-#>   a      94 156   250
-#>   b     143 107   250
-#>   Total 237 263   500
+#>   a      96 154   250
+#>   b     137 113   250
+#>   Total 233 267   500
 #> 
 #> 
 #> # Estimación para Respuesta = '1' 
 #> 
 #>   Muestra = a
-#>   p₁ = 0.376  (q₁=1-p₁ = 0.624) 
-#>   95%-IC(π₁) = (0.318, 0.438)
+#>   p₁ = 0.384  (q₁=1-p₁ = 0.616) 
+#>   95%-IC(π₁) = (0.326, 0.446)
 #> 
 #>   Muestra = b
-#>   p₂ = 0.572  (q₂=1-p₂ = 0.428)
-#>   95%-IC(π₂) = (0.51, 0.632)
+#>   p₂ = 0.548  (q₂=1-p₂ = 0.452)
+#>   95%-IC(π₂) = (0.486, 0.608)
 #>   ____
 #>   * Intervalos obtenidos por el método de Wald ajustado (Agresti-Coull)
 #> 
 #> 
 #> # Test de homogeneidad para contrastar Ho:π₁=π₂ (π₂-π₁=0)
-#>   p|H₀ = 0.474  (q|H₀ = 0.526) 
+#>   p|H₀ = 0.466  (q|H₀ = 0.534) 
 #>   Método: 
 #>                                 Zexp    cpc   cdv  p.bilat b p.unilat u
 #>   Condicionado exacto (Fisher)     -      -     -  < 0.001 ✓  < 0.001 ✓
-#>   Condicionado adn (Yates)     4.299  0.004 E>8.8  < 0.001 ✓  < 0.001 ✓
-#>   Incondicionado adn           4.388 <0.001 E>7.7  < 0.001 ✓  < 0.001 ✓
+#>   Condicionado adn (Yates)     3.586  0.004 E>8.8  < 0.001 ✓  < 0.001 ✓
+#>   Incondicionado adn           3.675 <0.001 E>7.7  < 0.001 ✓  < 0.001 ✓
 #>   ____
 #>   *   Alternativas: bilateral H₁:π₁≠π₂; unilateral H₁:π₁<π₂
-#>   **  E=118.5 es la frecuencia mínima esperada bajo H₀
+#>   **  E=116.5 es la frecuencia mínima esperada bajo H₀
 #>   *** adn = aproximación a la distribución normal
 #> 
 #> 
-#> # Estimación de la diferencia p₂-p₁=0.196
+#> # Estimación de la diferencia p₂-p₁=0.164
 #>   Aproximación a la distribución normal (válido): 
-#>   95%-IC(π₂-π₁) = (-0.286, -0.106) 
+#>   95%-IC(π₂-π₁) = (-0.254, -0.074) 
 #> 
 #>   Método de Agresti-Caffo: 
-#>   95%-IC(π₂-π₁) = (-0.28, -0.109) 
+#>   95%-IC(π₂-π₁) = (-0.249, -0.077) 
 #> 
 #> 
 

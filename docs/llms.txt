@@ -25,7 +25,7 @@ información sobre **BioEstatR** visite:
 
 Puede consultar la viñeta (tutorial) introductoria del paquete en:
 [Introducción a
-BioEstatR](https://migariane.github.io/BioEstatR/articles/BioEstatR-overview.html)  
+BioEstatR](https://migariane.github.io/BioEstatR/articles/BioEstatR-overview.html)\
 Puede instalar la versión de desarrollo de BioEstatR desde
 [GitHub](https://github.com/migariane/BioEstatR) con:
 

@@ -25,7 +25,9 @@ data(osteo)
 
 Este paquete proporciona una colección de rutinas estadísticas automatizadas para el análisis descriptivo, y la estadística inferencial clásica, desarrolladas como soporte para el libro [Matemática Estadística Médica con R](https://github.com/migariane/MatematicaEstadisticaMedicinaR).
 
-Todas las funciones han sido actualizadas en la versión 1.0.1 con referencias científicas a la literatura estadística fundamental para apoyar su uso y metodología.
+Todas las funciones han sido actualizadas con referencias científicas a la literatura estadística fundamental para apoyar su uso y metodología.
+
+En la versión 1.0.2 se han corregido varios procedimientos inferenciales (el valor p del chi-cuadrado sin corrección por continuidad en `tabla2x2`, los intervalos exactos de Clopper-Pearson y Garwood-Poisson en sus casos frontera) y se ha mejorado la robustez de `rls`, `rlm` y `nl`. Véase `NEWS.md` para el detalle completo.
 
 ## Uso
 
@@ -58,6 +60,29 @@ rlogits(osteo_cue ~ imc, data = osteo)
 ```{r rlogitm, warning=F}
 # Ejemplo de regresión logística múltiple
 rlogitm(osteo_cue ~ imc + edad + tevol, data = osteo, grf=T)
+```
+
+## Intervalos de confianza y tablas de contingencia
+
+### IC para una proporción binomial
+
+```{r icp}
+# Comparación de métodos: exacto, Wilson, Wald y Agresti-Coull
+icp(x = 25, n = 210)
+```
+
+### IC para el parámetro de una Poisson
+
+```{r icl}
+# Método exacto (Garwood) y aproximación normal
+icl(x = 25, n = 210)
+```
+
+### Tablas de contingencia 2x2
+
+```{r tabla2x2}
+# Análisis completo de una tabla 2x2 en estudio transversal
+tabla2x2(o = c(20, 26, 60, 294), estudio = "T", tablas = c("F", "S"))
 ```
 
 Para más información, consulte la documentación individual de cada función mediante `?funcion`.

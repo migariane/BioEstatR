@@ -28,7 +28,7 @@ icpexact<-function(x=0,n=0, conf=.95,alfa=.05, decs=3,eco=FALSE)
   res[[2]]<-NA
 
   if((n>1 && n>x) && x>0){
-    f1<-qf(alfa/2, (2*n-x+1),2*x,lower.tail = F)
+    f1<-qf(alfa/2, (2*(n-x+1)),2*x,lower.tail = F)
     f2<-qf(alfa/2, 2*(x+1),2*(n-x),lower.tail = F)
 
     res[[1]]<-x/((x+(n-x+1)*f1))
@@ -43,11 +43,11 @@ icpexact<-function(x=0,n=0, conf=.95,alfa=.05, decs=3,eco=FALSE)
   if(x==0 || x==n){
     if (x==0){
       res[[1]]<-0
-      res[[2]]<-1-(alfa^(1/n))
+      res[[2]]<-1-((alfa/2)^(1/n))
 
     }
     else{
-      res[[1]]<-alfa^(1/n)
+      res[[1]]<-(alfa/2)^(1/n)
       res[[2]]<-1
     }
 
