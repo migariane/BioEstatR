@@ -1,11 +1,15 @@
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("--------------------------------------------------------------")
-  packageStartupMessage("BioEstatR (ver 1.0.2 - 08/2026)")
-  packageStartupMessage("  Biostatistics Routines in R ")
-  packageStartupMessage("   Pedro Femia*, Miguel Angel Luque Fernandez")
-  packageStartupMessage("  Biostatistics Faculty of Medicine - University of Granada")
-  packageStartupMessage("  ")
-  packageStartupMessage("  * Contacto: pfemia@ugr.es, mluquefe@ugr.es")
-  packageStartupMessage("--------------------------------------------------------------")
-
+  msg <- paste(
+    "--------------------------------------------------------------",
+    "BioEstatR",
+    "  Biostatistics Routines in R",
+    "",
+    "  Authors: Pedro Femia*, Miguel Angel Luque Fernandez",
+    "  Biostatistics Faculty of Medicine - University of Granada",
+    "",
+    "  * Contacto: pfemia@ugr.es, mluquefe@ugr.es",
+    "--------------------------------------------------------------",
+    sep = "\n"
+  )
+  packageStartupMessage(msg)
 }
