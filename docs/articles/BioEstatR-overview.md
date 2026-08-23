@@ -3,9 +3,10 @@
 ``` r
 library(BioEstatR)
 #> --------------------------------------------------------------
-#> BioEstatR (ver 1.0.2 - 08/2026)
+#> BioEstatR
 #>   Biostatistics Routines in R
-#>    Pedro Femia*, Miguel Angel Luque Fernandez
+#> 
+#>   Authors: Pedro Femia*, Miguel Angel Luque Fernandez
 #>   Biostatistics Faculty of Medicine - University of Granada
 #> 
 #>   * Contacto: pfemia@ugr.es, mluquefe@ugr.es
