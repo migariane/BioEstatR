@@ -3,7 +3,7 @@
 ``` r
 library(BioEstatR)
 #> --------------------------------------------------------------
-#> BioEstatR (ver 1.0.1 - 05/2026)
+#> BioEstatR (ver 1.0.2 - 08/2026)
 #>   Biostatistics Routines in R
 #>    Pedro Femia*, Miguel Angel Luque Fernandez
 #>   Biostatistics Faculty of Medicine - University of Granada
@@ -21,9 +21,14 @@ clásica, desarrolladas como soporte para el libro [Matemática
 Estadística Médica con
 R](https://github.com/migariane/MatematicaEstadisticaMedicinaR).
 
-Todas las funciones han sido actualizadas en la versión 1.0.1 con
-referencias científicas a la literatura estadística fundamental para
-apoyar su uso y metodología.
+Todas las funciones han sido actualizadas con referencias científicas a
+la literatura estadística fundamental para apoyar su uso y metodología.
+
+En la versión 1.0.2 se han corregido varios procedimientos inferenciales
+(el valor p del chi-cuadrado sin corrección por continuidad en
+`tabla2x2`, los intervalos exactos de Clopper-Pearson y Garwood-Poisson
+en sus casos frontera) y se ha mejorado la robustez de `rls`, `rlm` y
+`nl`. Véase `NEWS.md` para el detalle completo.
 
 ## Uso
 
@@ -86,10 +91,10 @@ rlm(imc ~ peso + talla, data = osteo, pred = new_data, grf=F)
 #> ----------------------------------------------------------------
 #> # Información muestral --- 
 #> 
-#>       Variable  n   Media     DT    Min     Max
-#> imc        imc 94  23.921  3.748  18.07  37.333
-#> peso      peso 94  63.839 11.804  44.60  99.000
-#> talla    talla 94 163.181  8.795 144.00 190.000
+#>   Variable  n   Media     DT    Min     Max
+#> 1      imc 94  23.921  3.748  18.07  37.333
+#> 2     peso 94  63.839 11.804  44.60  99.000
+#> 3    talla 94 163.181  8.795 144.00 190.000
 #> 
 #> # Modelo lineal --- 
 #> 
@@ -212,6 +217,127 @@ rlogitm(osteo_cue ~ imc + edad + tevol, data = osteo, grf=T)
 ```
 
 ![](BioEstatR-overview_files/figure-html/rlogitm-1.png)
+
+## Intervalos de confianza y tablas de contingencia
+
+### IC para una proporción binomial
+
+``` r
+# Comparación de métodos: exacto, Wilson, Wald y Agresti-Coull
+icp(x = 25, n = 210)
+#> 
+#> Intervalo de confianza para una proporción binomial 
+#> --------------------------------------------------- 
+#> 
+#> Información muestral: 
+#>   Tamaño de muestra: n = 210
+#>   Estimación puntual clásica: p=x/n = 0.119, q=(1-p)=0.881
+#>   Casos observados: x = 25
+#> 
+#> # Método exacto (Clooper-Pearson):
+#>   Pseudo-estimación puntual: p' = 0.1246, q'=(1-p')=0.8754
+#>   95%-IC(π): (0.0785, 0.1707) 
+#>   Semiamplitud: 0.0461
+#> 
+#> # Método de Wilson (con cpc):
+#>   Pseudo-estimación puntual: p' = 0.1263, q'=(1-p')=0.8737
+#>   95%-IC(π): (0.08, 0.1725) 
+#>   Semiamplitud: 0.0463
+#> 
+#> # Método de Wald (con cpc):
+#>   Estimación puntual (clásica): p=x/n = 0.119, q=(1-p)=0.881
+#>   95%-IC(π): (0.0729, 0.1652) 
+#>   Precisión: 0.0462
+#> 
+#> # Método de Wald ajustado (Agresti-Coull):
+#>   Estimación puntual: p=(x+2)/(n+4) = 0.1262, q=(1-p)=0.8738
+#>   95%-IC(π): (0.0817, 0.1707) 
+#>   Precisión: 0.0445
+```
+
+### IC para el parámetro de una Poisson
+
+``` r
+# Método exacto (Garwood) y aproximación normal
+icl(x = 25, n = 210)
+#> 
+#> Intervalo de confianza bilateral para el parámetro  λ de una VA con distribución de Poisson 
+#> ----------------------------------------------------------------------------------------------
+#> Información muestral: 
+#>   Se indica una única observación muestral 210  
+#>   Tamaño muestral: n =  210 
+#>   Media observada: m =  25 
+#> 
+#> Estimación: 
+#>   [1] Método exacto: 
+#>       95 %-IC(λ):  ( 24.3283 ,  25.6856 )
+#>       Semiamplitud del intervalo: 0.6787 
+#> 
+#>   [2] Aproximación a la normal (transformación de la raiz): 
+#>       Validez de la aproximación: Σx =  5250  ⩾ 15 (válida) 
+#>       95 %-IC(λ):  ( 24.3283 ,  25.6857 )
+#>       Precisión obtenida: 0.6787
+```
+
+### Tablas de contingencia 2x2
+
+``` r
+# Análisis completo de una tabla 2x2 en estudio transversal
+tabla2x2(o = c(20, 26, 60, 294), estudio = "T", tablas = c("F", "S"))
+#> 
+#> # Análisis de tablas 2x2
+#> # ----------------------
+#> 
+#> # Frecuencias observadas
+#>           C1   C2 Total
+#>   F1      20   26    46
+#>   F2      60  294   354
+#>   Total   80  320   400
+#> 
+#> 
+#> # Test Chi-cuadrado para un estudio transversal
+#> 
+#>   χ² = 17.903,   gl = 1,  p < 0.001, (cpc = 0.5) 
+#>   Validez: Frecuencia mínima esperada = 9.20  > 3.9  
+#> 
+#>   Test exacto de Fisher (bilateral): p < 0.001 
+#> 
+#>   --- Otros criterios χ²:  
+#>   χ² = 17.907,   gl = 1,  p < 0.001, (sin cpc) 
+#>   χ² = 16.287,   gl = 1,  p < 0.001, (cpc de Yates = 200.00) 
+#> 
+#> # Residuos estandarizados
+#>          C1     C2
+#>   F1  4.232 -4.232
+#>   F2 -4.232  4.232
+#> 
+#> # Porcentajes por filas
+#>            C1    C2 Total
+#>   F1    0.435 0.565 1.000
+#>   F2    0.169 0.831 1.000
+#>   Total 0.200 0.800 1.000
+#> 
+#> # Estimación de la prevalenciaπ en un estudio transversal
+#>   Método de Wald ajustado: 
+#>   p=0.119; 95%-IC(π)=(0.087, 0.150) 
+#> 
+#> # Medidas de asociación para un estudio transversal
+#>   [!] Las medidas de riesgo se calculan como riesgo de la categoría  
+#>       en la 1a columna (frente a la 2a) para la categoría en la 1a 
+#>       fila (frente a la 2a)
+#> 
+#>   Riesgo absoluto (diferencia de Berkson; método de Agresti-Caffo): 
+#>   d=0.169; 95%-IC(d)=(0.073, 0.271) 
+#> 
+#>   Riesgo relativo: 
+#>   Rr=3.077; 95%-IC(Rr)=(1.818, 5.169) 
+#> 
+#>   Riesgo atribuible:
+#>   Ra=0.293; 95%-IC(Ra)= (0.104, 0.443) 
+#> 
+#>   Razón del producto cruzado (odds ratio):
+#>   OR=3.769; 95%-IC(OR)= (1.987, 7.137)
+```
 
 Para más información, consulte la documentación individual de cada
 función mediante `?funcion`.

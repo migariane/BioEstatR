@@ -131,7 +131,7 @@ testp(x=30,n=70,p0=0.4)
 #>     Cola derecha π>0.400 1.098   0.355
 #>     Bilateral    π≠0.400     -   0.709
 #> 
-#>     95%-IC(π) = (0.315, 0.553) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.311, 0.553) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 28.0 (>5, el método es válido)
@@ -155,7 +155,7 @@ testp(x=30,n=70,p0=0.4,delta=0.05,potencia=0.9)
 #>     Cola derecha π>0.400 1.098   0.355
 #>     Bilateral    π≠0.400     -   0.709
 #> 
-#>     95%-IC(π) = (0.315, 0.553) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.311, 0.553) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 28.0 (>5, el método es válido)
@@ -193,7 +193,7 @@ testp(x=modos, p0=0.4,delta=0.05,potencia=0.9)
 #>     Cola derecha π>0.400 3.000   0.018
 #>     Bilateral    π≠0.400     -   0.035
 #> 
-#>     95%-IC(π) = (0.446, 0.916) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.419, 0.916) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 5.6 (>5, el método es válido)
@@ -227,7 +227,7 @@ testp(x=edad, x0=6,p0=0.5, delta=0.05,potencia=0.9)
 #>     Cola derecha π>0.500 3.500   0.006
 #>     Bilateral    π≠0.500     -   0.013
 #> 
-#>     95%-IC(π) = (0.612, 0.962) (método de Clooper-Pearson)
+#>     95%-IC(π) = (0.566, 0.962) (método de Clooper-Pearson)
 #> 
 #>   [2] Método aproximado a la distribución normal
 #>     Validez: min(nπ₀, n(1-π₀)) = 8.5 (>5, el método es válido)

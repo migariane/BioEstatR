@@ -76,10 +76,10 @@ rlm(imc ~ peso + talla, data = osteo)
 #> ----------------------------------------------------------------
 #> # Información muestral --- 
 #> 
-#>       Variable  n   Media     DT    Min     Max
-#> imc        imc 94  23.921  3.748  18.07  37.333
-#> peso      peso 94  63.839 11.804  44.60  99.000
-#> talla    talla 94 163.181  8.795 144.00 190.000
+#>   Variable  n   Media     DT    Min     Max
+#> 1      imc 94  23.921  3.748  18.07  37.333
+#> 2     peso 94  63.839 11.804  44.60  99.000
+#> 3    talla 94 163.181  8.795 144.00 190.000
 #> 
 #> # Modelo lineal --- 
 #> 
@@ -120,10 +120,10 @@ rlm(imc ~ peso + talla, data = osteo, pred = new_data)
 #> ----------------------------------------------------------------
 #> # Información muestral --- 
 #> 
-#>       Variable  n   Media     DT    Min     Max
-#> imc        imc 94  23.921  3.748  18.07  37.333
-#> peso      peso 94  63.839 11.804  44.60  99.000
-#> talla    talla 94 163.181  8.795 144.00 190.000
+#>   Variable  n   Media     DT    Min     Max
+#> 1      imc 94  23.921  3.748  18.07  37.333
+#> 2     peso 94  63.839 11.804  44.60  99.000
+#> 3    talla 94 163.181  8.795 144.00 190.000
 #> 
 #> # Modelo lineal --- 
 #> 
@@ -172,10 +172,10 @@ rlm(imc ~ peso + talla, data = osteo)
 #> ----------------------------------------------------------------
 #> # Sample information --- 
 #> 
-#>       Variable  n   Media     DT    Min     Max
-#> imc        imc 94  23.921  3.748  18.07  37.333
-#> peso      peso 94  63.839 11.804  44.60  99.000
-#> talla    talla 94 163.181  8.795 144.00 190.000
+#>   Variable  n   Media     DT    Min     Max
+#> 1      imc 94  23.921  3.748  18.07  37.333
+#> 2     peso 94  63.839 11.804  44.60  99.000
+#> 3    talla 94 163.181  8.795 144.00 190.000
 #> 
 #> # Linear model --- 
 #> 

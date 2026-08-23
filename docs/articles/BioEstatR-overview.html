@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BioEstatR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
                         <h4 data-toc-skip class="author">Pedro Femia
 Marzo, Miguel Angel Luque Fernandez</h4>
             
-            <h4 data-toc-skip class="date">2026-06-01</h4>
+            <h4 data-toc-skip class="date">2026-08-23</h4>
       
 
       <div class="d-none name"><code>BioEstatR-overview.Rmd</code></div>
@@ -70,7 +70,7 @@ Marzo, Miguel Angel Luque Fernandez</h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://migariane.github.io/BioEstatR">BioEstatR</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; BioEstatR (ver 1.0.1 - 05/2026)</span></span>
+<span><span class="co">#&gt; BioEstatR (ver 1.0.2 - 08/2026)</span></span>
 <span><span class="co">#&gt;   Biostatistics Routines in R</span></span>
 <span><span class="co">#&gt;    Pedro Femia*, Miguel Angel Luque Fernandez</span></span>
 <span><span class="co">#&gt;   Biostatistics Faculty of Medicine - University of Granada</span></span>
@@ -85,9 +85,16 @@ Marzo, Miguel Angel Luque Fernandez</h4>
 automatizadas para el análisis descriptivo, y la estadística inferencial
 clásica, desarrolladas como soporte para el libro <a href="https://github.com/migariane/MatematicaEstadisticaMedicinaR" class="external-link">Matemática
 Estadística Médica con R</a>.</p>
-<p>Todas las funciones han sido actualizadas en la versión 1.0.1 con
-referencias científicas a la literatura estadística fundamental para
-apoyar su uso y metodología.</p>
+<p>Todas las funciones han sido actualizadas con referencias científicas
+a la literatura estadística fundamental para apoyar su uso y
+metodología.</p>
+<p>En la versión 1.0.2 se han corregido varios procedimientos
+inferenciales (el valor p del chi-cuadrado sin corrección por
+continuidad en <code>tabla2x2</code>, los intervalos exactos de
+Clopper-Pearson y Garwood-Poisson en sus casos frontera) y se ha
+mejorado la robustez de <code>rls</code>, <code>rlm</code> y
+<code>nl</code>. Véase <code>NEWS.md</code> para el detalle
+completo.</p>
 </div>
 <div class="section level2">
 <h2 id="uso">Uso<a class="anchor" aria-label="anchor" href="#uso"></a>
@@ -151,10 +158,10 @@ principales para la modelización lineal y logística.</p>
 <span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; # Información muestral --- </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;       Variable  n   Media     DT    Min     Max</span></span>
-<span><span class="co">#&gt; imc        imc 94  23.921  3.748  18.07  37.333</span></span>
-<span><span class="co">#&gt; peso      peso 94  63.839 11.804  44.60  99.000</span></span>
-<span><span class="co">#&gt; talla    talla 94 163.181  8.795 144.00 190.000</span></span>
+<span><span class="co">#&gt;   Variable  n   Media     DT    Min     Max</span></span>
+<span><span class="co">#&gt; 1      imc 94  23.921  3.748  18.07  37.333</span></span>
+<span><span class="co">#&gt; 2     peso 94  63.839 11.804  44.60  99.000</span></span>
+<span><span class="co">#&gt; 3    talla 94 163.181  8.795 144.00 190.000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Modelo lineal --- </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -275,6 +282,129 @@ principales para la modelización lineal y logística.</p>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">x</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">x</span>, which will replace the existing scale.</span></span></code></pre></div>
 <p><img src="BioEstatR-overview_files/figure-html/rlogitm-1.png" class="r-plt" alt="" width="700"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="intervalos-de-confianza-y-tablas-de-contingencia">Intervalos de confianza y tablas de contingencia<a class="anchor" aria-label="anchor" href="#intervalos-de-confianza-y-tablas-de-contingencia"></a>
+</h2>
+<div class="section level3">
+<h3 id="ic-para-una-proporción-binomial">IC para una proporción binomial<a class="anchor" aria-label="anchor" href="#ic-para-una-proporci%C3%B3n-binomial"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Comparación de métodos: exacto, Wilson, Wald y Agresti-Coull</span></span>
+<span><span class="fu"><a href="../reference/icp.html">icp</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">25</span>, n <span class="op">=</span> <span class="fl">210</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Intervalo de confianza para una proporción binomial </span></span>
+<span><span class="co">#&gt; --------------------------------------------------- </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Información muestral: </span></span>
+<span><span class="co">#&gt;   Tamaño de muestra: n = 210</span></span>
+<span><span class="co">#&gt;   Estimación puntual clásica: p=x/n = 0.119, q=(1-p)=0.881</span></span>
+<span><span class="co">#&gt;   Casos observados: x = 25</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Método exacto (Clooper-Pearson):</span></span>
+<span><span class="co">#&gt;   Pseudo-estimación puntual: p' = 0.1246, q'=(1-p')=0.8754</span></span>
+<span><span class="co">#&gt;   95%-IC(π): (0.0785, 0.1707) </span></span>
+<span><span class="co">#&gt;   Semiamplitud: 0.0461</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Método de Wilson (con cpc):</span></span>
+<span><span class="co">#&gt;   Pseudo-estimación puntual: p' = 0.1263, q'=(1-p')=0.8737</span></span>
+<span><span class="co">#&gt;   95%-IC(π): (0.08, 0.1725) </span></span>
+<span><span class="co">#&gt;   Semiamplitud: 0.0463</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Método de Wald (con cpc):</span></span>
+<span><span class="co">#&gt;   Estimación puntual (clásica): p=x/n = 0.119, q=(1-p)=0.881</span></span>
+<span><span class="co">#&gt;   95%-IC(π): (0.0729, 0.1652) </span></span>
+<span><span class="co">#&gt;   Precisión: 0.0462</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Método de Wald ajustado (Agresti-Coull):</span></span>
+<span><span class="co">#&gt;   Estimación puntual: p=(x+2)/(n+4) = 0.1262, q=(1-p)=0.8738</span></span>
+<span><span class="co">#&gt;   95%-IC(π): (0.0817, 0.1707) </span></span>
+<span><span class="co">#&gt;   Precisión: 0.0445</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="ic-para-el-parámetro-de-una-poisson">IC para el parámetro de una Poisson<a class="anchor" aria-label="anchor" href="#ic-para-el-par%C3%A1metro-de-una-poisson"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Método exacto (Garwood) y aproximación normal</span></span>
+<span><span class="fu"><a href="../reference/icl.html">icl</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">25</span>, n <span class="op">=</span> <span class="fl">210</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Intervalo de confianza bilateral para el parámetro  λ de una VA con distribución de Poisson </span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Información muestral: </span></span>
+<span><span class="co">#&gt;   Se indica una única observación muestral 210  </span></span>
+<span><span class="co">#&gt;   Tamaño muestral: n =  210 </span></span>
+<span><span class="co">#&gt;   Media observada: m =  25 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimación: </span></span>
+<span><span class="co">#&gt;   [1] Método exacto: </span></span>
+<span><span class="co">#&gt;       95 %-IC(λ):  ( 24.3283 ,  25.6856 )</span></span>
+<span><span class="co">#&gt;       Semiamplitud del intervalo: 0.6787 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   [2] Aproximación a la normal (transformación de la raiz): </span></span>
+<span><span class="co">#&gt;       Validez de la aproximación: Σx =  5250  ⩾ 15 (válida) </span></span>
+<span><span class="co">#&gt;       95 %-IC(λ):  ( 24.3283 ,  25.6857 )</span></span>
+<span><span class="co">#&gt;       Precisión obtenida: 0.6787</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="tablas-de-contingencia-2x2">Tablas de contingencia 2x2<a class="anchor" aria-label="anchor" href="#tablas-de-contingencia-2x2"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Análisis completo de una tabla 2x2 en estudio transversal</span></span>
+<span><span class="fu"><a href="../reference/tabla2x2.html">tabla2x2</a></span><span class="op">(</span>o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">26</span>, <span class="fl">60</span>, <span class="fl">294</span><span class="op">)</span>, estudio <span class="op">=</span> <span class="st">"T"</span>, tablas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Análisis de tablas 2x2</span></span>
+<span><span class="co">#&gt; # ----------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Frecuencias observadas</span></span>
+<span><span class="co">#&gt;           C1   C2 Total</span></span>
+<span><span class="co">#&gt;   F1      20   26    46</span></span>
+<span><span class="co">#&gt;   F2      60  294   354</span></span>
+<span><span class="co">#&gt;   Total   80  320   400</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Test Chi-cuadrado para un estudio transversal</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   χ² = 17.903,   gl = 1,  p &lt; 0.001, (cpc = 0.5) </span></span>
+<span><span class="co">#&gt;   Validez: Frecuencia mínima esperada = 9.20  &gt; 3.9  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Test exacto de Fisher (bilateral): p &lt; 0.001 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   --- Otros criterios χ²:  </span></span>
+<span><span class="co">#&gt;   χ² = 17.907,   gl = 1,  p &lt; 0.001, (sin cpc) </span></span>
+<span><span class="co">#&gt;   χ² = 16.287,   gl = 1,  p &lt; 0.001, (cpc de Yates = 200.00) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Residuos estandarizados</span></span>
+<span><span class="co">#&gt;          C1     C2</span></span>
+<span><span class="co">#&gt;   F1  4.232 -4.232</span></span>
+<span><span class="co">#&gt;   F2 -4.232  4.232</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Porcentajes por filas</span></span>
+<span><span class="co">#&gt;            C1    C2 Total</span></span>
+<span><span class="co">#&gt;   F1    0.435 0.565 1.000</span></span>
+<span><span class="co">#&gt;   F2    0.169 0.831 1.000</span></span>
+<span><span class="co">#&gt;   Total 0.200 0.800 1.000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Estimación de la prevalenciaπ en un estudio transversal</span></span>
+<span><span class="co">#&gt;   Método de Wald ajustado: </span></span>
+<span><span class="co">#&gt;   p=0.119; 95%-IC(π)=(0.087, 0.150) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Medidas de asociación para un estudio transversal</span></span>
+<span><span class="co">#&gt;   [!] Las medidas de riesgo se calculan como riesgo de la categoría  </span></span>
+<span><span class="co">#&gt;       en la 1a columna (frente a la 2a) para la categoría en la 1a </span></span>
+<span><span class="co">#&gt;       fila (frente a la 2a)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Riesgo absoluto (diferencia de Berkson; método de Agresti-Caffo): </span></span>
+<span><span class="co">#&gt;   d=0.169; 95%-IC(d)=(0.073, 0.271) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Riesgo relativo: </span></span>
+<span><span class="co">#&gt;   Rr=3.077; 95%-IC(Rr)=(1.818, 5.169) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Riesgo atribuible:</span></span>
+<span><span class="co">#&gt;   Ra=0.293; 95%-IC(Ra)= (0.104, 0.443) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Razón del producto cruzado (odds ratio):</span></span>
+<span><span class="co">#&gt;   OR=3.769; 95%-IC(OR)= (1.987, 7.137)</span></span></code></pre></div>
 <p>Para más información, consulte la documentación individual de cada
 función mediante <code>?funcion</code>.</p>
 </div>
@@ -290,7 +420,7 @@ función mediante <code>?funcion</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
