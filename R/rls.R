@@ -109,7 +109,7 @@ rls<-function(y=NULL,x=NULL,data=NULL,pred=NULL,grf=TRUE,dfout=F ,alfa=0.05,conf
     # obtener el data.frame del modelo
     dataf<-rl(y,data)
     if (inherits(dataf, "integer")) {
-      isERR<-TRUE
+      isErr<-TRUE
       stop(get_msg("rls_stop_multi_var"))}
     ylbl<-names(dataf)[1]
     xlbl<-names(dataf)[2]
@@ -140,6 +140,14 @@ rls<-function(y=NULL,x=NULL,data=NULL,pred=NULL,grf=TRUE,dfout=F ,alfa=0.05,conf
   # determinacion de valores faltantes + descriptiva de cada variable
   xmiss<-length(x[is.na(x)])
   ymiss<-length(y[is.na(y)])
+
+  # conservar unicamente parejas completas (coherente con lm())
+  if((xmiss+ymiss)>0){
+    okc<-( !is.na(x) & !is.na(y) )
+    dataf<-dataf[okc,,drop=FALSE]
+    y<-dataf[,1]
+    x<-dataf[,2]
+  }
 
   n<-length(x)
   sxx<-(n-1)*var(x)

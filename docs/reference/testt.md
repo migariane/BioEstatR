@@ -513,7 +513,7 @@ testt(n1=123, m1=25, s1=6, n2=87, m2=20, s2=8)
 #>     p < 0.001 para la alternativa bilateral H₁:μ₁≠μ₂ 
 #>     p < 0.001 para la alternativa unilateral H₁:μ₁>μ₂ 
 #>   95%-IC(μ₁-μ₂) = (2.996, 7.004) 
-#> Error in grpsggp(x = c(m1_m, m2_m), f = as.factor(c("1", "2")), se = c(m1_s,     m2_s), ggid = c(9), lbls = c("Media(sd)", "Muestra")): vectores de m() 2 y se() 4 de diferente dimensión
+
 
 # [C] Test con dos muestras relacionadas
 # [C.1] 2 muestras apareadas con datos individuales

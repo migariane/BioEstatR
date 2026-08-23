@@ -55,14 +55,29 @@ rlm <- function(f, data = NULL, pred = NULL, grf = TRUE, dfout = FALSE, alfa = 0
   n_val <- nrow(dataf)
   
   # Descriptiva basica
-  resumen_vars <- data.frame(
-    Variable = vars,
-    n = rep(n_val, length(vars)),
-    Media = round(colMeans(dataf, na.rm = TRUE), decs),
-    DT = round(apply(dataf, 2, sd, na.rm = TRUE), decs),
-    Min = round(apply(dataf, 2, min, na.rm = TRUE), decs),
-    Max = round(apply(dataf, 2, max, na.rm = TRUE), decs)
-  )
+  resumen_vars <- do.call(rbind, lapply(vars, function(vv) {
+    v <- dataf[[vv]]
+    if (is.numeric(v)) {
+      data.frame(
+        Variable = vv,
+        n = sum(!is.na(v)),
+        Media = round(mean(v, na.rm = TRUE), decs),
+        DT = round(sd(v, na.rm = TRUE), decs),
+        Min = round(min(v, na.rm = TRUE), decs),
+        Max = round(max(v, na.rm = TRUE), decs)
+      )
+    } else {
+      tab <- table(v, useNA = "no")
+      data.frame(
+        Variable = vv,
+        n = sum(!is.na(v)),
+        Media = NA_real_,
+        DT = NA_real_,
+        Min = "factor",
+        Max = paste(names(tab), tab, sep = ":", collapse = " ")
+      )
+    }
+  }))
 
   # Coeficientes
   su <- summary(modelo)

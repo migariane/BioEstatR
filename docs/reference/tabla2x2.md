@@ -319,7 +319,7 @@ tabla2x2(fvar=w1,cvar=w2)
 #>   Test exacto de Fisher (bilateral): p = 0.002 
 #> 
 #>   --- Otros criterios χ²:  
-#>   χ² = 9.972,   gl = 1,  p = 0.005, (sin cpc) 
+#>   χ² = 9.972,   gl = 1,  p = 0.002, (sin cpc) 
 #>   χ² = 7.926,   gl = 1,  p = 0.005, (cpc de Yates = 18.00) 
 #> 
 #> # Estimación de la prevalenciaπ en un estudio transversal
@@ -365,7 +365,7 @@ tabla2x2(fvar=v1,cvar=v2, estudio="R", tablas="F")
 #>   Test exacto de Fisher (bilateral): p = 0.002 
 #> 
 #>   --- Otros criterios χ²:  
-#>   χ² = 9.972,   gl = 1,  p = 0.005, (sin cpc) 
+#>   χ² = 9.972,   gl = 1,  p = 0.002, (sin cpc) 
 #>   χ² = 7.926,   gl = 1,  p = 0.005, (cpc de Yates = 18.00) 
 #> 
 #> # Porcentajes por filas

@@ -187,9 +187,9 @@ tabla2x2<-function(frecs=NULL,fvar=NULL,cvar=NULL,o=NULL,o11=0, o12=0, o21=0, o2
       ptxty<-""
       ptxty<-ifelse( pvaly<=ptol,  paste("p < ",ptol,sep=""), paste("p = ",roundf(pvaly,decs),sep="") )
       x2n<-t*((abs(o11*o22-o12*o21))^2)/(f1*f2*c1*c2)
-      pvaln<-pchisq(x2y,gl,lower.tail=FALSE)
+      pvaln<-pchisq(x2n,gl,lower.tail=FALSE)
       ptxtn<-""
-      ptxtn<-ifelse( pvaly<=ptol,  paste("p < ",ptol,sep=""), paste("p = ",roundf(pvaln,decs),sep="") )
+      ptxtn<-ifelse( pvaln<=ptol,  paste("p < ",ptol,sep=""), paste("p = ",roundf(pvaln,decs),sep="") )
 
 
       tab<-""

@@ -87,7 +87,7 @@ icl<-function(x=0,n=0,conf=.95,alfa=1-conf, decs=4, d=0, eco=TRUE){
   if(iserr==FALSE){
     #ic exacto
     if(sumax==0){lciex<-0
-                 uciex<-qchisq(alfa, 2*sumax+2,lower.tail =FALSE)/(2*n)
+                 uciex<-qchisq(alfa/2, 2*sumax+2,lower.tail =FALSE)/(2*n)
                  ddex=(uciex-lciex)/2 # semiamplitud
     }
     else{

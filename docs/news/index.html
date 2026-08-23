@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BioEstatR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,38 @@
 
     </div>
 
-  </main></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.2" id="bioestatr-102">BioEstatR 1.0.2<a class="anchor" aria-label="anchor" href="#bioestatr-102"></a></h2>
+<ul><li>
+<code>tabla2x2</code>: correccion de bug — el valor de p mostrado para el chi-cuadrado sin correccion por continuidad se calculaba a partir del estadistico con correccion de Yates.</li>
+<li>
+<code>icpexact</code> (IC exacto de Clopper-Pearson): grados de libertad corregidos en el limite inferior (<code>2*(n-x+1)</code>); los bordes x=0 y x=n pasan a ser bilaterales (alfa/2), consistentes con <code><a href="https://rdrr.io/r/stats/binom.test.html" class="external-link">stats::binom.test</a></code>.</li>
+<li>
+<code>icl</code> (IC exacto de Poisson): el limite superior cuando la suma de observaciones es 0 pasa a ser bilateral (alfa/2), consistente con <code><a href="https://rdrr.io/r/stats/poisson.test.html" class="external-link">stats::poisson.test</a></code>.</li>
+<li>
+<code>rls</code>: admite valores faltantes en los vectores de entrada (se analizan las parejas completas, coherente con <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>).</li>
+<li>
+<code>rlm</code>: la tabla descriptiva inicial admite predictores factor.</li>
+<li>
+<code>nl</code>: el modo silencioso (<code>eco=FALSE</code>) devuelve valores tambien cuando solo se indica <code>lmax</code>.</li>
+<li>Pruebas de regresion numerica (testthat) para los procedimientos corregidos y los ICs principales, contrastadas contra <code>binom.test</code>, <code>prop.test</code>, <code>poisson.test</code>, <code>lm</code> y valores de referencia.</li>
+<li>Vignette introductoria actualizada.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.1" id="bioestatr-101">BioEstatR 1.0.1<a class="anchor" aria-label="anchor" href="#bioestatr-101"></a></h2>
+<ul><li>Corrección de error en <code>grpsggp</code> al manejar escalares en el parámetro <code>se</code>.</li>
+<li>Actualización de terminología: “multivariable” a “multiple” en <code>rlogitm</code> y “regresión lineal múltiple” en <code>rlm</code>.</li>
+<li>Añadidas referencias cruzadas (<code>@seealso</code>) en toda la documentación de funciones exportadas.</li>
+<li>Inclusión de referencias científicas (<code>@references</code>) para todas las funciones exportadas.</li>
+<li>Estructura de pruebas unitarias (<code>testthat</code>) para todas las funciones exportadas.</li>
+<li>Actualización de la viñeta introductoria.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.0" id="bioestatr-100">BioEstatR 1.0.0<a class="anchor" aria-label="anchor" href="#bioestatr-100"></a></h2>
+<ul><li>Versión inicial del paquete.</li>
+</ul></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
