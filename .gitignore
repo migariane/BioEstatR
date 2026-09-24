@@ -6,3 +6,7 @@
 .venv/
 .claude/
 node_modules/
+
+*.tar.gz
+*.tgz
+*.zip
