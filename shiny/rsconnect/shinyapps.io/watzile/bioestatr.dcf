@@ -1,0 +1,10 @@
+name: bioestatr
+title: BioEstatR - Bioestadistica con R
+username: watzile
+account: watzile
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 18504274
+bundleId: 12855294
+url: https://watzile.shinyapps.io/bioestatr/
+version: 1
