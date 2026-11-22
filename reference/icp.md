@@ -88,9 +88,9 @@ icp(x=25, n=210)
 #>   Casos observados: x = 25
 #> 
 #> # Método exacto (Clooper-Pearson):
-#>   Pseudo-estimación puntual: p' = 0.1247, q'=(1-p')=0.8753
-#>   95%-IC(π): (0.0786, 0.1707) 
-#>   Semiamplitud: 0.046
+#>   Pseudo-estimación puntual: p' = 0.1246, q'=(1-p')=0.8754
+#>   95%-IC(π): (0.0785, 0.1707) 
+#>   Semiamplitud: 0.0461
 #> 
 #> # Método de Wilson (con cpc):
 #>   Pseudo-estimación puntual: p' = 0.1263, q'=(1-p')=0.8737
@@ -118,9 +118,9 @@ icp(x=25, n=210, conf=0.90, decs=8)
 #>   Casos observados: x = 25
 #> 
 #> # Método exacto (Clooper-Pearson):
-#>   Pseudo-estimación puntual: p' = 0.1232511, q'=(1-p')=0.8767489
-#>   90%-IC(π): (0.08421205, 0.1622901) 
-#>   Semiamplitud: 0.03903903
+#>   Pseudo-estimación puntual: p' = 0.1232123, q'=(1-p')=0.8767877
+#>   90%-IC(π): (0.08413459, 0.1622901) 
+#>   Semiamplitud: 0.03907776
 #> 
 #> # Método de Wilson (con cpc):
 #>   Pseudo-estimación puntual: p' = 0.1242024, q'=(1-p')=0.8757976
@@ -151,9 +151,9 @@ datos<-c(1,1,1,2,2,2,2,2,1,1,1,2,1,2,2,2,2,2,1,1,1,2,1,2,1,2,1,2,2,2,2,2,1,1)
 #>   Casos observados: (nivel =1)x = 15
 #> 
 #> # Método exacto (Clooper-Pearson):
-#>   Pseudo-estimación puntual: p' = 0.4492, q'=(1-p')=0.5508
-#>   95%-IC(π): (0.2772, 0.6211) 
-#>   Semiamplitud: 0.172
+#>   Pseudo-estimación puntual: p' = 0.4465, q'=(1-p')=0.5535
+#>   95%-IC(π): (0.2719, 0.6211) 
+#>   Semiamplitud: 0.1746
 #> 
 #> # Método de Wilson (con cpc):
 #>   Pseudo-estimación puntual: p' = 0.4476, q'=(1-p')=0.5524
@@ -179,9 +179,9 @@ datos<-c(1,1,1,2,2,2,2,2,1,1,1,2,1,2,2,2,2,2,1,1,1,2,1,2,1,2,1,2,2,2,2,2,1,1)
 #>   Casos observados: (nivel =1)x = 15
 #> 
 #> # Método exacto (Clooper-Pearson):
-#>   Pseudo-estimación puntual: p' = 0.4525, q'=(1-p')=0.5475
-#>   99%-IC(π): (0.2351, 0.67) 
-#>   Semiamplitud: 0.2174
+#>   Pseudo-estimación puntual: p' = 0.4495, q'=(1-p')=0.5505
+#>   99%-IC(π): (0.2291, 0.67) 
+#>   Semiamplitud: 0.2204
 #> 
 #> # Método de Wilson (con cpc):
 #>   Pseudo-estimación puntual: p' = 0.4514, q'=(1-p')=0.5486
@@ -208,9 +208,9 @@ sexo<-as.factor(c("H","H","M","M","H","M","M","H","H","M","H","M","H"))
 #>   Casos observados: (nivel =M)x = 6
 #> 
 #> # Método exacto (Clooper-Pearson):
-#>   Pseudo-estimación puntual: p' = 0.4728, q'=(1-p')=0.5272
-#>   95%-IC(π): (0.197, 0.7487) 
-#>   Semiamplitud: 0.2758
+#>   Pseudo-estimación puntual: p' = 0.4704, q'=(1-p')=0.5296
+#>   95%-IC(π): (0.1922, 0.7487) 
+#>   Semiamplitud: 0.2782
 #> 
 #> # Método de Wilson (con cpc):
 #>   Pseudo-estimación puntual: p' = 0.4714, q'=(1-p')=0.5286
@@ -234,7 +234,7 @@ icp(x=sexo, level="M",tabla=TRUE)
 #> # -----------------------------------------------------
 #>   Método (conf.=95%) 
 #>                   puntual  icinf  icsup precision
-#>   Clooper-Pearson  0.4728 0.1970 0.7487    0.2758
+#>   Clooper-Pearson  0.4704 0.1922 0.7487    0.2782
 #>   Wilson           0.4714 0.2040 0.7388    0.2674
 #>   Wald             0.4615     NA     NA        NA
 #>   Agresti-Coull    0.4706 0.2333 0.7079    0.2373
@@ -251,9 +251,9 @@ icp(x=sexo, level="M", d=0.1)
 #>   Casos observados: (nivel =M)x = 6
 #> 
 #> # Método exacto (Clooper-Pearson):
-#>   Pseudo-estimación puntual: p' = 0.4728, q'=(1-p')=0.5272
-#>   95%-IC(π): (0.197, 0.7487) 
-#>   Semiamplitud: 0.2758
+#>   Pseudo-estimación puntual: p' = 0.4704, q'=(1-p')=0.5296
+#>   95%-IC(π): (0.1922, 0.7487) 
+#>   Semiamplitud: 0.2782
 #> 
 #> # Método de Wilson (con cpc):
 #>   Pseudo-estimación puntual: p' = 0.4714, q'=(1-p')=0.5286
