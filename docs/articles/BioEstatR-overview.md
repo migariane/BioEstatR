@@ -4,9 +4,10 @@
 
 library(BioEstatR)
 #> --------------------------------------------------------------
-#> BioEstatR (ver 1.0.2 - 08/2026)
+#> BioEstatR
 #>   Biostatistics Routines in R
-#>    Pedro Femia*, Miguel Angel Luque Fernandez
+#> 
+#>   Authors: Pedro Femia*, Miguel Angel Luque Fernandez
 #>   Biostatistics Faculty of Medicine - University of Granada
 #> 
 #>   * Contacto: pfemia@ugr.es, mluquefe@ugr.es
@@ -31,12 +32,167 @@ En la versión 1.0.2 se han corregido varios procedimientos inferenciales
 en sus casos frontera) y se ha mejorado la robustez de `rls`, `rlm` y
 `nl`. Véase `NEWS.md` para el detalle completo.
 
+En la versión 1.0.3 se incorporan tres funciones nuevas de análisis
+descriptivo: `descriptiva`, `forma` y `posicion`.
+
 ## Uso
 
-A continuación se muestran ejemplos básicos de uso de las funciones
-principales para la modelización lineal y logística.
+### Análisis descriptivo
 
-### Regresión Lineal Simple
+`descriptiva` es una rutina global que resume un vector o un
+`data.frame` completo. Detecta automáticamente qué variables son
+cuantitativas y cuáles cualitativas, y adapta la salida a cada tipo:
+para las cuantitativas devuelve las medidas de tendencia central y de
+dispersión (incluido el coeficiente de variación), los cuantiles, el
+rango intercuartílico y el número de valores atípicos; para las
+cualitativas, la tabla de frecuencias.
+
+``` r
+
+# Descriptiva completa de varias variables del conjunto de datos
+descriptiva(x = osteo[, c("edad", "imc", "hba1c")], decs = 2)
+#> 
+#> # Analisis descriptivo ---
+#>   Observaciones: 94
+#> 
+#> ## Variables cuantitativas ---
+#> 
+#> ### edad ---
+#>   n = 94   faltantes = 0
+#>   media = 30.19   dt = 9.37   ee = 0.97
+#>   CV = 31.02%
+#>   mediana = 28.00   Q1 = 22.25   Q3 = 35.00
+#>   min = 18.00   max = 56.00   RIC = 12.75
+#>   asimetria = 0.93   curtosis = 0.16
+#>   valores atipicos (Tukey 1.5 x RIC) = 1
+#> 
+#> ### imc ---
+#>   n = 94   faltantes = 0
+#>   media = 23.92   dt = 3.75   ee = 0.39
+#>   CV = 15.67%
+#>   mediana = 23.22   Q1 = 21.34   Q3 = 25.54
+#>   min = 18.07   max = 37.33   RIC = 4.20
+#>   asimetria = 1.22   curtosis = 1.46
+#>   valores atipicos (Tukey 1.5 x RIC) = 6
+#> 
+#> ### hba1c ---
+#>   n = 94   faltantes = 0
+#>   media = 8.56   dt = 1.80   ee = 0.19
+#>   CV = 21.00%
+#>   mediana = 8.40   Q1 = 7.43   Q3 = 9.70
+#>   min = 4.60   max = 13.80   RIC = 2.27
+#>   asimetria = 0.37   curtosis = 0.35
+#>   valores atipicos (Tukey 1.5 x RIC) = 1
+```
+
+Se pueden añadir los intervalos de confianza para la media y la prueba
+de normalidad.
+
+``` r
+
+descriptiva(x = osteo$imc, ic = TRUE, normal = TRUE, decs = 2)
+#> 
+#> # Analisis descriptivo ---
+#>   Observaciones: 94
+#> 
+#> ## Variables cuantitativas ---
+#> 
+#> ### osteo$imc ---
+#>   n = 94   faltantes = 0
+#>   media = 23.92   dt = 3.75   ee = 0.39
+#>   CV = 15.67%
+#>   IC 95% = (23.15, 24.69)
+#>   mediana = 23.22   Q1 = 21.34   Q3 = 25.54
+#>   min = 18.07   max = 37.33   RIC = 4.20
+#>   asimetria = 1.22   curtosis = 1.46
+#>   valores atipicos (Tukey 1.5 x RIC) = 6
+#>   normalidad (Shapiro-Wilk) p = 0.000
+```
+
+Si se indica un factor de agrupación, la descriptiva de las variables
+cuantitativas se segmenta por sus niveles.
+
+``` r
+
+descriptiva(x = osteo$imc, f = osteo$osteo_cue, decs = 2)
+#> 
+#> # Analisis descriptivo ---
+#>   Observaciones: 94
+#>   Agrupacion: No, Sí
+#> 
+#> ## Variables cuantitativas ---
+#> 
+#> ### osteo$imc ---
+#>   n = 94   faltantes = 0
+#>   media = 23.92   dt = 3.75   ee = 0.39
+#>   CV = 15.67%
+#>   mediana = 23.22   Q1 = 21.34   Q3 = 25.54
+#>   min = 18.07   max = 37.33   RIC = 4.20
+#>   asimetria = 1.22   curtosis = 1.46
+#>   valores atipicos (Tukey 1.5 x RIC) = 6
+#>   por grupos:
+#>     No: n = 70, media = 24.45, dt = 4.01
+#>     Sí: n = 24, media = 22.37, dt = 2.26
+```
+
+#### Medidas de forma
+
+`forma` devuelve los coeficientes de asimetría y de curtosis muestrales
+corregidos (insesgados), con sus errores típicos, el contraste z de
+significación y la prueba de normalidad. Los valores coinciden con
+`e1071::skewness(type = 2)` y `e1071::kurtosis(type = 2)`, es decir, con
+la definición que usan SPSS y Excel.
+
+``` r
+
+forma(x = osteo$imc, decs = 2)
+#> 
+#> # Medidas de forma ---
+#> 
+#>   n = 94   media = 23.92   dt = 3.75
+#> 
+#>   Asimetria (g1) = 1.22   (error tipico = 0.25)
+#>     Interpretacion: asimetria positiva (cola derecha)
+#>     z = 4.90  p = 0.000  (asimetria significativa)
+#> 
+#>   Curtosis (g2) = 1.46   (error tipico = 0.49)
+#>     Interpretacion: leptocurtica (mas apuntada que la normal)
+#>     z = 2.96  p = 0.003  (curtosis significativa)
+#> 
+#>   Prueba de normalidad (Shapiro-Wilk): p = 0.000  -> se rechaza la normalidad
+```
+
+#### Medidas de posición y valores atípicos
+
+`posicion` calcula los cuantiles que se le pidan (cuartiles, deciles o
+percentiles), el rango intercuartílico y detecta los valores atípicos
+leves y graves por el criterio de Tukey (1,5 y 3 veces el rango
+intercuartílico), de forma coherente con `boxplot.stats`.
+
+``` r
+
+posicion(x = osteo$imc, decs = 2)
+#> 
+#> # Medidas de posicion ---
+#> 
+#>   n = 94
+#> 
+#>   Cuantiles (tipo 7):
+#>     0% = 18.07
+#>     25% = 21.34
+#>     50% = 23.22
+#>     75% = 25.54
+#>     100% = 37.33
+#> 
+#>   Rango intercuartilico (RIC) = 4.20
+#>   Vallas de Tukey (1.5 x RIC): [15.04, 31.84]
+#>   Vallas extremas   (3.0 x RIC): [8.75, 38.14]
+#> 
+#>   Valores atipicos leves (n = 6): 32.32, 32.46, 37.33, 32.47, 34.26, 32.00
+#>   Valores atipicos graves (n = 0)
+```
+
+### Regresión Lineal Simple
 
 ``` r
 

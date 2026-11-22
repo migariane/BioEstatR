@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BioEstatR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
                         <h4 data-toc-skip class="author">Pedro Femia
 Marzo, Miguel Angel Luque Fernandez</h4>
             
-            <h4 data-toc-skip class="date">2026-08-23</h4>
+            <h4 data-toc-skip class="date">2026-11-22</h4>
       
 
       <div class="d-none name"><code>BioEstatR-overview.Rmd</code></div>
@@ -70,9 +70,10 @@ Marzo, Miguel Angel Luque Fernandez</h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://migariane.github.io/BioEstatR">BioEstatR</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; BioEstatR (ver 1.0.2 - 08/2026)</span></span>
+<span><span class="co">#&gt; BioEstatR</span></span>
 <span><span class="co">#&gt;   Biostatistics Routines in R</span></span>
-<span><span class="co">#&gt;    Pedro Femia*, Miguel Angel Luque Fernandez</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Authors: Pedro Femia*, Miguel Angel Luque Fernandez</span></span>
 <span><span class="co">#&gt;   Biostatistics Faculty of Medicine - University of Granada</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   * Contacto: pfemia@ugr.es, mluquefe@ugr.es</span></span>
@@ -95,16 +96,160 @@ Clopper-Pearson y Garwood-Poisson en sus casos frontera) y se ha
 mejorado la robustez de <code>rls</code>, <code>rlm</code> y
 <code>nl</code>. Véase <code>NEWS.md</code> para el detalle
 completo.</p>
+<p>En la versión 1.0.3 se incorporan tres funciones nuevas de análisis
+descriptivo: <code>descriptiva</code>, <code>forma</code> y
+<code>posicion</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="uso">Uso<a class="anchor" aria-label="anchor" href="#uso"></a>
 </h2>
-<p>A continuación se muestran ejemplos básicos de uso de las funciones
-principales para la modelización lineal y logística.</p>
 <div class="section level3">
-<h3 id="regresion-lineal-simple">Regresión Lineal Simple<a class="anchor" aria-label="anchor" href="#regresion-lineal-simple"></a>
+<h3 id="análisis-descriptivo">Análisis descriptivo<a class="anchor" aria-label="anchor" href="#an%C3%A1lisis-descriptivo"></a>
 </h3>
+<p><code>descriptiva</code> es una rutina global que resume un vector o
+un <code>data.frame</code> completo. Detecta automáticamente qué
+variables son cuantitativas y cuáles cualitativas, y adapta la salida a
+cada tipo: para las cuantitativas devuelve las medidas de tendencia
+central y de dispersión (incluido el coeficiente de variación), los
+cuantiles, el rango intercuartílico y el número de valores atípicos;
+para las cualitativas, la tabla de frecuencias.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Descriptiva completa de varias variables del conjunto de datos</span></span>
+<span><span class="fu"><a href="../reference/descriptiva.html">descriptiva</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">osteo</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"edad"</span>, <span class="st">"imc"</span>, <span class="st">"hba1c"</span><span class="op">)</span><span class="op">]</span>, decs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Analisis descriptivo ---</span></span>
+<span><span class="co">#&gt;   Observaciones: 94</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ## Variables cuantitativas ---</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ### edad ---</span></span>
+<span><span class="co">#&gt;   n = 94   faltantes = 0</span></span>
+<span><span class="co">#&gt;   media = 30.19   dt = 9.37   ee = 0.97</span></span>
+<span><span class="co">#&gt;   CV = 31.02%</span></span>
+<span><span class="co">#&gt;   mediana = 28.00   Q1 = 22.25   Q3 = 35.00</span></span>
+<span><span class="co">#&gt;   min = 18.00   max = 56.00   RIC = 12.75</span></span>
+<span><span class="co">#&gt;   asimetria = 0.93   curtosis = 0.16</span></span>
+<span><span class="co">#&gt;   valores atipicos (Tukey 1.5 x RIC) = 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ### imc ---</span></span>
+<span><span class="co">#&gt;   n = 94   faltantes = 0</span></span>
+<span><span class="co">#&gt;   media = 23.92   dt = 3.75   ee = 0.39</span></span>
+<span><span class="co">#&gt;   CV = 15.67%</span></span>
+<span><span class="co">#&gt;   mediana = 23.22   Q1 = 21.34   Q3 = 25.54</span></span>
+<span><span class="co">#&gt;   min = 18.07   max = 37.33   RIC = 4.20</span></span>
+<span><span class="co">#&gt;   asimetria = 1.22   curtosis = 1.46</span></span>
+<span><span class="co">#&gt;   valores atipicos (Tukey 1.5 x RIC) = 6</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ### hba1c ---</span></span>
+<span><span class="co">#&gt;   n = 94   faltantes = 0</span></span>
+<span><span class="co">#&gt;   media = 8.56   dt = 1.80   ee = 0.19</span></span>
+<span><span class="co">#&gt;   CV = 21.00%</span></span>
+<span><span class="co">#&gt;   mediana = 8.40   Q1 = 7.43   Q3 = 9.70</span></span>
+<span><span class="co">#&gt;   min = 4.60   max = 13.80   RIC = 2.27</span></span>
+<span><span class="co">#&gt;   asimetria = 0.37   curtosis = 0.35</span></span>
+<span><span class="co">#&gt;   valores atipicos (Tukey 1.5 x RIC) = 1</span></span></code></pre></div>
+<p>Se pueden añadir los intervalos de confianza para la media y la
+prueba de normalidad.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptiva.html">descriptiva</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">osteo</span><span class="op">$</span><span class="va">imc</span>, ic <span class="op">=</span> <span class="cn">TRUE</span>, normal <span class="op">=</span> <span class="cn">TRUE</span>, decs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Analisis descriptivo ---</span></span>
+<span><span class="co">#&gt;   Observaciones: 94</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ## Variables cuantitativas ---</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ### osteo$imc ---</span></span>
+<span><span class="co">#&gt;   n = 94   faltantes = 0</span></span>
+<span><span class="co">#&gt;   media = 23.92   dt = 3.75   ee = 0.39</span></span>
+<span><span class="co">#&gt;   CV = 15.67%</span></span>
+<span><span class="co">#&gt;   IC 95% = (23.15, 24.69)</span></span>
+<span><span class="co">#&gt;   mediana = 23.22   Q1 = 21.34   Q3 = 25.54</span></span>
+<span><span class="co">#&gt;   min = 18.07   max = 37.33   RIC = 4.20</span></span>
+<span><span class="co">#&gt;   asimetria = 1.22   curtosis = 1.46</span></span>
+<span><span class="co">#&gt;   valores atipicos (Tukey 1.5 x RIC) = 6</span></span>
+<span><span class="co">#&gt;   normalidad (Shapiro-Wilk) p = 0.000</span></span></code></pre></div>
+<p>Si se indica un factor de agrupación, la descriptiva de las variables
+cuantitativas se segmenta por sus niveles.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/descriptiva.html">descriptiva</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">osteo</span><span class="op">$</span><span class="va">imc</span>, f <span class="op">=</span> <span class="va">osteo</span><span class="op">$</span><span class="va">osteo_cue</span>, decs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Analisis descriptivo ---</span></span>
+<span><span class="co">#&gt;   Observaciones: 94</span></span>
+<span><span class="co">#&gt;   Agrupacion: No, Sí</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ## Variables cuantitativas ---</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ### osteo$imc ---</span></span>
+<span><span class="co">#&gt;   n = 94   faltantes = 0</span></span>
+<span><span class="co">#&gt;   media = 23.92   dt = 3.75   ee = 0.39</span></span>
+<span><span class="co">#&gt;   CV = 15.67%</span></span>
+<span><span class="co">#&gt;   mediana = 23.22   Q1 = 21.34   Q3 = 25.54</span></span>
+<span><span class="co">#&gt;   min = 18.07   max = 37.33   RIC = 4.20</span></span>
+<span><span class="co">#&gt;   asimetria = 1.22   curtosis = 1.46</span></span>
+<span><span class="co">#&gt;   valores atipicos (Tukey 1.5 x RIC) = 6</span></span>
+<span><span class="co">#&gt;   por grupos:</span></span>
+<span><span class="co">#&gt;     No: n = 70, media = 24.45, dt = 4.01</span></span>
+<span><span class="co">#&gt;     Sí: n = 24, media = 22.37, dt = 2.26</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="medidas-de-forma">Medidas de forma<a class="anchor" aria-label="anchor" href="#medidas-de-forma"></a>
+</h4>
+<p><code>forma</code> devuelve los coeficientes de asimetría y de
+curtosis muestrales corregidos (insesgados), con sus errores típicos, el
+contraste z de significación y la prueba de normalidad. Los valores
+coinciden con <code>e1071::skewness(type = 2)</code> y
+<code>e1071::kurtosis(type = 2)</code>, es decir, con la definición que
+usan SPSS y Excel.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/forma.html">forma</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">osteo</span><span class="op">$</span><span class="va">imc</span>, decs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Medidas de forma ---</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   n = 94   media = 23.92   dt = 3.75</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Asimetria (g1) = 1.22   (error tipico = 0.25)</span></span>
+<span><span class="co">#&gt;     Interpretacion: asimetria positiva (cola derecha)</span></span>
+<span><span class="co">#&gt;     z = 4.90  p = 0.000  (asimetria significativa)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Curtosis (g2) = 1.46   (error tipico = 0.49)</span></span>
+<span><span class="co">#&gt;     Interpretacion: leptocurtica (mas apuntada que la normal)</span></span>
+<span><span class="co">#&gt;     z = 2.96  p = 0.003  (curtosis significativa)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Prueba de normalidad (Shapiro-Wilk): p = 0.000  -&gt; se rechaza la normalidad</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="medidas-de-posición-y-valores-atípicos">Medidas de posición y valores atípicos<a class="anchor" aria-label="anchor" href="#medidas-de-posici%C3%B3n-y-valores-at%C3%ADpicos"></a>
+</h4>
+<p><code>posicion</code> calcula los cuantiles que se le pidan
+(cuartiles, deciles o percentiles), el rango intercuartílico y detecta
+los valores atípicos leves y graves por el criterio de Tukey (1,5 y 3
+veces el rango intercuartílico), de forma coherente con
+<code>boxplot.stats</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/posicion.html">posicion</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">osteo</span><span class="op">$</span><span class="va">imc</span>, decs <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; # Medidas de posicion ---</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   n = 94</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Cuantiles (tipo 7):</span></span>
+<span><span class="co">#&gt;     0% = 18.07</span></span>
+<span><span class="co">#&gt;     25% = 21.34</span></span>
+<span><span class="co">#&gt;     50% = 23.22</span></span>
+<span><span class="co">#&gt;     75% = 25.54</span></span>
+<span><span class="co">#&gt;     100% = 37.33</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Rango intercuartilico (RIC) = 4.20</span></span>
+<span><span class="co">#&gt;   Vallas de Tukey (1.5 x RIC): [15.04, 31.84]</span></span>
+<span><span class="co">#&gt;   Vallas extremas   (3.0 x RIC): [8.75, 38.14]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Valores atipicos leves (n = 6): 32.32, 32.46, 37.33, 32.47, 34.26, 32.00</span></span>
+<span><span class="co">#&gt;   Valores atipicos graves (n = 0)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="regresión-lineal-simple">Regresión Lineal Simple<a class="anchor" aria-label="anchor" href="#regresi%C3%B3n-lineal-simple"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ejemplo de regresión lineal simple</span></span>
 <span><span class="fu"><a href="../reference/rls.html">rls</a></span><span class="op">(</span><span class="va">imc</span> <span class="op">~</span> <span class="va">peso</span>, data <span class="op">=</span> <span class="va">osteo</span>, grf<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -149,7 +294,7 @@ principales para la modelización lineal y logística.</p>
 <div class="section level3">
 <h3 id="regresion-lineal-multiple">Regresión Lineal Múltiple<a class="anchor" aria-label="anchor" href="#regresion-lineal-multiple"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ejemplo de regresión lineal múltiple</span></span>
 <span><span class="va">new_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>peso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">70</span>, <span class="fl">80</span><span class="op">)</span>, talla <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">170</span>, <span class="fl">180</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/rlm.html">rlm</a></span><span class="op">(</span><span class="va">imc</span> <span class="op">~</span> <span class="va">peso</span> <span class="op">+</span> <span class="va">talla</span>, data <span class="op">=</span> <span class="va">osteo</span>, pred <span class="op">=</span> <span class="va">new_data</span>, grf<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
@@ -199,7 +344,7 @@ principales para la modelización lineal y logística.</p>
 <div class="section level3">
 <h3 id="regresion-logistica-simple">Regresión Logística Simple<a class="anchor" aria-label="anchor" href="#regresion-logistica-simple"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ejemplo de regresión logística simple</span></span>
 <span><span class="fu"><a href="../reference/rlogits.html">rlogits</a></span><span class="op">(</span><span class="va">osteo_cue</span> <span class="op">~</span> <span class="va">imc</span>, data <span class="op">=</span> <span class="va">osteo</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Waiting for profiling to be done...</span></span>
@@ -240,7 +385,7 @@ principales para la modelización lineal y logística.</p>
 <div class="section level3">
 <h3 id="regresion-logistica-multiple">Regresión Logística Múltiple<a class="anchor" aria-label="anchor" href="#regresion-logistica-multiple"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ejemplo de regresión logística múltiple</span></span>
 <span><span class="fu"><a href="../reference/rlogitm.html">rlogitm</a></span><span class="op">(</span><span class="va">osteo_cue</span> <span class="op">~</span> <span class="va">imc</span> <span class="op">+</span> <span class="va">edad</span> <span class="op">+</span> <span class="va">tevol</span>, data <span class="op">=</span> <span class="va">osteo</span>, grf<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Waiting for profiling to be done...</span></span>
@@ -290,7 +435,7 @@ principales para la modelización lineal y logística.</p>
 <div class="section level3">
 <h3 id="ic-para-una-proporción-binomial">IC para una proporción binomial<a class="anchor" aria-label="anchor" href="#ic-para-una-proporci%C3%B3n-binomial"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Comparación de métodos: exacto, Wilson, Wald y Agresti-Coull</span></span>
 <span><span class="fu"><a href="../reference/icp.html">icp</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">25</span>, n <span class="op">=</span> <span class="fl">210</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -325,7 +470,7 @@ principales para la modelización lineal y logística.</p>
 <div class="section level3">
 <h3 id="ic-para-el-parámetro-de-una-poisson">IC para el parámetro de una Poisson<a class="anchor" aria-label="anchor" href="#ic-para-el-par%C3%A1metro-de-una-poisson"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Método exacto (Garwood) y aproximación normal</span></span>
 <span><span class="fu"><a href="../reference/icl.html">icl</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">25</span>, n <span class="op">=</span> <span class="fl">210</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -349,7 +494,7 @@ principales para la modelización lineal y logística.</p>
 <div class="section level3">
 <h3 id="tablas-de-contingencia-2x2">Tablas de contingencia 2x2<a class="anchor" aria-label="anchor" href="#tablas-de-contingencia-2x2"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Análisis completo de una tabla 2x2 en estudio transversal</span></span>
 <span><span class="fu"><a href="../reference/tabla2x2.html">tabla2x2</a></span><span class="op">(</span>o <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">26</span>, <span class="fl">60</span>, <span class="fl">294</span><span class="op">)</span>, estudio <span class="op">=</span> <span class="st">"T"</span>, tablas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>

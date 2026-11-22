@@ -1,4 +1,4 @@
-# BioEstatR (ver 1.0.1 - 05/2026)
+# BioEstatR (ver 1.0.3 - 11/2026)
 
 ## Biostatistics Routines in R
 
@@ -57,7 +57,7 @@ puede usar la siguiente estructura:
   title = {BioEstatR: Rutinas de bioestadística},
   author = {Pedro Jesús Femia Marzo & Miguel Ángel Luque Fernández},
   year = {2026},
-  note = {R package version 1.0.1},
+  note = {R package version 1.0.3},
   url = {https://github.com/migariane/BioEstatR},
 }
 ```
