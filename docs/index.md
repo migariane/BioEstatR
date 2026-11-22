@@ -2,6 +2,12 @@
 
 ## Biostatistics Routines in R
 
+[![Aplicación
+interactiva](https://img.shields.io/badge/%E2%96%B6%20Abrir%20la%20aplicaci%C3%B3n%20interactiva-Shiny%20(online)-4c9f70?style=for-the-badge)](https://watzile.shinyapps.io/bioestatr/)
+[![Sitio
+web](https://img.shields.io/badge/Sitio-web%20del%20paquete-0d6efd?style=for-the-badge)](https://migariane.github.io/BioEstatR/)
+[![Libro](https://img.shields.io/badge/Libro-Matem%C3%A1tica%20Estad%C3%ADstica%20M%C3%A9dica%20con%20R-6f42c1?style=for-the-badge)](https://migariane.github.io/MatematicaEstadisticaMedicinaR/)
+
 **Authors**: Pedro Femia, Miguel Angel Luque Fernandez **Biostatistics
 Faculty of Medicine - University of Granada**
 
@@ -20,6 +26,16 @@ en el libro, pero también se pueden usar de forma independiente para
 análisis estadísticos en medicina y ciencias de la salud. Para
 información sobre **BioEstatR** visite:
 <https://migariane.github.io/BioEstatR/>
+
+### Aplicación interactiva para estudiantes (sin instalar R)
+
+**<https://watzile.shinyapps.io/bioestatr/>**
+
+Interfaz gráfica que permite usar todas las rutinas de BioEstatR
+seleccionando opciones con el ratón — pensada para prácticas y para
+estudiantes que no programán. Incluye descarga de informes en Word y
+carga de datos propios (CSV/Excel). El código de la aplicación está en
+[`shiny/`](https://migariane.github.io/BioEstatR/shiny/).
 
 ## Introducción y Tutorial
 
