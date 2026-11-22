@@ -23,9 +23,12 @@ jobs:
 
       - name: Build site
         run: R -e 'pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)'
-      
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: docs
-          target-folder: docs
+          clean: true
+          clean-exclude: |
+            docs
+            .gitignore
