@@ -531,34 +531,34 @@ testp(x1=a,x2=b,x0=1)
 #>   Tabla de contingencia de Respuesta['1','0'] x Muestra['a','b'] 
 #>   Muestra Respuesta
 #>           1   0 Total
-#>   a      94 156   250
-#>   b     143 107   250
-#>   Total 237 263   500
+#>   a      98 152   250
+#>   b     147 103   250
+#>   Total 245 255   500
 #> 
 #> 
 #> # Estimación para Respuesta = '1' 
 #> 
 #>   Muestra = a
-#>   p₁ = 0.376  (q₁=1-p₁ = 0.624) 
-#>   95%-IC(π₁) = (0.318, 0.438)
+#>   p₁ = 0.392  (q₁=1-p₁ = 0.608) 
+#>   95%-IC(π₁) = (0.334, 0.454)
 #> 
 #>   Muestra = b
-#>   p₂ = 0.572  (q₂=1-p₂ = 0.428)
-#>   95%-IC(π₂) = (0.51, 0.632)
+#>   p₂ = 0.588  (q₂=1-p₂ = 0.412)
+#>   95%-IC(π₂) = (0.526, 0.647)
 #>   ____
 #>   * Intervalos obtenidos por el método de Wald ajustado (Agresti-Coull)
 #> 
 #> 
 #> # Test de homogeneidad para contrastar Ho:π₁=π₂ (π₂-π₁=0)
-#>   p|H₀ = 0.474  (q|H₀ = 0.526) 
+#>   p|H₀ = 0.490  (q|H₀ = 0.510) 
 #>   Método: 
 #>                                 Zexp    cpc   cdv  p.bilat b p.unilat u
 #>   Condicionado exacto (Fisher)     -      -     -  < 0.001 ✓  < 0.001 ✓
-#>   Condicionado adn (Yates)     4.299  0.004 E>8.8  < 0.001 ✓  < 0.001 ✓
-#>   Incondicionado adn           4.388 <0.001 E>7.7  < 0.001 ✓  < 0.001 ✓
+#>   Condicionado adn (Yates)     4.294  0.004 E>8.8  < 0.001 ✓  < 0.001 ✓
+#>   Incondicionado adn           4.383 <0.001 E>7.7  < 0.001 ✓  < 0.001 ✓
 #>   ____
 #>   *   Alternativas: bilateral H₁:π₁≠π₂; unilateral H₁:π₁<π₂
-#>   **  E=118.5 es la frecuencia mínima esperada bajo H₀
+#>   **  E=122.5 es la frecuencia mínima esperada bajo H₀
 #>   *** adn = aproximación a la distribución normal
 #> 
 #> 

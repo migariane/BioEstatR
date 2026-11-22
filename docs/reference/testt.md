@@ -152,6 +152,7 @@ Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.
 ## Examples
 
 ``` r
+# \donttest{
 # [A] Test con una muestra
 # [A.1] Con los datos individuales
 datos<-c(76,54,12,47,13,15,25,14,19,32,7)
@@ -889,4 +890,5 @@ testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, beta=0.15)
 
 
 
+# }
 ```

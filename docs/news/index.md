@@ -1,5 +1,35 @@
 # Changelog
 
+## BioEstatR 1.0.3
+
+- Nuevas funciones de analisis descriptivo:
+  - `descriptiva`: rutina global de estadistica descriptiva. Para cada
+    variable de un vector o de un data.frame devuelve, segun su
+    naturaleza, el tamano muestral valido, los valores faltantes, las
+    medidas de tendencia central y de dispersion (incluido el
+    coeficiente de variacion), los cuantiles, el rango intercuartilico,
+    las medidas de forma, el numero de valores atipicos y,
+    opcionalmente, el intervalo de confianza para la media y la prueba
+    de normalidad. Admite un factor de agrupacion y variables
+    cualitativas, de las que devuelve la tabla de frecuencias absolutas
+    y relativas.
+  - `forma`: coeficientes de asimetria y curtosis muestrales corregidos
+    (insesgados), con sus errores tipicos, el contraste z de
+    significacion, la interpretacion cualitativa y la prueba de
+    normalidad. Los valores coinciden con `e1071::skewness(type = 2)` y
+    `e1071::kurtosis(type = 2)` (definicion de SPSS/Excel).
+  - `posicion`: cuantiles configurables (cuartiles, deciles o
+    percentiles), rango intercuartilico y deteccion de valores atipicos
+    leves y graves por el criterio de Tukey, coherente con
+    `boxplot.stats`.
+- Documentacion: `osteo` incorpora ejemplos de uso; se corrigen ejemplos
+  que faltaban.
+- Se elimina de la documentacion la funcion interna `get_msg` (marcada
+  como `@noRd`).
+- Pruebas de regresion (`testthat`) para las tres funciones nuevas,
+  contrastadas contra `e1071`, `t.test`, `quantile`, `IQR` y
+  `boxplot.stats`.
+
 ## BioEstatR 1.0.2
 
 - `tabla2x2`: correccion de bug — el valor de p mostrado para el
