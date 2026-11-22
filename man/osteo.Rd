@@ -48,4 +48,15 @@ Archivo de datos con informacion sobre algunas variables antropometricas
 denigraficas y clinicas de un conjunto de 94 diabeticos
 (por compatibilidad se omiten acentos y caracteres no anglosajones)
 }
+\examples{
+data(osteo)
+dim(osteo)
+head(osteo)
+
+# Descriptiva de una variable cuantitativa
+grps(x = osteo$imc)
+
+# Descriptiva del imc segmentada por presencia de osteoporosis
+grps(x = osteo$imc, f = osteo$osteo_cue, grf = FALSE)
+}
 \keyword{datasets}

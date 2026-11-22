@@ -75,6 +75,7 @@ Informe con medidas descriptivas, test de normalidad (si se aportan datos indivi
 t-test con una y dos muestras, independientes o relacionadas  (se han omitido acentos deliberadamente por la incompatibilidad de caracteres de texto)
 }
 \examples{
+\donttest{
 # [A] Test con una muestra
 # [A.1] Con los datos individuales
 datos<-c(76,54,12,47,13,15,25,14,19,32,7)
@@ -118,7 +119,7 @@ testt(m=0.65, s=1.2, n=17)
 testt(m=peso, grupos=fuma, delta=5, potencia=0.95)
 testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, potencia=0.85)
 testt(m1=pre_tratamiento, m2=post_tratamiento, delta=0.5, beta=0.15)
-
+}
 }
 \references{
 Forthofer, R. N., & Lee, E. S. (1995). Introduction to Biostatistics.

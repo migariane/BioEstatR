@@ -2,3 +2,50 @@ url: https://migariane.github.io/BioEstatR/
 template:
   bootstrap: 5
 
+reference:
+- title: Analisis descriptivo
+  desc: Rutinas de estadistica descriptiva
+  contents:
+  - descriptiva
+  - freq
+  - grps
+  - grpsggp
+  - forma
+  - posicion
+
+- title: Datos
+  contents:
+  - osteo
+
+- title: Tablas de contingencia
+  contents:
+  - tabla2x2
+  - tablarxc
+
+- title: Estimacion por intervalos
+  contents:
+  - icm
+  - icp
+  - icl
+
+- title: Contrastes de hipotesis
+  contents:
+  - testnormal
+  - testt
+  - testf
+  - testp
+  - testwx
+  - testmcnemar
+
+- title: Modelos de regresion
+  contents:
+  - rls
+  - rlm
+  - rlogits
+  - rlogitm
+
+- title: Tamano de muestra
+  contents:
+  - nm
+  - np
+  - nl

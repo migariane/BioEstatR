@@ -37,4 +37,14 @@
 #'
 #' }
 #' @source \url{http://www.ugr.es/local/bioest/osteo.RData}
+#' @examples
+#' data(osteo)
+#' dim(osteo)
+#' head(osteo)
+#'
+#' # Descriptiva de una variable cuantitativa
+#' grps(x = osteo$imc)
+#'
+#' # Descriptiva del imc segmentada por presencia de osteoporosis
+#' grps(x = osteo$imc, f = osteo$osteo_cue, grf = FALSE)
 "osteo"

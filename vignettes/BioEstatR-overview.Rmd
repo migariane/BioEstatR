@@ -29,11 +29,59 @@ Todas las funciones han sido actualizadas con referencias científicas a la lite
 
 En la versión 1.0.2 se han corregido varios procedimientos inferenciales (el valor p del chi-cuadrado sin corrección por continuidad en `tabla2x2`, los intervalos exactos de Clopper-Pearson y Garwood-Poisson en sus casos frontera) y se ha mejorado la robustez de `rls`, `rlm` y `nl`. Véase `NEWS.md` para el detalle completo.
 
+En la versión 1.0.3 se incorporan tres funciones nuevas de análisis descriptivo: `descriptiva`, `forma` y `posicion`.
+
 ## Uso
 
-A continuación se muestran ejemplos básicos de uso de las funciones principales para la modelización lineal y logística.
+### Análisis descriptivo
 
-### Regresión Lineal Simple
+`descriptiva` es una rutina global que resume un vector o un `data.frame` completo. Detecta
+automáticamente qué variables son cuantitativas y cuáles cualitativas, y adapta la salida a cada
+tipo: para las cuantitativas devuelve las medidas de tendencia central y de dispersión (incluido
+el coeficiente de variación), los cuantiles, el rango intercuartílico y el número de valores
+atípicos; para las cualitativas, la tabla de frecuencias.
+
+```{r descriptiva}
+# Descriptiva completa de varias variables del conjunto de datos
+descriptiva(x = osteo[, c("edad", "imc", "hba1c")], decs = 2)
+```
+
+Se pueden añadir los intervalos de confianza para la media y la prueba de normalidad.
+
+```{r descriptiva-ic}
+descriptiva(x = osteo$imc, ic = TRUE, normal = TRUE, decs = 2)
+```
+
+Si se indica un factor de agrupación, la descriptiva de las variables cuantitativas se segmenta
+por sus niveles.
+
+```{r descriptiva-grupos}
+descriptiva(x = osteo$imc, f = osteo$osteo_cue, decs = 2)
+```
+
+#### Medidas de forma
+
+`forma` devuelve los coeficientes de asimetría y de curtosis muestrales corregidos (insesgados),
+con sus errores típicos, el contraste z de significación y la prueba de normalidad. Los valores
+coinciden con `e1071::skewness(type = 2)` y `e1071::kurtosis(type = 2)`, es decir, con la
+definición que usan SPSS y Excel.
+
+```{r forma}
+forma(x = osteo$imc, decs = 2)
+```
+
+#### Medidas de posición y valores atípicos
+
+`posicion` calcula los cuantiles que se le pidan (cuartiles, deciles o percentiles), el rango
+intercuartílico y detecta los valores atípicos leves y graves por el criterio de Tukey
+(1,5 y 3 veces el rango intercuartílico), de forma coherente con `boxplot.stats`.
+
+```{r posicion}
+posicion(x = osteo$imc, decs = 2)
+```
+
+### Regresión Lineal Simple
+
 
 ```{r rls}
 # Ejemplo de regresión lineal simple
