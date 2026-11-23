@@ -21,7 +21,7 @@ Para información sobre **BioEstatR** visite: [https://migariane.github.io/BioE
 
 **https://watzile.shinyapps.io/bioestatr/**
 
-Interfaz gráfica que permite usar todas las rutinas de BioEstatR seleccionando opciones con el ratón — pensada para prácticas y para estudiantes que no programán. Incluye descarga de informes en Word y carga de datos propios (CSV/Excel). El código de la aplicación está en [`shiny/`](shiny/).
+Interfaz gráfica que permite usar las rutinas de BioEstatR seleccionando opciones con el ratón — pensada para prácticas y para estudiantes que no programan. Incluye carga de datos propios (CSV/Excel), estadística descriptiva, normalidad, pruebas de medias (incluida la **prueba t para muestras relacionadas**), proporciones, intervalos de confianza, tablas 2×2, McNemar, regresión y **estudio de potencia y tamaño muestral** (`delta`). Permite ejecutar las pruebas t directamente sobre las variables de un `data.frame` cargado y descargar informes en Word. Identidad visual de la Universidad de Granada. El código de la aplicación está en [`shiny/`](shiny/).
 
 ## Introducción y Tutorial
 

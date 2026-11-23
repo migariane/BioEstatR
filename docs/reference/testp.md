@@ -533,8 +533,8 @@ testp(x1=a,x2=b,x0=1)
 #>   Muestra Respuesta
 #>           1   0 Total
 #>   a      98 152   250
-#>   b     135 115   250
-#>   Total 233 267   500
+#>   b     147 103   250
+#>   Total 245 255   500
 #> 
 #> 
 #> # Estimación para Respuesta = '1' 
@@ -544,31 +544,31 @@ testp(x1=a,x2=b,x0=1)
 #>   95%-IC(π₁) = (0.334, 0.454)
 #> 
 #>   Muestra = b
-#>   p₂ = 0.540  (q₂=1-p₂ = 0.460)
-#>   95%-IC(π₂) = (0.478, 0.601)
+#>   p₂ = 0.588  (q₂=1-p₂ = 0.412)
+#>   95%-IC(π₂) = (0.526, 0.647)
 #>   ____
 #>   * Intervalos obtenidos por el método de Wald ajustado (Agresti-Coull)
 #> 
 #> 
 #> # Test de homogeneidad para contrastar Ho:π₁=π₂ (π₂-π₁=0)
-#>   p|H₀ = 0.466  (q|H₀ = 0.534) 
+#>   p|H₀ = 0.490  (q|H₀ = 0.510) 
 #>   Método: 
 #>                                 Zexp    cpc   cdv  p.bilat b p.unilat u
-#>   Condicionado exacto (Fisher)     -      -     -    0.001 ✓  < 0.001 ✓
-#>   Condicionado adn (Yates)     3.227  0.004 E>8.8    0.001 ✓  < 0.001 ✓
-#>   Incondicionado adn           3.316 <0.001 E>7.7  < 0.001 ✓  < 0.001 ✓
+#>   Condicionado exacto (Fisher)     -      -     -  < 0.001 ✓  < 0.001 ✓
+#>   Condicionado adn (Yates)     4.294  0.004 E>8.8  < 0.001 ✓  < 0.001 ✓
+#>   Incondicionado adn           4.383 <0.001 E>7.7  < 0.001 ✓  < 0.001 ✓
 #>   ____
 #>   *   Alternativas: bilateral H₁:π₁≠π₂; unilateral H₁:π₁<π₂
-#>   **  E=116.5 es la frecuencia mínima esperada bajo H₀
+#>   **  E=122.5 es la frecuencia mínima esperada bajo H₀
 #>   *** adn = aproximación a la distribución normal
 #> 
 #> 
-#> # Estimación de la diferencia p₂-p₁=0.148
+#> # Estimación de la diferencia p₂-p₁=0.196
 #>   Aproximación a la distribución normal (válido): 
-#>   95%-IC(π₂-π₁) = (-0.238, -0.058) 
+#>   95%-IC(π₂-π₁) = (-0.286, -0.106) 
 #> 
 #>   Método de Agresti-Caffo: 
-#>   95%-IC(π₂-π₁) = (-0.233, -0.061) 
+#>   95%-IC(π₂-π₁) = (-0.28, -0.109) 
 #> 
 #> 
 

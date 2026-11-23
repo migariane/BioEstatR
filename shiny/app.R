@@ -8,7 +8,13 @@
 # Uso:  shiny::runApp("Scripts/BioEstatR/shiny")
 #   o dentro de RStudio: abrir este fichero y pulsar "Run App".
 #
-# Autor: interfaz docente sobre BioEstatR (Pedro Femia / M. A. Luque Fernandez)
+# Autor de la aplicacion:
+#   Miguel Angel Luque-Fernandez, MA - MSc - MPH - PhD
+#   Catedratico - Dpto. de Estadistica e Investigacion Operativa
+#   Universidad de Granada (UGR)
+# Coautores del paquete BioEstatR:
+#   Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y
+#   Juan Manuel Melchor Rodriguez
 # =============================================================================
 
 library(shiny)
@@ -37,6 +43,11 @@ library(BioEstatR)
 # -----------------------------------------------------------------------------
 # Utilidades
 # -----------------------------------------------------------------------------
+
+# Formatea un numero para mostrarlo dentro del codigo R generado.
+num_fmt <- function(x) {
+  format(x, trim = TRUE, scientific = FALSE, digits = 10)
+}
 
 # Ejecuta una llamada al paquete capturando la salida por consola (las funciones
 # de BioEstatR imprimen informes con cat()). Devuelve texto listo para mostrar.
@@ -70,12 +81,13 @@ capturar <- function(expr) {
 # Caja de resultado reutilizable: informe en texto + codigo R equivalente +
 # botones de descarga (Word y texto plano).
 caja_resultado <- function(id_salida, id_codigo, id_descarga) {
-  tagList(
+  div(
+    class = "result-card",
     verbatimTextOutput(id_salida),
     div(
       class = "d-flex gap-2 mt-2 mb-2",
-      downloadButton(id_descarga, "Descargar informe",
-                     class = "btn-sm btn-outline-success"),
+      downloadButton(id_descarga, "Descargar informe (.docx)",
+                     class = "btn-sm btn-success"),
       downloadButton(paste0(id_descarga, "_txt"), "Texto (.txt)",
                      class = "btn-sm btn-outline-secondary")
     ),
@@ -133,72 +145,403 @@ vars_num_con_cat <- function(df) {
 }
 
 # -----------------------------------------------------------------------------
+# Hoja de estilos (identidad corporativa UGR: azul marino + dorado)
+# -----------------------------------------------------------------------------
+estilos_ugr <- tags$style(HTML("
+  :root {
+    --ugr-blue:  #002855;
+    --ugr-blue2: #003d7c;
+    --ugr-gold:  #FFB81C;
+    --ugr-bg:    #f6f5f1;
+  }
+
+  body {
+    background-color: var(--ugr-bg);
+    color: #2d3748;
+    padding-bottom: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* --- Cabecera de marca --- */
+  .ugr-hero {
+    background: linear-gradient(135deg, #002855 0%, #003d7c 100%);
+    color: #ffffff;
+    padding: 26px 32px;
+    margin: 0 0 18px 0;
+    border-bottom: 4px solid var(--ugr-gold);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  }
+  .ugr-hero h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .ugr-hero .sub {
+    color: var(--ugr-gold);
+    font-weight: 600;
+    font-size: 15px;
+    margin: 6px 0 0 0;
+  }
+  .ugr-hero .author {
+    color: #cbd5e1;
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin: 12px 0 0 0;
+  }
+  .ugr-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .ugr-logo {
+    height: 74px;
+    background-color: rgba(255,255,255,0.96);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--ugr-gold);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+  }
+
+  /* --- Barra de navegacion (ribbon) --- */
+  .navbar {
+    background: linear-gradient(135deg, #002855 0%, #003d7c 100%) !important;
+    border: none !important;
+    border-bottom: 3px solid var(--ugr-gold) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    margin-bottom: 0;
+  }
+  .ugr-subbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 9px 22px;
+    font-size: 12.5px;
+    color: #64748b;
+    margin-bottom: 16px;
+  }
+  .ugr-subbar strong { color: var(--ugr-blue); }
+  .ugr-subbar .dot { color: var(--ugr-gold); font-weight: 700; }
+  .navbar .navbar-brand,
+  .navbar .navbar-nav > li > a {
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .navbar .navbar-nav > li > a:hover,
+  .navbar .navbar-nav > li > a:focus {
+    color: var(--ugr-gold) !important;
+    background: rgba(255,255,255,0.06) !important;
+  }
+  .navbar .navbar-nav > .active > a,
+  .navbar .navbar-nav > .active > a:hover,
+  .navbar .navbar-nav > .active > a:focus {
+    background: rgba(255,184,28,0.20) !important;
+    color: var(--ugr-gold) !important;
+    box-shadow: inset 0 -3px 0 var(--ugr-gold);
+  }
+
+  /* --- Tarjetas de contenido --- */
+  .well {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-top: 3px solid var(--ugr-blue2);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .sidebar-panel-scroll {
+    overflow-y: auto;
+    max-height: 86vh;
+  }
+  .result-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid var(--ugr-blue2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  }
+  .card-ugr {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid var(--ugr-blue2);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  }
+  .card-ugr > h3,
+  .card-ugr > h4 {
+    margin-top: 0;
+    color: var(--ugr-blue);
+    font-weight: 700;
+    border-bottom: 2px solid var(--ugr-gold);
+    padding-bottom: 8px;
+  }
+
+  /* --- Tipografia de titulos de panel --- */
+  h2, h3 {
+    color: var(--ugr-blue);
+    font-weight: 700;
+  }
+  h4 {
+    color: var(--ugr-blue);
+    font-weight: 700;
+  }
+
+  /* --- Salida de resultados --- */
+  pre {
+    background: #0f1b2d;
+    color: #e6edf3;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    max-height: 540px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  details {
+    margin-top: 14px;
+  }
+  details summary {
+    cursor: pointer;
+    color: var(--ugr-blue2);
+    font-weight: 600;
+  }
+  details pre {
+    background: #f1f5f9;
+    color: #1e293b;
+  }
+
+  .ayuda {
+    color: #6c757d;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  /* --- Botones --- */
+  .btn-primary {
+    background-color: var(--ugr-blue2);
+    border-color: var(--ugr-blue2);
+    font-weight: 600;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: var(--ugr-blue);
+    border-color: var(--ugr-blue);
+  }
+  .btn-success {
+    background-color: #157347;
+    border-color: #157347;
+  }
+
+  /* --- Tablas --- */
+  .table > thead > tr > th {
+    background: #eef2f7;
+    color: var(--ugr-blue);
+    font-weight: 700;
+  }
+
+  /* --- Pie de pagina --- */
+  .footer-ugr {
+    text-align: center;
+    color: #718096;
+    font-size: 12.5px;
+    line-height: 1.6;
+    padding: 18px 10px 26px 10px;
+    border-top: 3px solid var(--ugr-gold);
+    margin-top: 10px;
+    background: #ffffff;
+  }
+  .footer-ugr a { color: var(--ugr-blue2); font-weight: 600; }
+"))
+
+# -----------------------------------------------------------------------------
+# Cabecera de marca (logo UGR + titulo + autoria)
+# -----------------------------------------------------------------------------
+cabecera_ugr <- div(
+  class = "ugr-hero",
+  fluidRow(
+    column(
+      8,
+      h1("BioEstatR"),
+      p(class = "sub",
+        "Bioestadistica con R, sin escribir codigo - Docencia e investigacion"),
+      p(class = "author",
+        strong("Miguel Angel Luque-Fernandez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD"),
+        br(),
+        "Catedratico - Dpto. de Estadistica e Investigacion Operativa, Universidad de Granada",
+        br(),
+        tags$span(style = "color:#cbd5e1;",
+          "Coautores: Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y Juan Manuel Melchor Rodriguez")
+      )
+    ),
+    column(
+      4, class = "ugr-logo-container",
+      tags$img(src = "logo_ugr.png", class = "ugr-logo",
+               alt = "Logo Universidad de Granada")
+    )
+  )
+)
+
+barra_autor <- div(
+  class = "ugr-subbar",
+  tags$span(strong("Universidad de Granada"),
+            " - Dpto. de Estadistica e Investigacion Operativa"),
+  tags$span(class = "dot", " \u00b7 "),
+  tags$span(strong("Miguel Angel Luque-Fernandez"), ", PhD - Catedratico"),
+  tags$span(class = "dot", " \u00b7 "),
+  tags$span("Coautores: Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y ",
+            "Juan Manuel Melchor Rodriguez")
+)
+
+pie_ugr <- tags$footer(
+  class = "footer-ugr",
+  HTML("BioEstatR &middot; Rutinas de bioestadistica en R &middot; "),
+  tags$a(href = "https://migariane.github.io/BioEstatR/", target = "_blank",
+         "migariane.github.io/BioEstatR"),
+  HTML(" &middot; "),
+  tags$a(href = "https://www.ugr.es", target = "_blank", "Universidad de Granada"),
+  tags$br(),
+  "Miguel Angel Luque-Fernandez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD - ",
+  "Catedratico, Dpto. de Estadistica e Investigacion Operativa, UGR",
+  tags$br(),
+  tags$span(style = "color:#94a3b8;",
+    "Coautores: Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y Juan Manuel Melchor Rodriguez")
+)
+
+# -----------------------------------------------------------------------------
 # Interfaz
 # -----------------------------------------------------------------------------
 
 ui <- navbarPage(
-  title = "BioEstatR · Bioestadistica con R",
-  windowTitle = "BioEstatR - Bioestadistica con R",
-  collapsible = TRUE,
-
-  header = tags$head(
-    tags$style(HTML("
-      .navbar-brand { font-weight: 600; }
-      body { padding-bottom: 2rem; }
-      pre { background: #f7f7f9; border: 1px solid #e3e3e6; border-radius: 6px;
-            padding: 12px; font-size: 12.5px; line-height: 1.45;
-            max-height: 460px; overflow-y: auto; }
-      details { margin-top: 14px; }
-      details summary { cursor: pointer; color: #0d6efd; font-weight: 500; }
-      .ayuda { color: #6c757d; font-size: 13px; margin-bottom: 10px; }
-      .resultado { margin-top: 8px; }
-    "))
+  title = tagList(
+    tags$img(src = "logo_ugr.png",
+             style = "height:26px; background:#fff; padding:2px 6px; border-radius:4px; margin-right:8px; vertical-align:middle;",
+             alt = "UGR"),
+    "BioEstatR"
   ),
+  windowTitle = "BioEstatR - Bioestadistica con R (UGR)",
+  collapsible = TRUE,
+  inverse = TRUE,
 
-  # ---------------------------------------------------------------- Inicio ----
+  header = tagList(estilos_ugr, barra_autor),
+  footer = pie_ugr,
+
+  # ------------------------------------------------------- Introduccion ----
   tabPanel(
-    "Inicio",
+    "Introduccion",
+    cabecera_ugr,
     fluidRow(
       column(
-        12,
-        h2("Bioestadistica con R, sin escribir codigo"),
+        8,
+        div(
+          class = "card-ugr",
+          h3("Bioestadistica con R, sin escribir codigo"),
+          p(class = "ayuda",
+            "Esta aplicacion permite usar las funciones del paquete ",
+            strong("BioEstatR"), " seleccionando opciones con el raton. ",
+            "En cada resultado puede desplegar ", em("Ver el codigo R equivalente"),
+            " para aprender la instruccion que produce ese analisis."),
+          hr(),
+          h4("Como funciona"),
+          tags$ol(
+            tags$li("Elija un conjunto de datos en la pestana ", strong("Mis datos"),
+                    " (por defecto ", code("osteo"),
+                    ", que acompana al paquete: 94 pacientes con 27 variables)."),
+            tags$li("Vaya a la pestana del analisis que necesite."),
+            tags$li("Seleccione las variables y pulse el boton de calcular."),
+            tags$li("Copie el informe, o abra el codigo R para reproducirlo.")
+          ),
+          hr(),
+          h4("Analisis de medias con potencia y tamano muestral"),
+          p(class = "ayuda",
+            "La pestana ", strong("Medias"), " incluye el ",
+            strong("t-test para medidas repetidas"), " (dos muestras relacionadas) ",
+            "y, para cualquiera de los contrastes de medias, el ",
+            strong("estudio de potencia y la estimacion del tamano muestral"),
+            " mediante los parametros ", code("delta"), " (efecto a detectar) y ",
+            code("potencia"),
+            ", tal y como los ofrece la funcion ", code("testt"), ".")
+        )
+      ),
+      column(
+        4,
+        div(
+          class = "card-ugr",
+          h4("Pestanas disponibles"),
+          tags$table(
+            class = "table table-sm table-striped",
+            tags$thead(tags$tr(tags$th("Pestana"), tags$th("Funcion"))),
+            tags$tbody(
+              tags$tr(tags$td("Mis datos"),       tags$td(code("osteo / CSV / Excel"))),
+              tags$tr(tags$td("Descriptiva"),     tags$td(code("descriptiva, freq"))),
+              tags$tr(tags$td("Normalidad"),      tags$td(code("testnormal"))),
+              tags$tr(tags$td("Medias"),          tags$td(code("testt"))),
+              tags$tr(tags$td("Proporciones"),    tags$td(code("testp"))),
+              tags$tr(tags$td("Intervalos"),      tags$td(code("icm, icp"))),
+              tags$tr(tags$td("Tablas 2x2"),      tags$td(code("tabla2x2"))),
+              tags$tr(tags$td("McNemar"),         tags$td(code("testmcnemar"))),
+              tags$tr(tags$td("Regresion"),       tags$td(code("rls, rlm, rlogits"))),
+              tags$tr(tags$td("Tamano muestral"), tags$td(code("nm, np, nl")))
+            )
+          ),
+          hr(),
+          p(class = "ayuda",
+            "Version del paquete instalada: ",
+            textOutput("version_pkg", inline = TRUE))
+        )
+      )
+    )
+  ),
+
+  # ----------------------------------------------------------- Mis datos ----
+  tabPanel(
+    "Mis datos",
+    sidebarLayout(
+      sidebarPanel(
+        width = 3,
+        class = "sidebar-panel-scroll",
         p(class = "ayuda",
-          "Esta aplicacion permite usar las funciones del paquete ",
-          strong("BioEstatR"), " seleccionando opciones con el raton. ",
-          "En cada resultado puede desplegar ", em("Ver el codigo R equivalente"),
-          " para aprender la instruccion que produce ese analisis."),
-        hr(),
-        h4("Como funciona"),
-        tags$ol(
-          tags$li("Elija un conjunto de datos (por defecto ", code("osteo"),
-                  ", que acompana al paquete: 94 pacientes con 27 variables)."),
-          tags$li("Vaya a la pestana del analisis que necesite."),
-          tags$li("Seleccione las variables y pulse el boton de calcular."),
-          tags$li("Copie el informe, o abra el codigo R para reproducirlo.")
+          "Cargue un fichero CSV, Excel o los datos incluidos en el paquete."),
+        radioButtons("src", "Origen de los datos",
+          choices = c("Incluidos en el paquete" = "pkg",
+                      "Subir fichero" = "file"),
+          selected = "pkg"),
+        conditionalPanel(
+          "input.src == 'pkg'",
+          selectInput("pkg_data", "Conjunto de datos",
+            choices = c("osteo" = "osteo"))
+        ),
+        conditionalPanel(
+          "input.src == 'file'",
+          fileInput("fichero", "Fichero (.csv, .txt, .xlsx)",
+            accept = c(".csv", ".txt", ".xlsx", ".xls")),
+          checkboxInput("cabecera", "La primera fila contiene los nombres", TRUE),
+          selectInput("sep", "Separador",
+            choices = c("Coma" = ",", "Punto y coma" = ";", "Tabulador" = "\t"),
+            selected = ","),
+          checkboxInput("decimal_coma", "Usar coma como separador decimal", FALSE)
         ),
         hr(),
-        h4("Pestanas disponibles"),
-        tags$table(
-          class = "table table-sm table-striped",
-          tags$thead(tags$tr(tags$th("Pestana"), tags$th("Funcion"), tags$th("Para que sirve"))),
-          tags$tbody(
-            tags$tr(tags$td("Descriptiva"),   tags$td(code("descriptiva")), tags$td("Resumen de una o varias variables")),
-            tags$tr(tags$td("Descriptiva"),   tags$td(code("freq")),         tags$td("Tabla de frecuencias")),
-            tags$tr(tags$td("Normalidad"),    tags$td(code("testnormal")),   tags$td("Shapiro-Wilk, QQ-plot")),
-            tags$tr(tags$td("Medias"),        tags$td(code("testt")),        tags$td("t de Student: 1 y 2 muestras")),
-            tags$tr(tags$td("Proporciones"),  tags$td(code("testp")),        tags$td("Contraste de una proporcion")),
-            tags$tr(tags$td("Intervalos"),    tags$td(code("icm, icp")),     tags$td("IC para media y proporcion")),
-            tags$tr(tags$td("Tablas 2x2"),    tags$td(code("tabla2x2")),     tags$td("Chi-cuadrado, OR, RR")),
-            tags$tr(tags$tr(tags$td("Tablas RxC"), tags$td(code("tablarxc")), tags$td("Chi-cuadrado, asociacion"))),
-            tags$tr(tags$td("McNemar"),       tags$td(code("testmcnemar")),   tags$td("Datos apareados")),
-            tags$tr(tags$td("Regresion"),     tags$td(code("rls, rlm")),      tags$td("Lineal simple y multiple")),
-            tags$tr(tags$td("Regresion"),     tags$td(code("rlogits")),       tags$td("Logistica")),
-            tags$tr(tags$td("Tamano muestral"), tags$td(code("nm, np, nl")),  tags$td("Calcular n necesario"))
-          )
+        verbatimTextOutput("resumen_datos")
+      ),
+      mainPanel(
+        width = 9,
+        div(
+          class = "card-ugr",
+          h4("Vista de los datos"),
+          tableOutput("tabla_datos")
         ),
-        hr(),
-        p(class = "ayuda",
-          "Version del paquete: ", textOutput("version_pkg", inline = TRUE))
+        div(
+          class = "card-ugr",
+          h4("Estructura"),
+          verbatimTextOutput("str_datos")
+        )
       )
     )
   ),
@@ -209,6 +552,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         uiOutput("ui_descr_dataset"),
         uiOutput("ui_descr_vars"),
         checkboxInput("descr_ic", "Anadir intervalos de confianza", FALSE),
@@ -223,11 +567,10 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Analisis descriptivo"),
-        caja_resultado("descr_out", "descr_code", "descr_dl"),
-        hr(),
-        h4("Distribucion de frecuencias"),
-        caja_resultado("freq_out", "freq_code", "freq_dl")
+        div(class = "card-ugr", h4("Analisis descriptivo"),
+            caja_resultado("descr_out", "descr_code", "descr_dl")),
+        div(class = "card-ugr", h4("Distribucion de frecuencias"),
+            caja_resultado("freq_out", "freq_code", "freq_dl"))
       )
     )
   ),
@@ -238,6 +581,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         uiOutput("ui_norm_dataset"),
         uiOutput("ui_norm_var"),
         p(class = "ayuda", "Contrasta si la variable sigue una distribucion normal (Shapiro-Wilk)."),
@@ -245,9 +589,9 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Test de normalidad"),
-        caja_resultado("norm_out", "norm_code", "norm_dl"),
-        plotOutput("norm_plot", height = "420px")
+        div(class = "card-ugr", h4("Test de normalidad"),
+            caja_resultado("norm_out", "norm_code", "norm_dl"),
+            plotOutput("norm_plot", height = "420px"))
       )
     )
   ),
@@ -258,32 +602,113 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         radioButtons("t_tipo", "Tipo de contraste",
-          choices = c("Una muestra" = "una", "Dos muestras independientes" = "dos"),
+          choices = c(
+            "Una muestra" = "una",
+            "Dos muestras independientes" = "dos",
+            "Dos muestras relacionadas (medidas repetidas)" = "rel"
+          ),
           selected = "una"),
+        radioButtons("t_fuente", "Origen de los datos",
+          choices = c(
+            "Datos resumidos (manual)" = "manual",
+            "Variables de los datos cargados" = "datos"
+          ),
+          selected = "manual"),
+
+        # ---- Una muestra: datos manuales
         conditionalPanel(
-          "input.t_tipo == 'una'",
+          "input.t_tipo == 'una' && input.t_fuente == 'manual'",
           numericInput("t_m", "Media muestral", 25, step = 0.1),
           numericInput("t_s", "Desviacion tipica", 4, min = 0, step = 0.1),
           numericInput("t_n", "Tamano muestral", 30, min = 2, step = 1),
           numericInput("t_m0", "Media hipotetica (H0)", 23, step = 0.1)
         ),
+        # ---- Una muestra: variable del dataset
         conditionalPanel(
-          "input.t_tipo == 'dos'",
+          "input.t_tipo == 'una' && input.t_fuente == 'datos'",
+          uiOutput("ui_t_una_var"),
+          numericInput("t_data_una_m0", "Media hipotetica (H0)", 0, step = 0.1)
+        ),
+
+        # ---- Dos independientes: datos manuales
+        conditionalPanel(
+          "input.t_tipo == 'dos' && input.t_fuente == 'manual'",
           numericInput("t_m1", "Media grupo 1", 25, step = 0.1),
           numericInput("t_s1", "Desv. tipica grupo 1", 4, min = 0, step = 0.1),
           numericInput("t_n1", "n grupo 1", 30, min = 2, step = 1),
           numericInput("t_m2", "Media grupo 2", 23, step = 0.1),
           numericInput("t_s2", "Desv. tipica grupo 2", 3.5, min = 0, step = 0.1),
-          numericInput("t_n2", "n grupo 2", 30, min = 2, step = 1)
+          numericInput("t_n2", "n grupo 2", 30, min = 2, step = 1),
+          numericInput("t_m0_dos", "Diferencia hipotetica (H0: m1-m2)", 0, step = 0.1)
+        ),
+        # ---- Dos independientes: variables del dataset
+        conditionalPanel(
+          "input.t_tipo == 'dos' && input.t_fuente == 'datos'",
+          uiOutput("ui_t_dos_y"),
+          uiOutput("ui_t_dos_g"),
+          numericInput("t_data_dos_m0", "Diferencia hipotetica (H0: m1-m2)", 0, step = 0.1)
+        ),
+
+        # ---- Relacionadas: datos manuales
+        conditionalPanel(
+          "input.t_tipo == 'rel' && input.t_fuente == 'manual'",
+          p(class = "ayuda",
+            "Dos medidas sobre los mismos sujetos (antes / despues). ",
+            "El contraste se realiza sobre la diferencia intra-sujeto."),
+          radioButtons("t_rel_modo", "Datos de partida",
+            choices = c(
+              "Medias pre/post + correlacion" = "prepost",
+              "Diferencia resumida (media y DT)" = "dif"
+            ),
+            selected = "prepost"),
+          conditionalPanel(
+            "input.t_rel_modo == 'prepost'",
+            numericInput("t_pre_m", "Media pre", 24, step = 0.1),
+            numericInput("t_pre_s", "Desv. tipica pre", 4, min = 0, step = 0.1),
+            numericInput("t_post_m", "Media post", 25, step = 0.1),
+            numericInput("t_post_s", "Desv. tipica post", 4.5, min = 0, step = 0.1),
+            numericInput("t_rel_r", "Correlacion pre-post (r)", 0.5, -0.99, 0.99, 0.01),
+            numericInput("t_rel_n", "Numero de parejas (n)", 30, min = 2, step = 1),
+            numericInput("t_rel_m0", "Diferencia hipotetica (H0)", 0, step = 0.1)
+          ),
+          conditionalPanel(
+            "input.t_rel_modo == 'dif'",
+            numericInput("t_dif_m", "Media de la diferencia", 1, step = 0.1),
+            numericInput("t_dif_s", "Desv. tipica de la diferencia", 3, min = 0, step = 0.1),
+            numericInput("t_dif_n", "Numero de parejas (n)", 30, min = 2, step = 1),
+            numericInput("t_dif_m0", "Diferencia hipotetica (H0)", 0, step = 0.1)
+          )
+        ),
+        # ---- Relacionadas: variables del dataset
+        conditionalPanel(
+          "input.t_tipo == 'rel' && input.t_fuente == 'datos'",
+          p(class = "ayuda",
+            "Dos variables numericas medidas sobre los mismos sujetos ",
+            "(cada fila es un sujeto; se aparean v1 y v2)."),
+          uiOutput("ui_t_rel_v1"),
+          uiOutput("ui_t_rel_v2"),
+          numericInput("t_data_rel_m0", "Diferencia hipotetica (H0)", 0, step = 0.1)
         ),
         numericInput("t_alfa", "Nivel de significacion (alfa)", 0.05, 0.001, 0.2, 0.001),
+        hr(),
+        checkboxInput("t_estudio", "Estudiar potencia y tamano muestral", FALSE),
+        conditionalPanel(
+          "input.t_estudio == true",
+          p(class = "ayuda",
+            "Efecto a detectar (", code("delta"), ") y potencia deseada (",
+            code("potencia"), "), igual que en ", code("testt"), "."),
+          numericInput("t_delta", "Efecto a detectar (delta)", 0.5, min = 0.001, step = 0.1),
+          numericInput("t_potencia", "Potencia deseada (1 - beta)", 0.8, 0.5, 0.999, 0.05)
+        ),
         actionButton("t_go", "Calcular", class = "btn-primary w-100")
       ),
       mainPanel(
         width = 9,
-        h4("Comparacion de medias (t de Student)"),
-        caja_resultado("t_out", "t_code", "t_dl")
+        div(class = "card-ugr",
+            h4("Comparacion de medias (t de Student)"),
+            caja_resultado("t_out", "t_code", "t_dl"))
       )
     )
   ),
@@ -294,6 +719,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         numericInput("p_x", "Numero de exitos", 40, min = 0, step = 1),
         numericInput("p_n", "Tamano muestral", 100, min = 1, step = 1),
         numericInput("p_p0", "Proporcion hipotetica (H0)", 0.5, 0.001, 0.999, 0.001),
@@ -302,8 +728,8 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Contraste de una proporcion"),
-        caja_resultado("p_out", "p_code", "p_dl")
+        div(class = "card-ugr", h4("Contraste de una proporcion"),
+            caja_resultado("p_out", "p_code", "p_dl"))
       )
     )
   ),
@@ -314,6 +740,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         radioButtons("ic_tipo", "Que desea estimar",
           choices = c("Media" = "media", "Proporcion" = "prop")),
         conditionalPanel(
@@ -332,8 +759,8 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Estimacion por intervalo"),
-        caja_resultado("ic_out", "ic_code", "ic_dl")
+        div(class = "card-ugr", h4("Estimacion por intervalo"),
+            caja_resultado("ic_out", "ic_code", "ic_dl"))
       )
     )
   ),
@@ -344,11 +771,12 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         p(class = "ayuda", "Introduzca las cuatro frecuencias observadas."),
-        numericInput("x2_o11", "Fila 1 · Columna 1", 25, min = 0, step = 1),
-        numericInput("x2_o12", "Fila 1 · Columna 2", 10, min = 0, step = 1),
-        numericInput("x2_o21", "Fila 2 · Columna 1", 12, min = 0, step = 1),
-        numericInput("x2_o22", "Fila 2 · Columna 2", 23, min = 0, step = 1),
+        numericInput("x2_o11", "Fila 1 - Columna 1", 25, min = 0, step = 1),
+        numericInput("x2_o12", "Fila 1 - Columna 2", 10, min = 0, step = 1),
+        numericInput("x2_o21", "Fila 2 - Columna 1", 12, min = 0, step = 1),
+        numericInput("x2_o22", "Fila 2 - Columna 2", 23, min = 0, step = 1),
         selectInput("x2_estudio", "Diseno del estudio",
           choices = c("Transversal / cohorte" = "T",
                       "Casos y controles" = "C")),
@@ -361,8 +789,8 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Analisis de tabla 2x2"),
-        caja_resultado("x2_out", "x2_code", "x2_dl")
+        div(class = "card-ugr", h4("Analisis de tabla 2x2"),
+            caja_resultado("x2_out", "x2_code", "x2_dl"))
       )
     )
   ),
@@ -373,6 +801,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         p(class = "ayuda", "Datos apareados (antes / despues). Introduzca las 4 casillas."),
         numericInput("mc_n11", "Antes + / Despues +", 20, min = 0, step = 1),
         numericInput("mc_n12", "Antes + / Despues -", 15, min = 0, step = 1),
@@ -383,8 +812,8 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Test de McNemar"),
-        caja_resultado("mc_out", "mc_code", "mc_dl")
+        div(class = "card-ugr", h4("Test de McNemar"),
+            caja_resultado("mc_out", "mc_code", "mc_dl"))
       )
     )
   ),
@@ -395,6 +824,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         uiOutput("ui_reg_dataset"),
         radioButtons("reg_tipo", "Modelo",
           choices = c("Lineal simple" = "rls",
@@ -407,8 +837,8 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Modelo de regresion"),
-        caja_resultado("reg_out", "reg_code", "reg_dl")
+        div(class = "card-ugr", h4("Modelo de regresion"),
+            caja_resultado("reg_out", "reg_code", "reg_dl"))
       )
     )
   ),
@@ -419,6 +849,7 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         width = 3,
+        class = "sidebar-panel-scroll",
         radioButtons("n_tipo", "Que desea calcular",
           choices = c("Media" = "nm",
                       "Proporcion" = "np",
@@ -450,49 +881,8 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        h4("Tamano muestral necesario"),
-        caja_resultado("n_out", "n_code", "n_dl")
-      )
-    )
-  ),
-
-  # ------------------------------------------------------------- Datasets ----
-  tabPanel(
-    "Mis datos",
-    sidebarLayout(
-      sidebarPanel(
-        width = 3,
-        p(class = "ayuda",
-          "Cargue un fichero CSV, Excel o los datos incluidos en el paquete."),
-        radioButtons("src", "Origen de los datos",
-          choices = c("Incluidos en el paquete" = "pkg",
-                      "Subir fichero" = "file"),
-          selected = "pkg"),
-        conditionalPanel(
-          "input.src == 'pkg'",
-          selectInput("pkg_data", "Conjunto de datos",
-            choices = c("osteo" = "osteo"))
-        ),
-        conditionalPanel(
-          "input.src == 'file'",
-          fileInput("fichero", "Fichero (.csv, .txt, .xlsx)",
-            accept = c(".csv", ".txt", ".xlsx", ".xls")),
-          checkboxInput("cabecera", "La primera fila contiene los nombres", TRUE),
-          selectInput("sep", "Separador",
-            choices = c("Coma" = ",", "Punto y coma" = ";", "Tabulador" = "\t"),
-            selected = ","),
-          checkboxInput("decimal_coma", "Usar coma como separador decimal", FALSE)
-        ),
-        hr(),
-        verbatimTextOutput("resumen_datos")
-      ),
-      mainPanel(
-        width = 9,
-        h4("Vista de los datos"),
-        tableOutput("tabla_datos"),
-        hr(),
-        h4("Estructura"),
-        verbatimTextOutput("str_datos")
+        div(class = "card-ugr", h4("Tamano muestral necesario"),
+            caja_resultado("n_out", "n_code", "n_dl"))
       )
     )
   ),
@@ -502,39 +892,54 @@ ui <- navbarPage(
     "Ayuda",
     fluidRow(column(
       12,
-      h3("Ayuda rapida"),
-      h4("Que es un contraste de hipotesis"),
-      p("Un contraste compara lo que observamos en la muestra con lo que ",
-        "esperariamos si cierta hipotesis nula (H0) fuese cierta. Si el ",
-        strong("valor p"), " es menor que el nivel de significacion alfa ",
-        "(habitualmente 0,05), rechazamos H0."),
-      h4("Como interpretar el valor p"),
-      tags$ul(
-        tags$li("p < 0,05: hay evidencia estadistica contra H0."),
-        tags$li("p >= 0,05: no hay evidencia suficiente para rechazar H0 ",
-                "(no es lo mismo que demostrar que H0 es cierta).")
-      ),
-      h4("Intervalos de confianza"),
-      p("Un IC al 95% es un rango de valores plausibles para el parametro ",
-        "poblacional. Si el IC del 95% para una diferencia de medias incluye ",
-        "el 0, el contraste correspondiente no sera significativo al 5%."),
-      h4("Normalidad"),
-      p("Muchos contrastes (t de Student, regresion lineal) suponen que los ",
-        "datos siguen una distribucion normal. Use la pestana Normalidad para ",
-        "comprobarlo antes de aplicarlos."),
-      h4("Regresion logistica"),
-      p("Se usa cuando la variable respuesta es binaria (si/no). El modelo ",
-        "estima como cambia el logaritmo de la odds (log-odds) al aumentar una ",
-        "unidad la variable explicativa; exp(beta) es la odds ratio."),
-      hr(),
-      h4("Documentacion completa"),
-      p("Cada funcion esta documentada en R con ", code("?nombre_funcion"),
-        ", y en el sitio web del paquete: ",
-        tags$a(href = "https://migariane.github.io/BioEstatR/",
-               target = "_blank", "migariane.github.io/BioEstatR")),
-      h4("Reproducir en R"),
-      p("En cada resultado puede desplegar el codigo R equivalente. Copielo en ",
-        "la consola de R o en un script para reproducir el analisis exacto.")
+      div(
+        class = "card-ugr",
+        h3("Ayuda rapida"),
+        h4("Que es un contraste de hipotesis"),
+        p("Un contraste compara lo que observamos en la muestra con lo que ",
+          "esperariamos si cierta hipotesis nula (H0) fuese cierta. Si el ",
+          strong("valor p"), " es menor que el nivel de significacion alfa ",
+          "(habitualmente 0,05), rechazamos H0."),
+        h4("Como interpretar el valor p"),
+        tags$ul(
+          tags$li("p < 0,05: hay evidencia estadistica contra H0."),
+          tags$li("p >= 0,05: no hay evidencia suficiente para rechazar H0 ",
+                  "(no es lo mismo que demostrar que H0 es cierta).")
+        ),
+        h4("Intervalos de confianza"),
+        p("Un IC al 95% es un rango de valores plausibles para el parametro ",
+          "poblacional. Si el IC del 95% para una diferencia de medias incluye ",
+          "el 0, el contraste correspondiente no sera significativo al 5%."),
+        h4("Medidas repetidas"),
+        p("Cuando las dos medidas se toman sobre los mismos sujetos (antes / ",
+          "despues), las observaciones no son independientes. El t-test para ",
+          "muestras relacionadas se aplica sobre la diferencia intra-sujeto ",
+          "(post - pre). A partir de las medias y desviaciones tipicas de cada ",
+          "medida y de su correlacion r, la desviacion tipica de la diferencia ",
+          "es s_d = sqrt(s1^2 + s2^2 - 2*r*s1*s2)."),
+        h4("Potencia y tamano muestral"),
+        p("La potencia (1 - beta) es la probabilidad de detectar un efecto real ",
+          "de magnitud delta. Con ", code("testt"), " puede fijar delta y la ",
+          "potencia deseada para estimar cuantos sujetos se necesitan. Un ",
+          "estudio con baja potencia puede no detectar diferencias reales."),
+        h4("Normalidad"),
+        p("Muchos contrastes (t de Student, regresion lineal) suponen que los ",
+          "datos siguen una distribucion normal. Use la pestana Normalidad para ",
+          "comprobarlo antes de aplicarlos."),
+        h4("Regresion logistica"),
+        p("Se usa cuando la variable respuesta es binaria (si/no). El modelo ",
+          "estima como cambia el logaritmo de la odds (log-odds) al aumentar una ",
+          "unidad la variable explicativa; exp(beta) es la odds ratio."),
+        hr(),
+        h4("Documentacion completa"),
+        p("Cada funcion esta documentada en R con ", code("?nombre_funcion"),
+          ", y en el sitio web del paquete: ",
+          tags$a(href = "https://migariane.github.io/BioEstatR/",
+                 target = "_blank", "migariane.github.io/BioEstatR")),
+        h4("Reproducir en R"),
+        p("En cada resultado puede desplegar el codigo R equivalente. Copielo en ",
+          "la consola de R o en un script para reproducir el analisis exacto.")
+      )
     ))
   )
 )
@@ -685,6 +1090,55 @@ server <- function(input, output, session) {
       choices = num, selected = num[1])
   })
 
+  # ---- Selectores para el t-test sobre variables del data.frame ------------
+  output$ui_t_una_var <- renderUI({
+    df <- datos()
+    num <- vars_num(df)
+    if (!length(num)) num <- names(df)
+    selectInput("t_una_var", "Variable numerica (muestra)",
+      choices = num,
+      selected = if ("peso" %in% num) "peso" else num[1])
+  })
+
+  output$ui_t_dos_y <- renderUI({
+    df <- datos()
+    num <- vars_num(df)
+    if (!length(num)) num <- names(df)
+    selectInput("t_dos_y", "Variable respuesta (numerica)",
+      choices = num,
+      selected = if ("peso" %in% num) "peso" else num[1])
+  })
+
+  output$ui_t_dos_g <- renderUI({
+    df <- datos()
+    cats <- vars_cat(df)
+    if (!length(cats)) cats <- names(df)
+    bin <- cats[vapply(df[cats], function(v) {
+      nlevels(droplevels(as.factor(v))) == 2
+    }, logical(1))]
+    choices <- c(bin, setdiff(cats, bin))
+    selectInput("t_dos_g", "Variable de agrupacion (2 niveles)",
+      choices = choices,
+      selected = if ("sexo" %in% choices) "sexo" else choices[1])
+  })
+
+  output$ui_t_rel_v1 <- renderUI({
+    df <- datos()
+    num <- vars_num(df)
+    if (!length(num)) num <- names(df)
+    selectInput("t_rel_v1", "Variable 1 (medida inicial)",
+      choices = num, selected = num[1])
+  })
+
+  output$ui_t_rel_v2 <- renderUI({
+    df <- datos()
+    num <- vars_num(df)
+    if (!length(num)) num <- names(df)
+    selectInput("t_rel_v2", "Variable 2 (medida final)",
+      choices = num,
+      selected = if (length(num) > 1) num[2] else num[1])
+  })
+
   # ---- Descriptiva ----------------------------------------------------------
   observeEvent(input$descr_go, {
     req(input$descr_vars)
@@ -758,23 +1212,129 @@ server <- function(input, output, session) {
     })
   })
 
-  # ---- t de Student ---------------------------------------------------------
+  # ---- t de Student (1 muestra, 2 independientes, 2 relacionadas) -----------
   observeEvent(input$t_go, {
-    if (identical(input$t_tipo, "una")) {
+    estudio <- isTRUE(input$t_estudio)
+    potencia <- if (estudio) input$t_potencia else 0.8
+    beta <- 1 - potencia
+    delta <- if (estudio) input$t_delta else 0
+
+    if (estudio) {
+      validate(
+        need(is.finite(input$t_delta) && input$t_delta > 0,
+             "El efecto a detectar (delta) debe ser > 0."),
+        need(is.finite(input$t_potencia) && input$t_potencia > 0.5 &&
+               input$t_potencia < 1,
+             "La potencia deseada debe estar entre 0.5 y 1.")
+      )
+    }
+
+    # Argumentos y comentario para el codigo R generado
+    args <- character()
+    comentario <- ""
+
+    if (identical(input$t_fuente, "datos")) {
+      # ---- El test se calcula sobre variables del data.frame cargado ----
+      df <- datos()
+      if (identical(input$t_tipo, "una")) {
+        req(input$t_una_var)
+        validate(
+          need(input$t_una_var %in% names(df), "Variable no valida."),
+          need(is.numeric(df[[input$t_una_var]]), "La variable debe ser numerica."),
+          need(sum(is.finite(df[[input$t_una_var]])) >= 2,
+               "La variable necesita al menos 2 valores no faltantes.")
+        )
+        r <- capturar(testt(m = df[[input$t_una_var]],
+                            m0 = input$t_data_una_m0, alfa = input$t_alfa,
+                            delta = delta, potencia = potencia, beta = beta,
+                            grf = FALSE))
+        comentario <- paste0("# Contraste de una media sobre la variable ",
+                             input$t_una_var)
+        args <- c(paste0("m = datos$", input$t_una_var),
+                  paste0("m0 = ", num_fmt(input$t_data_una_m0)),
+                  paste0("alfa = ", num_fmt(input$t_alfa)))
+
+      } else if (identical(input$t_tipo, "dos")) {
+        req(input$t_dos_y, input$t_dos_g)
+        validate(
+          need(all(c(input$t_dos_y, input$t_dos_g) %in% names(df)),
+               "Variables no validas."),
+          need(is.numeric(df[[input$t_dos_y]]), "La variable respuesta debe ser numerica.")
+        )
+        g <- droplevels(as.factor(df[[input$t_dos_g]]))
+        validate(need(nlevels(g) == 2,
+          "La variable de agrupacion debe tener exactamente 2 niveles."))
+        r <- capturar(testt(m = df[[input$t_dos_y]], grupos = g,
+                            m0 = input$t_data_dos_m0, alfa = input$t_alfa,
+                            delta = delta, potencia = potencia, beta = beta,
+                            grf = FALSE))
+        comentario <- paste0("# Dos muestras independientes: ", input$t_dos_y,
+                             " segun ", input$t_dos_g)
+        args <- c(paste0("m = datos$", input$t_dos_y),
+                  paste0("grupos = datos$", input$t_dos_g),
+                  paste0("m0 = ", num_fmt(input$t_data_dos_m0)),
+                  paste0("alfa = ", num_fmt(input$t_alfa)))
+
+      } else {
+        req(input$t_rel_v1, input$t_rel_v2)
+        validate(
+          need(all(c(input$t_rel_v1, input$t_rel_v2) %in% names(df)),
+               "Variables no validas."),
+          need(is.numeric(df[[input$t_rel_v1]]) && is.numeric(df[[input$t_rel_v2]]),
+               "Ambas variables deben ser numericas."),
+          need(!identical(input$t_rel_v1, input$t_rel_v2),
+               "Seleccione dos variables distintas.")
+        )
+        v1 <- df[[input$t_rel_v1]]
+        v2 <- df[[input$t_rel_v2]]
+        validate(need(sum(stats::complete.cases(cbind(v1, v2))) >= 2,
+                      "Se necesitan al menos 2 parejas completas."))
+        r <- capturar(testt(m1 = df[[input$t_rel_v1]],
+                            m2 = df[[input$t_rel_v2]], par = TRUE,
+                            m0 = input$t_data_rel_m0, alfa = input$t_alfa,
+                            delta = delta, potencia = potencia, beta = beta,
+                            grf = FALSE))
+        comentario <- paste0("# Dos muestras relacionadas: ", input$t_rel_v1,
+                             " y ", input$t_rel_v2, " (par = TRUE)")
+        args <- c(paste0("m1 = datos$", input$t_rel_v1),
+                  paste0("m2 = datos$", input$t_rel_v2),
+                  "par = TRUE",
+                  paste0("m0 = ", num_fmt(input$t_data_rel_m0)),
+                  paste0("alfa = ", num_fmt(input$t_alfa)))
+      }
+
+      # Mostrar los nombres reales de las variables en el informe
+      if (identical(input$t_tipo, "una")) {
+        r$texto <- gsub("df[[input$t_una_var]]", input$t_una_var,
+                        r$texto, fixed = TRUE)
+      } else if (identical(input$t_tipo, "dos")) {
+        r$texto <- gsub("df[[input$t_dos_y]]", input$t_dos_y,
+                        r$texto, fixed = TRUE)
+      } else {
+        r$texto <- gsub("df[[input$t_rel_v1]]", input$t_rel_v1,
+                        r$texto, fixed = TRUE)
+        r$texto <- gsub("df[[input$t_rel_v2]]", input$t_rel_v2,
+                        r$texto, fixed = TRUE)
+      }
+
+    } else if (identical(input$t_tipo, "una")) {
       validate(
         need(is.finite(input$t_m), "Indique la media."),
         need(is.finite(input$t_s) && input$t_s > 0, "La desviacion tipica debe ser > 0."),
         need(input$t_n >= 2, "El tamano muestral debe ser al menos 2.")
       )
       r <- capturar(testt(m = input$t_m, s = input$t_s, n = input$t_n,
-                          m0 = input$t_m0, alfa = input$t_alfa, grf = FALSE))
-      code <- paste0(
-        "library(BioEstatR)\n",
-        "# Contraste de una media (t de Student)\n",
-        "testt(m = ", input$t_m, ", s = ", input$t_s, ", n = ", input$t_n, ",\n",
-        "      m0 = ", input$t_m0, ", alfa = ", input$t_alfa, ", grf = FALSE)"
-      )
-    } else {
+                          m0 = input$t_m0, alfa = input$t_alfa,
+                          delta = delta, potencia = potencia, beta = beta,
+                          grf = FALSE))
+      comentario <- "# Contraste de una media (t de Student)"
+      args <- c(paste0("m = ", num_fmt(input$t_m)),
+                paste0("s = ", num_fmt(input$t_s)),
+                paste0("n = ", input$t_n),
+                paste0("m0 = ", num_fmt(input$t_m0)),
+                paste0("alfa = ", num_fmt(input$t_alfa)))
+
+    } else if (identical(input$t_tipo, "dos")) {
       validate(
         need(input$t_n1 >= 2 && input$t_n2 >= 2, "Los tamanos muestrales deben ser al menos 2."),
         need(is.finite(input$t_s1) && input$t_s1 > 0, "Desv. tipica grupo 1 > 0."),
@@ -782,15 +1342,98 @@ server <- function(input, output, session) {
       )
       r <- capturar(testt(m1 = input$t_m1, s1 = input$t_s1, n1 = input$t_n1,
                           m2 = input$t_m2, s2 = input$t_s2, n2 = input$t_n2,
-                          alfa = input$t_alfa, grf = FALSE))
-      code <- paste0(
-        "library(BioEstatR)\n",
-        "# Dos muestras independientes\n",
-        "testt(m1 = ", input$t_m1, ", s1 = ", input$t_s1, ", n1 = ", input$t_n1, ",\n",
-        "      m2 = ", input$t_m2, ", s2 = ", input$t_s2, ", n2 = ", input$t_n2, ",\n",
-        "      alfa = ", input$t_alfa, ", grf = FALSE)"
-      )
+                          m0 = input$t_m0_dos, alfa = input$t_alfa,
+                          delta = delta, potencia = potencia, beta = beta,
+                          grf = FALSE))
+      comentario <- "# Dos muestras independientes"
+      args <- c(paste0("m1 = ", num_fmt(input$t_m1)),
+                paste0("s1 = ", num_fmt(input$t_s1)),
+                paste0("n1 = ", input$t_n1),
+                paste0("m2 = ", num_fmt(input$t_m2)),
+                paste0("s2 = ", num_fmt(input$t_s2)),
+                paste0("n2 = ", input$t_n2),
+                paste0("m0 = ", num_fmt(input$t_m0_dos)),
+                paste0("alfa = ", num_fmt(input$t_alfa)))
+
+    } else {
+      # Dos muestras relacionadas (medidas repetidas)
+      if (identical(input$t_rel_modo, "prepost")) {
+        validate(
+          need(is.finite(input$t_pre_s) && input$t_pre_s > 0, "Desv. tipica pre > 0."),
+          need(is.finite(input$t_post_s) && input$t_post_s > 0, "Desv. tipica post > 0."),
+          need(input$t_rel_r > -1 && input$t_rel_r < 1,
+               "La correlacion r debe estar entre -1 y 1."),
+          need(input$t_rel_n >= 2, "El numero de parejas debe ser al menos 2.")
+        )
+        d_m <- input$t_post_m - input$t_pre_m
+        var_d <- input$t_pre_s^2 + input$t_post_s^2 -
+          2 * input$t_rel_r * input$t_pre_s * input$t_post_s
+        validate(need(var_d > 0,
+          "La combinacion de desviaciones tipicas y correlacion produce una varianza de la diferencia no positiva."))
+        s_d <- sqrt(var_d)
+        m0 <- input$t_rel_m0
+        n_par <- input$t_rel_n
+        r <- capturar(testt(m = d_m, s = s_d, n = n_par, m0 = m0,
+                            alfa = input$t_alfa, delta = delta,
+                            potencia = potencia, beta = beta, grf = FALSE))
+        comentario <- paste0(
+          "# Dos muestras relacionadas (medidas repetidas): diferencia post - pre\n",
+          "d_media <- ", num_fmt(input$t_post_m), " - ", num_fmt(input$t_pre_m), "\n",
+          "s_dif <- sqrt(", num_fmt(input$t_pre_s), "^2 + ",
+          num_fmt(input$t_post_s), "^2 - 2 * ", num_fmt(input$t_rel_r), " * ",
+          num_fmt(input$t_pre_s), " * ", num_fmt(input$t_post_s), ")\n",
+          "# t-test sobre la diferencia (equivalente a muestras apareadas)")
+        args <- c(paste0("m = ", num_fmt(d_m)),
+                  paste0("s = ", num_fmt(s_d)),
+                  paste0("n = ", n_par),
+                  paste0("m0 = ", num_fmt(m0)),
+                  paste0("alfa = ", num_fmt(input$t_alfa)))
+      } else {
+        validate(
+          need(is.finite(input$t_dif_s) && input$t_dif_s > 0,
+               "La desviacion tipica de la diferencia debe ser > 0."),
+          need(input$t_dif_n >= 2, "El numero de parejas debe ser al menos 2.")
+        )
+        d_m <- input$t_dif_m
+        s_d <- input$t_dif_s
+        m0 <- input$t_dif_m0
+        n_par <- input$t_dif_n
+        r <- capturar(testt(m = d_m, s = s_d, n = n_par, m0 = m0,
+                            alfa = input$t_alfa, delta = delta,
+                            potencia = potencia, beta = beta, grf = FALSE))
+        comentario <- paste0(
+          "# Dos muestras relacionadas (medidas repetidas)\n",
+          "# Datos resumidos de la diferencia intra-sujeto")
+        args <- c(paste0("m = ", num_fmt(d_m)),
+                  paste0("s = ", num_fmt(s_d)),
+                  paste0("n = ", n_par),
+                  paste0("m0 = ", num_fmt(m0)),
+                  paste0("alfa = ", num_fmt(input$t_alfa)))
+      }
+
+      # El paquete rotula este caso como "una muestra"; se reetiqueta para
+      # reflejar que el analisis es de medidas repetidas sobre la diferencia.
+      r$texto <- sub("t-Test con una muestra",
+                     "t-test para dos muestras relacionadas (medidas repetidas: post - pre)",
+                     r$texto, fixed = TRUE)
+      r$texto <- paste0(
+        "# Nota: contraste sobre la diferencia intra-sujeto. ",
+        "Media de la diferencia = ", round(d_m, 4),
+        "; DT de la diferencia = ", round(s_d, 4),
+        "; n parejas = ", n_par, "; m0 = ", round(m0, 4), ".\n\n",
+        r$texto)
     }
+
+    if (delta > 0) {
+      args <- c(args,
+                paste0("delta = ", num_fmt(delta)),
+                paste0("potencia = ", num_fmt(potencia)))
+    }
+
+    code <- paste0("library(BioEstatR)\n", comentario, "\n",
+                   "testt(", paste(args, collapse = ",\n      "),
+                   ", grf = FALSE)")
+
     ultimo$t_out <- r$texto
     output$t_out <- renderText(r$texto)
     ultimo$t_code <- code

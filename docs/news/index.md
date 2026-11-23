@@ -30,6 +30,24 @@
   contrastadas contra `e1071`, `t.test`, `quantile`, `IQR` y
   `boxplot.stats`.
 
+### Aplicacion interactiva (Shiny)
+
+- Nueva pestana **Mis datos** como segunda entrada de la barra superior
+  y reordenacion de la navegacion.
+- **Prueba t para muestras relacionadas** (medidas repetidas): admite
+  medias, desviaciones estandar y correlacion, o directamente la media y
+  DE de la diferencia.
+- **Estudio de potencia y tamano muestral** (`delta`, `potencia`)
+  integrado en las pruebas t de una y dos muestras y de medidas
+  repetidas.
+- Las pruebas t pueden ejecutarse directamente sobre **variables de un
+  `data.frame`** cargado (variable unica, respuesta + factor de grupo, o
+  dos variables apareadas).
+- Nueva imagen corporativa UGR (logotipo, colores y cabecera) y creditos
+  de autoria y coautoria.
+- Descarga de informes en Word (`.docx`) y texto (`.txt`) y
+  visualizacion del codigo R reproducible.
+
 ## BioEstatR 1.0.2
 
 - `tabla2x2`: correccion de bug — el valor de p mostrado para el
