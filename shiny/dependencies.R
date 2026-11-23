@@ -4,5 +4,6 @@
 
 library(BioEstatR)   # paquete analizado; se instala desde BioEstatR_pkg/
 library(shiny)       # framework de la aplicacion
+library(bslib)       # tema Bootstrap 5, tipografia y componentes
 library(officer)     # exportacion de informes a Word (.docx)
 library(readxl)      # lectura de ficheros Excel (.xlsx, .xls)

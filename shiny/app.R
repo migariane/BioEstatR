@@ -9,12 +9,12 @@
 #   o dentro de RStudio: abrir este fichero y pulsar "Run App".
 #
 # Autor de la aplicacion:
-#   Miguel Angel Luque-Fernandez, MA - MSc - MPH - PhD
-#   Catedratico - Dpto. de Estadistica e Investigacion Operativa
+#   Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA - MSc - MPH - PhD
+#   Catedr\u00e1tico - Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa
 #   Universidad de Granada (UGR)
 # Coautores del paquete BioEstatR:
-#   Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y
-#   Juan Manuel Melchor Rodriguez
+#   Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y
+#   Juan Manuel Melchor Rodr\u00edguez
 # =============================================================================
 
 library(shiny)
@@ -83,16 +83,20 @@ capturar <- function(expr) {
 caja_resultado <- function(id_salida, id_codigo, id_descarga) {
   div(
     class = "result-card",
-    verbatimTextOutput(id_salida),
+    div(class = "result-eyebrow",
+        icon("chart-bar"), " Resultado del an\u00e1lisis"),
+    div(class = "result-body",
+        verbatimTextOutput(id_salida)),
     div(
-      class = "d-flex gap-2 mt-2 mb-2",
-      downloadButton(id_descarga, "Descargar informe (.docx)",
+      class = "result-actions",
+      downloadButton(id_descarga, "Informe Word",
                      class = "btn-sm btn-success"),
-      downloadButton(paste0(id_descarga, "_txt"), "Texto (.txt)",
+      downloadButton(paste0(id_descarga, "_txt"), "Texto plano",
                      class = "btn-sm btn-outline-secondary")
     ),
     tags$details(
-      tags$summary("Ver el codigo R equivalente (para aprender)"),
+      class = "code-details",
+      tags$summary(icon("code"), " Ver el c\u00f3digo R equivalente"),
       verbatimTextOutput(id_codigo)
     )
   )
@@ -149,45 +153,86 @@ vars_num_con_cat <- function(df) {
 # -----------------------------------------------------------------------------
 estilos_ugr <- tags$style(HTML("
   :root {
+    /* Marca UGR */
     --ugr-blue:  #002855;
     --ugr-blue2: #003d7c;
+    --ugr-blue3: #0a4f9e;
     --ugr-gold:  #FFB81C;
-    --ugr-bg:    #f6f5f1;
+    /* Superficies y texto */
+    --bg:        #f6f5f1;
+    --surface:   #ffffff;
+    --surface-2: #f8fafc;
+    --border:    #e2e8f0;
+    --text:      #24303f;
+    --text-muted:#64748b;
+    --text-soft: #8a97a8;
+    /* Semanticos */
+    --success:   #157347;
+    --danger:    #b42318;
+    --warning:   #b45309;
+    /* Escala de espaciado (8px) */
+    --s1: 4px;  --s2: 8px;  --s3: 12px;
+    --s4: 16px; --s5: 24px; --s6: 32px;
+    /* Radios y sombras */
+    --r-sm: 6px; --r-md: 10px; --r-lg: 14px;
+    --shadow-1: 0 1px 2px rgba(15,27,45,.06), 0 1px 3px rgba(15,27,45,.05);
+    --shadow-2: 0 6px 18px rgba(15,27,45,.10);
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
   }
 
+  html { font-size: 16px; }
   body {
-    background-color: var(--ugr-bg);
-    color: #2d3748;
-    padding-bottom: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    color: var(--ugr-blue);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h2 { font-size: 1.45rem; }
+  h3 { font-size: 1.2rem; }
+  h4 { font-size: 1.05rem; }
+  p { max-width: 78ch; }
+  a { color: var(--ugr-blue2); }
+
+  :focus-visible {
+    outline: 3px solid var(--ugr-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   /* --- Cabecera de marca --- */
   .ugr-hero {
-    background: linear-gradient(135deg, #002855 0%, #003d7c 100%);
-    color: #ffffff;
-    padding: 26px 32px;
-    margin: 0 0 18px 0;
+    background: linear-gradient(135deg, var(--ugr-blue) 0%, var(--ugr-blue2) 100%);
+    color: #fff;
+    padding: var(--s6);
+    margin: 0 0 var(--s5) 0;
     border-bottom: 4px solid var(--ugr-gold);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
   }
   .ugr-hero h1 {
     margin: 0;
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
   }
   .ugr-hero .sub {
     color: var(--ugr-gold);
     font-weight: 600;
-    font-size: 15px;
-    margin: 6px 0 0 0;
+    font-size: .95rem;
+    margin: var(--s2) 0 0 0;
   }
   .ugr-hero .author {
     color: #cbd5e1;
-    font-size: 13.5px;
-    line-height: 1.5;
-    margin: 12px 0 0 0;
+    font-size: .84rem;
+    line-height: 1.6;
+    margin: var(--s4) 0 0 0;
   }
   .ugr-logo-container {
     display: flex;
@@ -195,169 +240,224 @@ estilos_ugr <- tags$style(HTML("
     justify-content: flex-end;
   }
   .ugr-logo {
-    height: 74px;
-    background-color: rgba(255,255,255,0.96);
-    padding: 6px 14px;
-    border-radius: 8px;
-    border: 2px solid var(--ugr-gold);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    height: 64px;
+    width: auto;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: var(--r-sm);
+    box-shadow: var(--shadow-1);
   }
 
-  /* --- Barra de navegacion (ribbon) --- */
+  /* --- Barra de navegacion (Bootstrap 5) --- */
   .navbar {
-    background: linear-gradient(135deg, #002855 0%, #003d7c 100%) !important;
+    background: linear-gradient(135deg, var(--ugr-blue), var(--ugr-blue2)) !important;
     border: none !important;
     border-bottom: 3px solid var(--ugr-gold) !important;
     border-radius: 0 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    margin-bottom: 0;
+    box-shadow: var(--shadow-1);
+    padding-top: var(--s2);
+    padding-bottom: var(--s2);
+    margin-bottom: 0 !important;
   }
+  .navbar .navbar-brand { color: #fff !important; font-weight: 700; letter-spacing: -0.01em; }
+  .navbar .nav-link {
+    color: rgba(255,255,255,.88) !important;
+    font-weight: 500;
+    font-size: .93rem;
+    padding: .5rem .8rem !important;
+    border-radius: var(--r-sm);
+  }
+  .navbar .nav-link:hover,
+  .navbar .nav-link:focus {
+    color: #fff !important;
+    background: rgba(255,255,255,.08) !important;
+  }
+  .navbar .nav-link.active,
+  .navbar .nav-item.active > .nav-link {
+    color: var(--ugr-gold) !important;
+    background: rgba(255,184,28,.14) !important;
+  }
+  .navbar .dropdown-menu {
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-2);
+    padding: var(--s1);
+  }
+  .navbar .dropdown-item { border-radius: var(--r-sm); padding: .45rem .7rem; font-size: .92rem; }
+  .navbar .dropdown-item:hover,
+  .navbar .dropdown-item:focus { background: #eef4fc; color: var(--ugr-blue); }
+  .navbar .dropdown-item.active,
+  .navbar .dropdown-item:active { background: var(--ugr-blue2); color: #fff; }
   .ugr-subbar {
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 9px 22px;
-    font-size: 12.5px;
-    color: #64748b;
-    margin-bottom: 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px var(--s5);
+    font-size: .78rem;
+    color: var(--text-muted);
+    margin-bottom: var(--s5);
   }
   .ugr-subbar strong { color: var(--ugr-blue); }
   .ugr-subbar .dot { color: var(--ugr-gold); font-weight: 700; }
-  .navbar .navbar-brand,
-  .navbar .navbar-nav > li > a {
-    color: #ffffff !important;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  .navbar .navbar-nav > li > a:hover,
-  .navbar .navbar-nav > li > a:focus {
-    color: var(--ugr-gold) !important;
-    background: rgba(255,255,255,0.06) !important;
-  }
-  .navbar .navbar-nav > .active > a,
-  .navbar .navbar-nav > .active > a:hover,
-  .navbar .navbar-nav > .active > a:focus {
-    background: rgba(255,184,28,0.20) !important;
-    color: var(--ugr-gold) !important;
-    box-shadow: inset 0 -3px 0 var(--ugr-gold);
-  }
 
-  /* --- Tarjetas de contenido --- */
-  .well {
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-top: 3px solid var(--ugr-blue2);
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  }
-  .sidebar-panel-scroll {
-    overflow-y: auto;
-    max-height: 86vh;
-  }
+  /* --- Tarjetas --- */
+  .card-ugr,
   .result-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-left: 5px solid var(--ugr-blue2);
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--s5);
+    margin-bottom: var(--s4);
+    box-shadow: var(--shadow-1);
   }
-  .card-ugr {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-left: 5px solid var(--ugr-blue2);
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-  }
+  .card-ugr { border-top: 3px solid var(--ugr-blue2); }
   .card-ugr > h3,
   .card-ugr > h4 {
-    margin-top: 0;
+    margin: 0 0 var(--s3) 0;
     color: var(--ugr-blue);
     font-weight: 700;
-    border-bottom: 2px solid var(--ugr-gold);
-    padding-bottom: 8px;
+    padding-bottom: var(--s2);
+    border-bottom: 1px solid var(--border);
   }
-
-  /* --- Tipografia de titulos de panel --- */
-  h2, h3 {
-    color: var(--ugr-blue);
+  .result-card { border-left: 4px solid var(--ugr-gold); }
+  .result-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    font-size: .72rem;
     font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--s2);
   }
-  h4 {
-    color: var(--ugr-blue);
-    font-weight: 700;
+  .result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s2);
+    margin: var(--s3) 0 var(--s2) 0;
   }
 
   /* --- Salida de resultados --- */
-  pre {
-    background: #0f1b2d;
-    color: #e6edf3;
-    border: none;
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 12.5px;
-    line-height: 1.5;
-    max-height: 540px;
-    overflow-y: auto;
+  pre, pre.shiny-text-output {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: var(--s3) var(--s4);
+    font-family: var(--font-mono);
+    font-size: .8rem;
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
     white-space: pre-wrap;
     word-break: break-word;
+    max-height: 520px;
+    overflow: auto;
   }
-  details {
-    margin-top: 14px;
-  }
+  details { margin-top: var(--s3); }
   details summary {
     cursor: pointer;
     color: var(--ugr-blue2);
     font-weight: 600;
+    font-size: .9rem;
   }
-  details pre {
-    background: #f1f5f9;
-    color: #1e293b;
-  }
-
-  .ayuda {
-    color: #6c757d;
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-
-  /* --- Botones --- */
-  .btn-primary {
-    background-color: var(--ugr-blue2);
-    border-color: var(--ugr-blue2);
-    font-weight: 600;
-  }
-  .btn-primary:hover,
-  .btn-primary:focus {
-    background-color: var(--ugr-blue);
-    border-color: var(--ugr-blue);
-  }
-  .btn-success {
-    background-color: #157347;
-    border-color: #157347;
-  }
+  details summary:hover { color: var(--ugr-blue); }
+  details pre { background: #f1f5f9; }
 
   /* --- Tablas --- */
-  .table > thead > tr > th {
+  table.table { font-variant-numeric: tabular-nums; margin-bottom: 0; }
+  table.table thead th {
     background: #eef2f7;
     color: var(--ugr-blue);
     font-weight: 700;
+    border-bottom: 2px solid var(--border) !important;
+    white-space: nowrap;
   }
+  table.table tbody tr:hover { background: #f6f9fd; }
+
+  /* --- Formularios --- */
+  .form-label, label, .control-label {
+    font-weight: 600;
+    color: #334155;
+    font-size: .86rem;
+  }
+  .form-control, .form-select,
+  input[type=number], input[type=text], select {
+    border-radius: var(--r-sm);
+    border-color: #cbd5e1;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: var(--ugr-blue2);
+    box-shadow: 0 0 0 .2rem rgba(0,61,124,.15);
+  }
+  .shiny-input-container { margin-bottom: var(--s3); }
+  .ayuda { color: var(--text-muted); font-size: .8rem; margin-bottom: var(--s2); }
+  .sidebar-panel-scroll {
+    overflow-y: auto;
+    max-height: 86vh;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-1);
+    padding: var(--s4);
+  }
+
+  /* --- Botones --- */
+  .btn {
+    border-radius: var(--r-sm);
+    font-weight: 600;
+    transition: background-color .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary { background: var(--ugr-blue2); border-color: var(--ugr-blue2); }
+  .btn-primary:hover, .btn-primary:focus { background: var(--ugr-blue); border-color: var(--ugr-blue); }
+  .btn-outline-primary { color: var(--ugr-blue2); border-color: var(--ugr-blue2); }
+  .btn-outline-primary:hover { background: var(--ugr-blue2); color: #fff; }
+  .btn-success { background: var(--success); border-color: var(--success); }
+  .btn-sm { font-size: .8rem; padding: .35rem .7rem; }
 
   /* --- Pie de pagina --- */
   .footer-ugr {
     text-align: center;
-    color: #718096;
-    font-size: 12.5px;
-    line-height: 1.6;
-    padding: 18px 10px 26px 10px;
+    color: var(--text-soft);
+    font-size: .78rem;
+    line-height: 1.7;
+    padding: var(--s5) var(--s3) var(--s6) var(--s3);
     border-top: 3px solid var(--ugr-gold);
-    margin-top: 10px;
-    background: #ffffff;
+    margin-top: var(--s5);
+    background: var(--surface);
   }
   .footer-ugr a { color: var(--ugr-blue2); font-weight: 600; }
+
+  /* --- Varios --- */
+  .badge-ugr {
+    display: inline-block;
+    background: #eef4fc;
+    color: var(--ugr-blue2);
+    border: 1px solid #d6e4f5;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: .72rem;
+    font-weight: 600;
+  }
+
+  /* --- Adaptacion movil --- */
+  @media (max-width: 991px) {
+    .ugr-hero { padding: var(--s5) var(--s4); }
+    .ugr-logo { height: 52px; margin-top: var(--s4); }
+    .ugr-subbar { display: none; }
+    .sidebar-panel-scroll { max-height: none; }
+  }
+
+  /* --- Accesibilidad e impresion --- */
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+  @media print {
+    .navbar, .ugr-hero, .ugr-subbar, .footer-ugr,
+    .sidebar-panel-scroll, .result-actions, details, .btn { display: none !important; }
+    body { background: #fff; }
+    .card-ugr, .result-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    pre { max-height: none; }
+  }
 "))
 
 # -----------------------------------------------------------------------------
@@ -370,14 +470,14 @@ cabecera_ugr <- div(
       8,
       h1("BioEstatR"),
       p(class = "sub",
-        "Bioestadistica con R, sin escribir codigo - Docencia e investigacion"),
+        "Bioestad\u00edstica con R, sin escribir c\u00f3digo \u2013 Docencia e investigaci\u00f3n"),
       p(class = "author",
-        strong("Miguel Angel Luque-Fernandez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD"),
+        strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD"),
         br(),
-        "Catedratico - Dpto. de Estadistica e Investigacion Operativa, Universidad de Granada",
+        "Catedr\u00e1tico \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, Universidad de Granada",
         br(),
         tags$span(style = "color:#cbd5e1;",
-          "Coautores: Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y Juan Manuel Melchor Rodriguez")
+          "Coautores: Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y Juan Manuel Melchor Rodr\u00edguez")
       )
     ),
     column(
@@ -391,27 +491,27 @@ cabecera_ugr <- div(
 barra_autor <- div(
   class = "ugr-subbar",
   tags$span(strong("Universidad de Granada"),
-            " - Dpto. de Estadistica e Investigacion Operativa"),
+            " \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa"),
   tags$span(class = "dot", " \u00b7 "),
-  tags$span(strong("Miguel Angel Luque-Fernandez"), ", PhD - Catedratico"),
+  tags$span(strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez"), ", PhD \u2013 Catedr\u00e1tico"),
   tags$span(class = "dot", " \u00b7 "),
-  tags$span("Coautores: Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y ",
-            "Juan Manuel Melchor Rodriguez")
+  tags$span("Coautores: Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y ",
+            "Juan Manuel Melchor Rodr\u00edguez")
 )
 
 pie_ugr <- tags$footer(
   class = "footer-ugr",
-  HTML("BioEstatR &middot; Rutinas de bioestadistica en R &middot; "),
+  HTML("BioEstatR &middot; Rutinas de bioestad\u00edstica en R &middot; "),
   tags$a(href = "https://migariane.github.io/BioEstatR/", target = "_blank",
          "migariane.github.io/BioEstatR"),
   HTML(" &middot; "),
   tags$a(href = "https://www.ugr.es", target = "_blank", "Universidad de Granada"),
   tags$br(),
-  "Miguel Angel Luque-Fernandez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD - ",
-  "Catedratico, Dpto. de Estadistica e Investigacion Operativa, UGR",
+  "Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD - ",
+  "Catedr\u00e1tico, Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, UGR",
   tags$br(),
   tags$span(style = "color:#94a3b8;",
-    "Coautores: Pedro Jesus Femia Marzo, Miguel Angel Montero Alonso y Juan Manuel Melchor Rodriguez")
+    "Coautores: Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y Juan Manuel Melchor Rodr\u00edguez")
 )
 
 # -----------------------------------------------------------------------------
@@ -425,32 +525,45 @@ ui <- navbarPage(
              alt = "UGR"),
     "BioEstatR"
   ),
-  windowTitle = "BioEstatR - Bioestadistica con R (UGR)",
+  windowTitle = "BioEstatR - Bioestad\u00edstica con R (UGR)",
   collapsible = TRUE,
   inverse = TRUE,
+  theme = bslib::bs_theme(
+    version = 5,
+    primary = "#003d7c",
+    secondary = "#5a6b82",
+    success = "#157347",
+    info = "#0d6efd",
+    bg = "#f6f5f1",
+    fg = "#24303f",
+    base_font = bslib::font_collection(
+      bslib::font_google("Inter", local = FALSE),
+      "system-ui", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"
+    )
+  ),
 
   header = tagList(estilos_ugr, barra_autor),
   footer = pie_ugr,
 
   # ------------------------------------------------------- Introduccion ----
   tabPanel(
-    "Introduccion",
+    "Introducci\u00f3n",
     cabecera_ugr,
     fluidRow(
       column(
         8,
         div(
           class = "card-ugr",
-          h3("Bioestadistica con R, sin escribir codigo"),
+          h3("Bioestad\u00edstica con R, sin escribir c\u00f3digo"),
           p(class = "ayuda",
             "Esta aplicacion permite usar las funciones del paquete ",
             strong("BioEstatR"), " seleccionando opciones con el raton. ",
             "En cada resultado puede desplegar ", em("Ver el codigo R equivalente"),
             " para aprender la instruccion que produce ese analisis."),
           hr(),
-          h4("Como funciona"),
+          h4("C\u00f3mo funciona"),
           tags$ol(
-            tags$li("Elija un conjunto de datos en la pestana ", strong("Mis datos"),
+            tags$li("Elija un conjunto de datos en la pesta\u00f1a ", strong("Mis datos"),
                     " (por defecto ", code("osteo"),
                     ", que acompana al paquete: 94 pacientes con 27 variables)."),
             tags$li("Vaya a la pestana del analisis que necesite."),
@@ -458,12 +571,12 @@ ui <- navbarPage(
             tags$li("Copie el informe, o abra el codigo R para reproducirlo.")
           ),
           hr(),
-          h4("Analisis de medias con potencia y tamano muestral"),
+          h4("An\u00e1lisis de medias con potencia y tama\u00f1o muestral"),
           p(class = "ayuda",
-            "La pestana ", strong("Medias"), " incluye el ",
+            "La pesta\u00f1a ", strong("Medias"), " incluye el ",
             strong("t-test para medidas repetidas"), " (dos muestras relacionadas) ",
             "y, para cualquiera de los contrastes de medias, el ",
-            strong("estudio de potencia y la estimacion del tamano muestral"),
+            strong("estudio de potencia y la estimaci\u00f3n del tama\u00f1o muestral"),
             " mediante los parametros ", code("delta"), " (efecto a detectar) y ",
             code("potencia"),
             ", tal y como los ofrece la funcion ", code("testt"), ".")
@@ -473,10 +586,10 @@ ui <- navbarPage(
         4,
         div(
           class = "card-ugr",
-          h4("Pestanas disponibles"),
+          h4("Pesta\u00f1as disponibles"),
           tags$table(
             class = "table table-sm table-striped",
-            tags$thead(tags$tr(tags$th("Pestana"), tags$th("Funcion"))),
+            tags$thead(tags$tr(tags$th("Pesta\u00f1a"), tags$th("Funcion"))),
             tags$tbody(
               tags$tr(tags$td("Mis datos"),       tags$td(code("osteo / CSV / Excel"))),
               tags$tr(tags$td("Descriptiva"),     tags$td(code("descriptiva, freq"))),
@@ -484,10 +597,10 @@ ui <- navbarPage(
               tags$tr(tags$td("Medias"),          tags$td(code("testt"))),
               tags$tr(tags$td("Proporciones"),    tags$td(code("testp"))),
               tags$tr(tags$td("Intervalos"),      tags$td(code("icm, icp"))),
-              tags$tr(tags$td("Tablas 2x2"),      tags$td(code("tabla2x2"))),
+              tags$tr(tags$td("Tablas 2\u00d72"),      tags$td(code("tabla2x2"))),
               tags$tr(tags$td("McNemar"),         tags$td(code("testmcnemar"))),
-              tags$tr(tags$td("Regresion"),       tags$td(code("rls, rlm, rlogits"))),
-              tags$tr(tags$td("Tamano muestral"), tags$td(code("nm, np, nl")))
+              tags$tr(tags$td("Regresi\u00f3n"),       tags$td(code("rls, rlm, rlogits"))),
+              tags$tr(tags$td("Tama\u00f1o muestral"), tags$td(code("nm, np, nl")))
             )
           ),
           hr(),
@@ -555,8 +668,8 @@ ui <- navbarPage(
         class = "sidebar-panel-scroll",
         uiOutput("ui_descr_dataset"),
         uiOutput("ui_descr_vars"),
-        checkboxInput("descr_ic", "Anadir intervalos de confianza", FALSE),
-        checkboxInput("descr_normal", "Anadir prueba de normalidad", FALSE),
+        checkboxInput("descr_ic", "A\u00f1adir intervalos de confianza", FALSE),
+        checkboxInput("descr_normal", "A\u00f1adir prueba de normalidad", FALSE),
         numericInput("descr_decs", "Decimales", 3, 0, 6, 1),
         actionButton("descr_go", "Calcular", class = "btn-primary w-100"),
         hr(),
@@ -567,14 +680,16 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        div(class = "card-ugr", h4("Analisis descriptivo"),
+        div(class = "card-ugr", h4("An\u00e1lisis descriptivo"),
             caja_resultado("descr_out", "descr_code", "descr_dl")),
-        div(class = "card-ugr", h4("Distribucion de frecuencias"),
+        div(class = "card-ugr", h4("Distribuci\u00f3n de frecuencias"),
             caja_resultado("freq_out", "freq_code", "freq_dl"))
       )
     )
   ),
 
+  navbarMenu(
+    "An\u00e1lisis",
   # ------------------------------------------------------------ Normalidad ----
   tabPanel(
     "Normalidad",
@@ -621,8 +736,8 @@ ui <- navbarPage(
         conditionalPanel(
           "input.t_tipo == 'una' && input.t_fuente == 'manual'",
           numericInput("t_m", "Media muestral", 25, step = 0.1),
-          numericInput("t_s", "Desviacion tipica", 4, min = 0, step = 0.1),
-          numericInput("t_n", "Tamano muestral", 30, min = 2, step = 1),
+          numericInput("t_s", "Desviaci\u00f3n t\u00edpica", 4, min = 0, step = 0.1),
+          numericInput("t_n", "Tama\u00f1o muestral", 30, min = 2, step = 1),
           numericInput("t_m0", "Media hipotetica (H0)", 23, step = 0.1)
         ),
         # ---- Una muestra: variable del dataset
@@ -720,15 +835,15 @@ ui <- navbarPage(
       sidebarPanel(
         width = 3,
         class = "sidebar-panel-scroll",
-        numericInput("p_x", "Numero de exitos", 40, min = 0, step = 1),
-        numericInput("p_n", "Tamano muestral", 100, min = 1, step = 1),
+        numericInput("p_x", "N\u00famero de \u00e9xitos", 40, min = 0, step = 1),
+        numericInput("p_n", "Tama\u00f1o muestral", 100, min = 1, step = 1),
         numericInput("p_p0", "Proporcion hipotetica (H0)", 0.5, 0.001, 0.999, 0.001),
         numericInput("p_alfa", "Nivel de significacion (alfa)", 0.05, 0.001, 0.2, 0.001),
         actionButton("p_go", "Calcular", class = "btn-primary w-100")
       ),
       mainPanel(
         width = 9,
-        div(class = "card-ugr", h4("Contraste de una proporcion"),
+        div(class = "card-ugr", h4("Contraste de una proporci\u00f3n"),
             caja_resultado("p_out", "p_code", "p_dl"))
       )
     )
@@ -741,33 +856,36 @@ ui <- navbarPage(
       sidebarPanel(
         width = 3,
         class = "sidebar-panel-scroll",
-        radioButtons("ic_tipo", "Que desea estimar",
+        radioButtons("ic_tipo", "Qu\u00e9 desea estimar",
           choices = c("Media" = "media", "Proporcion" = "prop")),
         conditionalPanel(
           "input.ic_tipo == 'media'",
           numericInput("ic_m", "Media muestral", 25, step = 0.1),
-          numericInput("ic_s", "Desviacion tipica", 4, min = 0, step = 0.1),
-          numericInput("ic_n", "Tamano muestral", 30, min = 2, step = 1)
+          numericInput("ic_s", "Desviaci\u00f3n t\u00edpica", 4, min = 0, step = 0.1),
+          numericInput("ic_n", "Tama\u00f1o muestral", 30, min = 2, step = 1)
         ),
         conditionalPanel(
           "input.ic_tipo == 'prop'",
-          numericInput("ic_x", "Numero de exitos", 40, min = 0, step = 1),
-          numericInput("ic_np", "Tamano muestral", 100, min = 1, step = 1)
+          numericInput("ic_x", "N\u00famero de \u00e9xitos", 40, min = 0, step = 1),
+          numericInput("ic_np", "Tama\u00f1o muestral", 100, min = 1, step = 1)
         ),
         numericInput("ic_conf", "Nivel de confianza", 0.95, 0.5, 0.999, 0.001),
         actionButton("ic_go", "Calcular", class = "btn-primary w-100")
       ),
       mainPanel(
         width = 9,
-        div(class = "card-ugr", h4("Estimacion por intervalo"),
+        div(class = "card-ugr", h4("Estimaci\u00f3n por intervalo"),
             caja_resultado("ic_out", "ic_code", "ic_dl"))
       )
     )
+  )
   ),
 
+  navbarMenu(
+    "Tablas",
   # ------------------------------------------------------------ Tablas 2x2 ----
   tabPanel(
-    "Tablas 2x2",
+    "Tablas 2\u00d72",
     sidebarLayout(
       sidebarPanel(
         width = 3,
@@ -777,7 +895,7 @@ ui <- navbarPage(
         numericInput("x2_o12", "Fila 1 - Columna 2", 10, min = 0, step = 1),
         numericInput("x2_o21", "Fila 2 - Columna 1", 12, min = 0, step = 1),
         numericInput("x2_o22", "Fila 2 - Columna 2", 23, min = 0, step = 1),
-        selectInput("x2_estudio", "Diseno del estudio",
+        selectInput("x2_estudio", "Dise\u00f1o del estudio",
           choices = c("Transversal / cohorte" = "T",
                       "Casos y controles" = "C")),
         actionButton("x2_go", "Calcular", class = "btn-primary w-100"),
@@ -789,7 +907,7 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        div(class = "card-ugr", h4("Analisis de tabla 2x2"),
+        div(class = "card-ugr", h4("An\u00e1lisis de tabla 2\u00d72"),
             caja_resultado("x2_out", "x2_code", "x2_dl"))
       )
     )
@@ -807,7 +925,7 @@ ui <- navbarPage(
         numericInput("mc_n12", "Antes + / Despues -", 15, min = 0, step = 1),
         numericInput("mc_n21", "Antes - / Despues +", 3, min = 0, step = 1),
         numericInput("mc_n22", "Antes - / Despues -", 12, min = 0, step = 1),
-        numericInput("mc_alfa", "Nivel de significacion", 0.05, 0.001, 0.2, 0.001),
+        numericInput("mc_alfa", "Nivel de significaci\u00f3n", 0.05, 0.001, 0.2, 0.001),
         actionButton("mc_go", "Calcular", class = "btn-primary w-100")
       ),
       mainPanel(
@@ -816,11 +934,12 @@ ui <- navbarPage(
             caja_resultado("mc_out", "mc_code", "mc_dl"))
       )
     )
+  )
   ),
 
-  # ------------------------------------------------------------ Regresion ----
+  # ------------------------------------------------------------ Regresi\u00f3n ----
   tabPanel(
-    "Regresion",
+    "Regresi\u00f3n",
     sidebarLayout(
       sidebarPanel(
         width = 3,
@@ -837,7 +956,7 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        div(class = "card-ugr", h4("Modelo de regresion"),
+        div(class = "card-ugr", h4("Modelo de regresi\u00f3n"),
             caja_resultado("reg_out", "reg_code", "reg_dl"))
       )
     )
@@ -845,7 +964,7 @@ ui <- navbarPage(
 
   # ------------------------------------------------------ Tamano muestral ----
   tabPanel(
-    "Tamano muestral",
+    "Tama\u00f1o muestral",
     sidebarLayout(
       sidebarPanel(
         width = 3,
@@ -881,7 +1000,7 @@ ui <- navbarPage(
       ),
       mainPanel(
         width = 9,
-        div(class = "card-ugr", h4("Tamano muestral necesario"),
+        div(class = "card-ugr", h4("Tama\u00f1o muestral necesario"),
             caja_resultado("n_out", "n_code", "n_dl"))
       )
     )
