@@ -980,8 +980,7 @@ ui <- navbarPage(
         class = "sidebar-panel-scroll",
         radioButtons("n_tipo", "Que desea calcular",
           choices = c("Media" = "nm",
-                      "Proporcion" = "np",
-                      "Normalidad / 1 muestra" = "nl"),
+                      "Proporcion" = "np"),
           selected = "nm"),
         conditionalPanel(
           "input.n_tipo == 'nm'",
@@ -1026,11 +1025,6 @@ ui <- navbarPage(
             uiOutput("ui_np_level")
           ),
           numericInput("n_dp", "Precision deseada", 0.05, 0.001, 0.5, 0.001)
-        ),
-        conditionalPanel(
-          "input.n_tipo == 'nl'",
-          numericInput("n_lmax", "Valor maximo esperado", 100, min = 1, step = 1),
-          numericInput("n_dl", "Precision deseada", 1, min = 0.001, step = 0.1)
         ),
         numericInput("n_conf", "Nivel de confianza", 0.95, 0.5, 0.999, 0.001),
         actionButton("n_go", "Calcular", class = "btn-primary w-100")
@@ -1883,12 +1877,6 @@ server <- function(input, output, session) {
                        "np(x = ", input$n_px, ", n = ", input$n_pn, ",\n",
                        "   d = ", input$n_dp, ", conf = ", input$n_conf, ")")
       }
-    } else {
-      validate(need(input$n_lmax > 0 && input$n_dl > 0, "Los valores deben ser > 0."))
-      r <- capturar(nl(lmax = input$n_lmax, d = input$n_dl, conf = input$n_conf))
-      code <- paste0("library(BioEstatR)\n",
-                     "nl(lmax = ", input$n_lmax, ", d = ", input$n_dl, ",\n",
-                     "   conf = ", input$n_conf, ")")
     }
     ultimo$n_out <- r$texto
     output$n_out <- renderText(r$texto)

@@ -66,7 +66,7 @@ shiny::runApp("Scripts/BioEstatR/shiny")
 | Tablas 2x2 | `tabla2x2` | Chi-cuadrado, OR, RR (transversal o casos-controles) |
 | McNemar | `testmcnemar` | Datos apareados |
 | Regresion | `rls`, `rlm`, `rlogits` | Lineal simple, multiple y logistica. `rls` y `rlogits` incluyen grafico (dispersion + recta, y curva ROC con AUC) |
-| Tamano muestral | `nm`, `np`, `nl` | n necesario a partir de muestra piloto |
+| Tamano muestral | `nm`, `np` | n necesario para media o proporcion (desde muestra piloto o desde el dataset) |
 | Mis datos | — | Cargar CSV / Excel o usar el dataset `osteo` |
 | Ayuda | — | Conceptos basicos de inferencia |
 
@@ -85,7 +85,6 @@ shiny::runApp("Scripts/BioEstatR/shiny")
   - **Media (`nm`)**: desde una variable numerica del dataset (muestra piloto) **o** introduciendo manualmente la desviacion tipica (sigma), el tamano de la muestra piloto y la precision deseada.
   - **Proporcion (`np`)**: introduciendo manualmente casos y n de la muestra piloto **o** seleccionando una variable binaria del dataset y su categoria "exito", a partir de la cual se calculan los casos y n automaticamente.
   - `nm` y `np` requieren una *muestra piloto* (necesitan estimar la variabilidad).
-  - `nl` usa el valor maximo esperado del parametro de Poisson.
 - **Regresion.** `rls` muestra un diagrama de dispersion con la recta de regresion y su intervalo de confianza; `rlogits` muestra la curva ROC con el AUC.
 
 ## Logotipo y enlace al libro
