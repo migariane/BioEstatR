@@ -65,7 +65,7 @@ shiny::runApp("Scripts/BioEstatR/shiny")
 | Intervalos | `icm`, `icp` | IC para media y proporcion |
 | Tablas 2x2 | `tabla2x2` | Chi-cuadrado, OR, RR (transversal o casos-controles) |
 | McNemar | `testmcnemar` | Datos apareados |
-| Regresion | `rls`, `rlm`, `rlogits` | Lineal simple, multiple y logistica |
+| Regresion | `rls`, `rlm`, `rlogits` | Lineal simple, multiple y logistica. `rls` y `rlogits` incluyen grafico (dispersion + recta, y curva ROC con AUC) |
 | Tamano muestral | `nm`, `np`, `nl` | n necesario a partir de muestra piloto |
 | Mis datos | — | Cargar CSV / Excel o usar el dataset `osteo` |
 | Ayuda | — | Conceptos basicos de inferencia |
@@ -86,11 +86,12 @@ shiny::runApp("Scripts/BioEstatR/shiny")
   - **Proporcion (`np`)**: introduciendo manualmente casos y n de la muestra piloto **o** seleccionando una variable binaria del dataset y su categoria "exito", a partir de la cual se calculan los casos y n automaticamente.
   - `nm` y `np` requieren una *muestra piloto* (necesitan estimar la variabilidad).
   - `nl` usa el valor maximo esperado del parametro de Poisson.
+- **Regresion.** `rls` muestra un diagrama de dispersion con la recta de regresion y su intervalo de confianza; `rlogits` muestra la curva ROC con el AUC.
 
 ## Logotipo y enlace al libro
 
 - **Logotipo:** la imagen se carga desde `www/logo-ugr.png`. Sustituye ese fichero por tu propio logotipo (mismo nombre de fichero) para actualizarlo en la cabecera y en la barra de navegacion.
-- **Enlace al libro (en el nombre del autor):** en la cabecera de la app el nombre del autor es un enlace a su libro. Edita en `app.R` la URL `https://TU_LIBRO.netlify.app/` y sustituye `TU_LIBRO` por la direccion real de tu libro alojado en Netlify (o cualquier otra plataforma).
+- **Enlace al libro (en el nombre del autor):** en la cabecera de la app el nombre del autor enlaza con https://migariane.github.io/MatematicaEstadisticaMedicinaR/
 
 ## Descargar informes
 

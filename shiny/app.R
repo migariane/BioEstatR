@@ -960,7 +960,13 @@ ui <- navbarPage(
       mainPanel(
         width = 9,
         div(class = "card-ugr", h4("Modelo de regresi\u00f3n"),
-            caja_resultado("reg_out", "reg_code", "reg_dl"))
+            caja_resultado("reg_out", "reg_code", "reg_dl")),
+        conditionalPanel(
+          "input.reg_tipo == 'rls' || input.reg_tipo == 'rlogits'",
+          div(class = "card-ugr",
+              h4("Graficos del modelo"),
+              plotOutput("reg_plot", height = "520px"))
+        )
       )
     )
   ),
@@ -1751,6 +1757,64 @@ server <- function(input, output, session) {
       })()
       ultimo$reg_code
     })
+
+    # Guardar el objeto del modelo para los graficos (solo rls y rlogits)
+    if (identical(input$reg_tipo, "rls")) {
+      ultimo$reg_modelo <- lm(form, data = df)
+      ultimo$reg_tipo_plot <- "rls"
+    } else if (identical(input$reg_tipo, "rlogits")) {
+      ultimo$reg_modelo <- glm(form, data = df, family = binomial)
+      ultimo$reg_tipo_plot <- "rlogits"
+    } else {
+      ultimo$reg_modelo <- NULL
+      ultimo$reg_tipo_plot <- NULL
+    }
+  })
+
+  # ---- Grafico de regresion (dispersion + recta para rls; ROC para rlogits) ----
+  output$reg_plot <- renderPlot({
+    req(ultimo$reg_modelo, ultimo$reg_tipo_plot %in% c("rls", "rlogits"))
+    df <- datos()
+    yvar <- input$reg_y
+    xvar <- input$reg_x[1]
+    validate(
+      need(yvar %in% names(df) && xvar %in% names(df), "Variables no validas.")
+    )
+
+    if (identical(ultimo$reg_tipo_plot, "rlogits")) {
+      # --------------------------------- Curva ROC (regresion logistica) ----
+      modelo <- ultimo$reg_modelo
+      prob <- predict(modelo, type = "response")
+      y <- df[[yvar]]
+      roc_obj <- pROC::roc(y, prob, quiet = TRUE)
+      auc_val <- as.numeric(pROC::auc(roc_obj))
+      pROC::ggroc(roc_obj, size = 1) +
+        ggplot2::theme_classic() +
+        ggplot2::labs(
+          title = "Curva ROC - Regresion logistica",
+          subtitle = paste0("AUC = ", round(auc_val, 3)),
+          x = "1 - Especificidad (FPR)",
+          y = "Sensibilidad (TPR)"
+        ) +
+        ggplot2::geom_abline(intercept = 1, slope = 1,
+                             linetype = "dashed", color = "gray") +
+        ggplot2::scale_x_reverse(
+          breaks = c(0, 0.25, 0.5, 0.75, 1),
+          labels = c("0.0", "0.25", "0.5", "0.75", "1.0")
+        )
+    } else {
+      # ------------------------------ rls: dispersion + recta de regresion ----
+      ggplot2::ggplot(df,
+                      ggplot2::aes(x = .data[[xvar]], y = .data[[yvar]])) +
+        ggplot2::geom_point(color = "#003d7c", alpha = 0.7) +
+        ggplot2::geom_smooth(method = "lm", se = TRUE, color = "#FFB81C") +
+        ggplot2::theme_classic() +
+        ggplot2::labs(
+          title = "Regresion lineal simple",
+          subtitle = paste0(xvar, " -> ", yvar),
+          x = xvar, y = yvar
+        )
+    }
   })
 
   # ---- Tamano muestral ------------------------------------------------------
