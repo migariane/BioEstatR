@@ -475,7 +475,8 @@ cabecera_ugr <- div(
         # Enlace al libro del autor (hostado en Netlify).
         # Enlace al libro del autor (publicado en GitHub Pages).
         tags$a(href = "https://migariane.github.io/MatematicaEstadisticaMedicinaR/", target = "_blank",
-          strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD")),
+          strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD",
+                 style = "color: #fff;")),
         br(),
         "Catedr\u00e1tico \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, Universidad de Granada",
         br(),
@@ -999,7 +1000,8 @@ ui <- navbarPage(
           conditionalPanel(
             "input.n_nm_fuente == 'manual'",
             p(class = "ayuda",
-              "Introduzca la desviacion tipica esperada y la precision deseada."),
+              "Introduzca los valores de la muestra piloto y la precision deseada."),
+            numericInput("n_m_manual", "Media (muestra piloto)", 25, step = 0.1),
             numericInput("n_s_manual", "Desviacion tipica (sigma)", 4, min = 0.001, step = 0.1),
             numericInput("n_nm_piloto", "Tamano de la muestra piloto (n)", 30, min = 2, step = 1)
           ),
@@ -1837,11 +1839,11 @@ server <- function(input, output, session) {
                "El tamano de la muestra piloto debe ser >= 2."),
           need(input$n_d > 0, "La precision debe ser > 0.")
         )
-        r <- capturar(nm(s = input$n_s_manual, n = input$n_nm_piloto,
+        r <- capturar(nm(m = input$n_m_manual, s = input$n_s_manual, n = input$n_nm_piloto,
                          d = input$n_d, conf = input$n_conf))
         code <- paste0("library(BioEstatR)\n",
                        "# n para estimar una media con valores introducidos manualmente\n",
-                       "nm(s = ", input$n_s_manual, ", n = ", input$n_nm_piloto, ", d = ", input$n_d, ",\n",
+                       "nm(m = ", input$n_m_manual, ", s = ", input$n_s_manual, ", n = ", input$n_nm_piloto, ", d = ", input$n_d, ",\n",
                        "   conf = ", input$n_conf, ")")
       }
     } else if (identical(input$n_tipo, "np")) {
