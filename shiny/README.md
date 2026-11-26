@@ -12,20 +12,46 @@ Los estudiantes pueden abrirla desde cualquier navegador, sin R ni RStudio.
 
 ## Como abrirla en local
 
-Desde R o RStudio:
+La aplicacion es un script de R/Shiny, por lo que funciona igual en **macOS** y en **Windows**.
+Solo necesitas instalar R (y opcionalmente RStudio) y lanzar la app.
+
+### En macOS
+
+1. Instala R desde <https://cran.r-project.org/> (y opcionalmente RStudio desde <https://posit.co/download/rstudio-desktop/>).
+2. Abre Terminal (o RStudio) y ejecuta:
 
 ```r
-# 1. Instalar el paquete (si no esta instalado)
+# 1. Instalar el paquete BioEstatR (si no esta instalado)
 remotes::install_github("migariane/BioEstatR")
 
 # 2. Instalar Shiny (si no esta instalado)
 install.packages("shiny")
 
-# 3. Lanzar la aplicacion
+# 3. Lanzar la aplicacion (ajusta la ruta a donde clonaste el proyecto)
 shiny::runApp("Scripts/BioEstatR/shiny")
 ```
 
-En RStudio tambien puede abrir `app.R` y pulsar el boton **Run App**.
+3. Se abrira en tu navegador predeterminado en `http://127.0.0.1:XXXX`.
+
+### En Windows
+
+1. Instala R desde <https://cran.r-project.org/> (y opcionalmente RStudio).
+2. Abre RStudio (o Rgui / PowerShell) y ejecuta:
+
+```r
+# 1. Instalar el paquete BioEstatR (si no esta instalado)
+remotes::install_github("migariane/BioEstatR")
+
+# 2. Instalar Shiny (si no esta instalado)
+install.packages("shiny")
+
+# 3. Lanzar la aplicacion (ajusta la ruta a donde clonaste el proyecto)
+shiny::runApp("Scripts/BioEstatR/shiny")
+```
+
+3. Se abrira en tu navegador predeterminado en `http://127.0.0.1:XXXX`.
+
+> Nota: en RStudio tambien puedes abrir `app.R` y pulsar el boton **Run App**. La ruta de `runApp` es relativa al directorio de trabajo; usa `setwd()` si es necesario o indica la ruta absoluta.
 
 ## Pestanas
 
@@ -55,8 +81,16 @@ En RStudio tambien puede abrir `app.R` y pulsar el boton **Run App**.
   (incluido en el despliegue). Las columnas de texto se convierten
   automaticamente en factores para que funcionen las tablas de contingencia y la
   regresion logistica.
-- **Tamano muestral.** `nm` y `np` requieren una *muestra piloto* (necesitan
-  estimar la variabilidad); no aceptan una desviacion tipica supuesta.
+- **Tamano muestral.** `nm` y `np` aceptan ahora dos modos de entrada:
+  - **Media (`nm`)**: desde una variable numerica del dataset (muestra piloto) **o** introduciendo manualmente la desviacion tipica (sigma), el tamano de la muestra piloto y la precision deseada.
+  - **Proporcion (`np`)**: introduciendo manualmente casos y n de la muestra piloto **o** seleccionando una variable binaria del dataset y su categoria "exito", a partir de la cual se calculan los casos y n automaticamente.
+  - `nm` y `np` requieren una *muestra piloto* (necesitan estimar la variabilidad).
+  - `nl` usa el valor maximo esperado del parametro de Poisson.
+
+## Logotipo y enlace al libro
+
+- **Logotipo:** la imagen se carga desde `www/logo-ugr.png`. Sustituye ese fichero por tu propio logotipo (mismo nombre de fichero) para actualizarlo en la cabecera y en la barra de navegacion.
+- **Enlace al libro (en el nombre del autor):** en la cabecera de la app el nombre del autor es un enlace a su libro. Edita en `app.R` la URL `https://TU_LIBRO.netlify.app/` y sustituye `TU_LIBRO` por la direccion real de tu libro alojado en Netlify (o cualquier otra plataforma).
 
 ## Descargar informes
 

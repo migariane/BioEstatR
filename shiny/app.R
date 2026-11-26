@@ -472,7 +472,10 @@ cabecera_ugr <- div(
       p(class = "sub",
         "Bioestad\u00edstica con R, sin escribir c\u00f3digo \u2013 Docencia e investigaci\u00f3n"),
       p(class = "author",
-        strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD"),
+        # Enlace al libro del autor (hostado en Netlify).
+        # Reemplaza "https://TU_LIBRO.netlify.app/" por la URL real del libro.
+        tags$a(href = "https://TU_LIBRO.netlify.app/", target = "_blank",
+          strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD")),
         br(),
         "Catedr\u00e1tico \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, Universidad de Granada",
         br(),
@@ -482,7 +485,7 @@ cabecera_ugr <- div(
     ),
     column(
       4, class = "ugr-logo-container",
-      tags$img(src = "logo_ugr.png", class = "ugr-logo",
+      tags$img(src = "logo-ugr.png", class = "ugr-logo",
                alt = "Logo Universidad de Granada")
     )
   )
@@ -520,7 +523,7 @@ pie_ugr <- tags$footer(
 
 ui <- navbarPage(
   title = tagList(
-    tags$img(src = "logo_ugr.png",
+    tags$img(src = "logo-ugr.png",
              style = "height:26px; background:#fff; padding:2px 6px; border-radius:4px; margin-right:8px; vertical-align:middle;",
              alt = "UGR"),
     "BioEstatR"
@@ -976,18 +979,46 @@ ui <- navbarPage(
           selected = "nm"),
         conditionalPanel(
           "input.n_tipo == 'nm'",
-          p(class = "ayuda",
-            "La funcion ", code("nm"), " parte de una ",
-            strong("muestra piloto"), " para estimar la desviacion tipica. ",
-            "Seleccione una variable numerica de los datos cargados."),
-          uiOutput("ui_nm_var"),
+          radioButtons("n_nm_fuente", "Origen de la desviacion tipica",
+            choices = c("Desde variable del dataset (muestra piloto)" = "datos",
+                        "Valores introducidos manualmente" = "manual"),
+            selected = "datos"),
+          conditionalPanel(
+            "input.n_nm_fuente == 'datos'",
+            p(class = "ayuda",
+              "La funcion ", code("nm"), " parte de una ",
+              strong("muestra piloto"), " para estimar la desviacion tipica. ",
+              "Seleccione una variable numerica de los datos cargados."),
+            uiOutput("ui_nm_var")
+          ),
+          conditionalPanel(
+            "input.n_nm_fuente == 'manual'",
+            p(class = "ayuda",
+              "Introduzca la desviacion tipica esperada y la precision deseada."),
+            numericInput("n_s_manual", "Desviacion tipica (sigma)", 4, min = 0.001, step = 0.1),
+            numericInput("n_nm_piloto", "Tamano de la muestra piloto (n)", 30, min = 2, step = 1)
+          ),
           numericInput("n_d", "Precision deseada (margen de error)", 1, min = 0.001, step = 0.1)
         ),
         conditionalPanel(
           "input.n_tipo == 'np'",
-          p(class = "ayuda", "Estima n para una proporcion a partir de una muestra piloto."),
-          numericInput("n_px", "Casos favorables en la muestra piloto", 40, min = 0, step = 1),
-          numericInput("n_pn", "Tamano de la muestra piloto", 100, min = 1, step = 1),
+          radioButtons("n_np_fuente", "Origen de la proporcion",
+            choices = c("Valor introducido manualmente" = "manual",
+                        "Desde variable del dataset" = "datos"),
+            selected = "manual"),
+          conditionalPanel(
+            "input.n_np_fuente == 'manual'",
+            p(class = "ayuda", "Estima n para una proporcion a partir de una muestra piloto."),
+            numericInput("n_px", "Casos favorables en la muestra piloto", 40, min = 0, step = 1),
+            numericInput("n_pn", "Tamano de la muestra piloto", 100, min = 1, step = 1)
+          ),
+          conditionalPanel(
+            "input.n_np_fuente == 'datos'",
+            p(class = "ayuda",
+              "Seleccione una variable binaria (2 categorias) de los datos cargados y la categoria que considera 'caso' o exito."),
+            uiOutput("ui_np_var"),
+            uiOutput("ui_np_level")
+          ),
           numericInput("n_dp", "Precision deseada", 0.05, 0.001, 0.5, 0.001)
         ),
         conditionalPanel(
@@ -1207,6 +1238,24 @@ server <- function(input, output, session) {
     if (!length(num)) num <- names(df)
     selectInput("nm_var", "Variable de la muestra piloto",
       choices = num, selected = num[1])
+  })
+
+  # ---- Selectores para proporcion desde dataset (tamaño muestral) -----------
+  output$ui_np_var <- renderUI({
+    df <- datos()
+    cats <- c(vars_cat(df), vars_num_con_cat(df))
+    if (!length(cats)) cats <- names(df)
+    selectInput("np_var", "Variable binaria (2 categorias)",
+      choices = cats, selected = cats[1])
+  })
+
+  output$ui_np_level <- renderUI({
+    req(input$np_var)
+    df <- datos()
+    vals <- unique(stats::na.omit(df[[input$np_var]]))
+    # Solo tiene sentido para proporcion si hay 2 categorias (o se elige una como exito)
+    selectInput("np_level", "Categoria 'exito' / caso",
+      choices = vals, selected = vals[1])
   })
 
   # ---- Selectores para el t-test sobre variables del data.frame ------------
@@ -1707,30 +1756,69 @@ server <- function(input, output, session) {
   # ---- Tamano muestral ------------------------------------------------------
   observeEvent(input$n_go, {
     if (identical(input$n_tipo, "nm")) {
-      req(input$nm_var)
-      df <- datos()
-      validate(
-        need(input$nm_var %in% names(df), "Variable no valida."),
-        need(sum(is.finite(df[[input$nm_var]])) > 2, "La variable necesita al menos 3 valores."),
-        need(input$n_d > 0, "La precision debe ser > 0.")
-      )
-      r <- capturar(nm(x = df[[input$nm_var]], d = input$n_d, conf = input$n_conf))
-      code <- paste0("library(BioEstatR)\n",
-                     "# n para estimar una media a partir de una muestra piloto\n",
-                     "nm(x = datos$", input$nm_var, ", d = ", input$n_d, ",\n",
-                     "   conf = ", input$n_conf, ")")
+      if (identical(input$n_nm_fuente, "datos")) {
+        # ---- Media: desviacion tipica desde una variable del dataset ----
+        req(input$nm_var)
+        df <- datos()
+        validate(
+          need(input$nm_var %in% names(df), "Variable no valida."),
+          need(sum(is.finite(df[[input$nm_var]])) > 2, "La variable necesita al menos 3 valores."),
+          need(input$n_d > 0, "La precision debe ser > 0.")
+        )
+        r <- capturar(nm(x = df[[input$nm_var]], d = input$n_d, conf = input$n_conf))
+        code <- paste0("library(BioEstatR)\n",
+                       "# n para estimar una media a partir de una muestra piloto\n",
+                       "nm(x = datos$", input$nm_var, ", d = ", input$n_d, ",\n",
+                       "   conf = ", input$n_conf, ")")
+      } else {
+        # ---- Media: valores introducidos manualmente ----
+        validate(
+          need(is.finite(input$n_s_manual) && input$n_s_manual > 0,
+               "La desviacion tipica debe ser > 0."),
+          need(is.finite(input$n_nm_piloto) && input$n_nm_piloto >= 2,
+               "El tamano de la muestra piloto debe ser >= 2."),
+          need(input$n_d > 0, "La precision debe ser > 0.")
+        )
+        r <- capturar(nm(s = input$n_s_manual, n = input$n_nm_piloto,
+                         d = input$n_d, conf = input$n_conf))
+        code <- paste0("library(BioEstatR)\n",
+                       "# n para estimar una media con valores introducidos manualmente\n",
+                       "nm(s = ", input$n_s_manual, ", n = ", input$n_nm_piloto, ", d = ", input$n_d, ",\n",
+                       "   conf = ", input$n_conf, ")")
+      }
     } else if (identical(input$n_tipo, "np")) {
-      validate(
-        need(input$n_pn >= 1, "El tamano de la muestra piloto debe ser >= 1."),
-        need(input$n_px >= 0 && input$n_px <= input$n_pn, "Los casos deben estar entre 0 y n."),
-        need(input$n_dp > 0, "La precision debe ser > 0.")
-      )
-      r <- capturar(np(x = input$n_px, n = input$n_pn, d = input$n_dp,
-                       conf = input$n_conf))
-      code <- paste0("library(BioEstatR)\n",
-                     "# n para estimar una proporcion a partir de una muestra piloto\n",
-                     "np(x = ", input$n_px, ", n = ", input$n_pn, ",\n",
-                     "   d = ", input$n_dp, ", conf = ", input$n_conf, ")")
+      if (identical(input$n_np_fuente, "datos")) {
+        # ---- Proporcion: desde una variable del dataset ----
+        req(input$np_var, input$np_level)
+        df <- datos()
+        validate(
+          need(input$np_var %in% names(df), "Variable no valida."),
+          need(input$np_level %in% unique(stats::na.omit(df[[input$np_var]])),
+               "Nivel de 'exito' no valido."),
+          need(length(unique(stats::na.omit(df[[input$np_var]]))) <= 2,
+               "Para una proporcion la variable debe ser binaria (2 categorias)."),
+          need(input$n_dp > 0, "La precision debe ser > 0.")
+        )
+        r <- capturar(np(v = df[[input$np_var]], level = input$np_level,
+                         d = input$n_dp, conf = input$n_conf))
+        code <- paste0("library(BioEstatR)\n",
+                       "# n para estimar una proporcion desde una variable del dataset\n",
+                       "np(v = datos$", input$np_var, ", level = \"", input$np_level, "\", d = ", input$n_dp, ",\n",
+                       "   conf = ", input$n_conf, ")")
+      } else {
+        # ---- Proporcion: valores introducidos manualmente ----
+        validate(
+          need(input$n_pn >= 1, "El tamano de la muestra piloto debe ser >= 1."),
+          need(input$n_px >= 0 && input$n_px <= input$n_pn, "Los casos deben estar entre 0 y n."),
+          need(input$n_dp > 0, "La precision debe ser > 0.")
+        )
+        r <- capturar(np(x = input$n_px, n = input$n_pn, d = input$n_dp,
+                         conf = input$n_conf))
+        code <- paste0("library(BioEstatR)\n",
+                       "# n para estimar una proporcion a partir de una muestra piloto\n",
+                       "np(x = ", input$n_px, ", n = ", input$n_pn, ",\n",
+                       "   d = ", input$n_dp, ", conf = ", input$n_conf, ")")
+      }
     } else {
       validate(need(input$n_lmax > 0 && input$n_dl > 0, "Los valores deben ser > 0."))
       r <- capturar(nl(lmax = input$n_lmax, d = input$n_dl, conf = input$n_conf))
