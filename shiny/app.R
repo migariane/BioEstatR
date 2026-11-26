@@ -473,8 +473,8 @@ cabecera_ugr <- div(
         "Bioestad\u00edstica con R, sin escribir c\u00f3digo \u2013 Docencia e investigaci\u00f3n"),
       p(class = "author",
         # Enlace al libro del autor (hostado en Netlify).
-        # Reemplaza "https://TU_LIBRO.netlify.app/" por la URL real del libro.
-        tags$a(href = "https://TU_LIBRO.netlify.app/", target = "_blank",
+        # Enlace al libro del autor (publicado en GitHub Pages).
+        tags$a(href = "https://migariane.github.io/MatematicaEstadisticaMedicinaR/", target = "_blank",
           strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD")),
         br(),
         "Catedr\u00e1tico \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, Universidad de Granada",
