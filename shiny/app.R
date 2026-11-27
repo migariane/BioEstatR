@@ -9,8 +9,8 @@
 #   o dentro de RStudio: abrir este fichero y pulsar "Run App".
 #
 # Autor de la aplicacion:
-#   Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA - MSc - MPH - PhD
-#   Catedr\u00e1tico - Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa
+#   Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA - MSc - MPH
+#   Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa
 #   Universidad de Granada (UGR)
 # Coautores del paquete BioEstatR:
 #   Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y
@@ -472,13 +472,15 @@ cabecera_ugr <- div(
       p(class = "sub",
         "Bioestad\u00edstica con R, sin escribir c\u00f3digo \u2013 Docencia e investigaci\u00f3n"),
       p(class = "author",
-        # Enlace al libro del autor (hostado en Netlify).
-        # Enlace al libro del autor (publicado en GitHub Pages).
-        tags$a(href = "https://migariane.github.io/MatematicaEstadisticaMedicinaR/", target = "_blank",
-          strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD",
+        tags$a(href = "https://maluque.netlify.app", target = "_blank",
+          strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez, BSc \u00b7 MA \u00b7 MSc \u00b7 MPH \u00b7 PhD",
                  style = "color: #fff;")),
         br(),
-        "Catedr\u00e1tico \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, Universidad de Granada",
+        "Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, Universidad de Granada",
+        br(),
+        tags$a(href = "https://migariane.github.io/MatematicaEstadisticaMedicinaR/", target = "_blank",
+          tags$span(style = "color: var(--ugr-gold); font-weight: 600;",
+                    "Matem\u00e1tica, Estad\u00edstica y Medicina con R")),
         br(),
         tags$span(style = "color:#cbd5e1;",
           "Coautores: Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y Juan Manuel Melchor Rodr\u00edguez")
@@ -497,7 +499,7 @@ barra_autor <- div(
   tags$span(strong("Universidad de Granada"),
             " \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa"),
   tags$span(class = "dot", " \u00b7 "),
-  tags$span(strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez"), ", PhD \u2013 Catedr\u00e1tico"),
+  tags$span(strong("Miguel \u00c1ngel Luque-Fern\u00e1ndez"), " BSc \u00b7 MA \u00b7 MSc \u00b7 MPH \u00b7 PhD \u2013 Dpto. de Estad\u00edstica e I.O."),
   tags$span(class = "dot", " \u00b7 "),
   tags$span("Coautores: Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y ",
             "Juan Manuel Melchor Rodr\u00edguez")
@@ -511,8 +513,12 @@ pie_ugr <- tags$footer(
   HTML(" &middot; "),
   tags$a(href = "https://www.ugr.es", target = "_blank", "Universidad de Granada"),
   tags$br(),
-  "Miguel \u00c1ngel Luque-Fern\u00e1ndez, MA \u00b7 MSc \u00b7 MPH \u00b7 PhD - ",
-  "Catedr\u00e1tico, Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, UGR",
+  tags$a(href = "https://maluque.netlify.app", target = "_blank",
+         "Miguel \u00c1ngel Luque-Fern\u00e1ndez, BSc \u00b7 MA \u00b7 MSc \u00b7 MPH \u00b7 PhD"),
+  " \u2013 Dpto. de Estad\u00edstica e Investigaci\u00f3n Operativa, UGR",
+  tags$br(),
+  tags$a(href = "https://migariane.github.io/MatematicaEstadisticaMedicinaR/", target = "_blank",
+         "Matem\u00e1tica, Estad\u00edstica y Medicina con R"),
   tags$br(),
   tags$span(style = "color:#94a3b8;",
     "Coautores: Pedro Jes\u00fas Femia Marzo, Miguel \u00c1ngel Montero Alonso y Juan Manuel Melchor Rodr\u00edguez")
