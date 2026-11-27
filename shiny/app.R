@@ -240,10 +240,10 @@ estilos_ugr <- tags$style(HTML("
     justify-content: flex-end;
   }
   .ugr-logo {
-    height: 64px;
+    height: 80px;
     width: auto;
     background: #fff;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: var(--r-sm);
     box-shadow: var(--shadow-1);
   }
@@ -442,7 +442,7 @@ estilos_ugr <- tags$style(HTML("
   /* --- Adaptacion movil --- */
   @media (max-width: 991px) {
     .ugr-hero { padding: var(--s5) var(--s4); }
-    .ugr-logo { height: 52px; margin-top: var(--s4); }
+    .ugr-logo { height: 64px; margin-top: var(--s3); }
     .ugr-subbar { display: none; }
     .sidebar-panel-scroll { max-height: none; }
   }
@@ -531,7 +531,7 @@ pie_ugr <- tags$footer(
 ui <- navbarPage(
   title = tagList(
     tags$img(src = "logo-ugr.png",
-             style = "height:26px; background:#fff; padding:2px 6px; border-radius:4px; margin-right:8px; vertical-align:middle;",
+             style = "height:32px; background:#fff; padding:2px 6px; border-radius:4px; margin-right:8px; vertical-align:middle;",
              alt = "UGR"),
     "BioEstatR"
   ),
@@ -575,7 +575,7 @@ ui <- navbarPage(
           tags$ol(
             tags$li("Elija un conjunto de datos en la pesta\u00f1a ", strong("Mis datos"),
                     " (por defecto ", code("osteo"),
-                    ", que acompana al paquete: 94 pacientes con 27 variables)."),
+                    ", dataset incluido en BioEstatR: 94 pacientes de medicina interna con 27 variables sobre edad, sexo, peso, talla, IMC, hábitos tabáquico/alcohólico y indicadores clínicos como creatinina, hemoglobina A1c y calcio)."),
             tags$li("Vaya a la pestana del analisis que necesite."),
             tags$li("Seleccione las variables y pulse el boton de calcular."),
             tags$li("Copie el informe, o abra el codigo R para reproducirlo.")
